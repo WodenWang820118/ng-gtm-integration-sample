@@ -1,0 +1,104 @@
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="staticBackdrop"
+  data-bs-backdrop="static"
+  tabindex="-1"
+  [class.show]="showModal"
+  [style.display]="showModal ? 'block' : 'none'"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Cookie Policy</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="hide()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="consent d-flex flex-column gap-3">
+          <div class="consent__option d-flex flex-column">
+            <div class="d-flex justify-content-between">
+              <div class="consent__description"><b>Analytics</b></div>
+              <div class="consent__switch">
+                <!-- Rounded switch -->
+                <label class="switch">
+                  <input
+                    type="checkbox"
+                    (change)="acceptAnalytics($event)"
+                    [checked]="consentService.analyticsConsentGiven$() | async"
+                  />
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+            <div>
+              Analytics cookies track site usage and trends to improve your
+              browsing experience. They gather anonymous data on how you
+              navigate and interact with the site.
+            </div>
+          </div>
+          <hr />
+          <div class="consent__option d-flex flex-column">
+            <div class="d-flex justify-content-between">
+              <div class="consent__description"><b>Measurement</b></div>
+              <div class="consent__switch">
+                <!-- Rounded switch -->
+                <label class="switch">
+                  <input
+                    type="checkbox"
+                    (change)="acceptMeasurement($event)"
+                    [checked]="
+                      consentService.measurementConsentGiven$() | async
+                    "
+                  />
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+            <div>Measurement</div>
+          </div>
+          <hr />
+          <div class="consent__option d-flex flex-column">
+            <div class="d-flex justify-content-between">
+              <div class="consent__description"><b>Audience</b></div>
+              <div class="consent__switch">
+                <!-- Rounded switch -->
+                <label class="switch">
+                  <input
+                    type="checkbox"
+                    (change)="acceptAudience($event)"
+                    [checked]="consentService.audienceConsentGiven$() | async"
+                  />
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+            <div>Audience</div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="hide(); consent()"
+          >
+            Confirm
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<fa-icon
+  class="cookie"
+  [icon]="faCookie"
+  size="2xl"
+  [class.show]="showCookieConsent"
+  [style.display]="showCookieConsent ? 'block' : 'none'"
+  (click)="switchModal()"
+></fa-icon>

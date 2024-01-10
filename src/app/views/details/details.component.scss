@@ -1,0 +1,65 @@
+@import '../../../variables.scss';
+
+.all-destinations {
+  position: absolute;
+  right: 90px;
+  font-size: 16px;
+}
+
+.all-destinations::before {
+  content: '\2039\2039';
+  margin-right: 4px;
+}
+
+.all-destinations:hover {
+  text-decoration: none;
+}
+
+.add2Cart {
+  text-align: right;
+}
+
+.add2Cart h4 {
+  padding: 0;
+  margin: 20px 0 10px 0;
+  font-size: 20px;
+}
+
+.add2Cart select {
+  margin: 0;
+  width: 120px;
+}
+
+.page-header h2 {
+  margin: 0;
+  background: #e9e9e9;
+  padding: 10px 6px;
+}
+
+@media screen and (max-width: $mobile-max-width) {
+  .rwd-mobile {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .rwd-mobile-img {
+    img {
+      display: none;
+    }
+  }
+
+  .rwd-all-destinations {
+    position: relative;
+    right: 0;
+  }
+}
+
+.img-main {
+  width: 500px;
+  object-fit: cover;
+}
+
+.img-sub {
+  width: 170px;
+  object-fit: cover;
+}

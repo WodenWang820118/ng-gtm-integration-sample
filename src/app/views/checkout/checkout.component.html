@@ -1,0 +1,36 @@
+<div class="container" id="checkout">
+  <h2>Checkout</h2>
+  <table id="checkoutTable" class="table table-striped">
+    <caption>
+      Summary
+    </caption>
+    <tr>
+      <th>Ref.</th>
+      <th>Name</th>
+      <th>Price Per Person</th>
+      <th>Quantity</th>
+      <th>Total</th>
+    </tr>
+    <tbody>
+      @for (item of orders$ | async; track item) {
+      <tr>
+        <td>{{ item.id }}</td>
+        <td>{{ item.title }}</td>
+        <td>${{ item.value }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>${{ item.value * item.quantity }}</td>
+      </tr>
+      }
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="6" class="h3">
+          Total Price: ${{ calculateTotalPrice() | async }}
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+  <app-shipping-form></app-shipping-form>
+  <app-payment-form></app-payment-form>
+  <div id="errareMSG"></div>
+</div>

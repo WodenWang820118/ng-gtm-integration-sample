@@ -1,0 +1,21 @@
+#disclaimer {
+  margin: 0;
+  padding: 0;
+  background: #333 !important;
+  color: #fff;
+  padding: 10px 0;
+  font-weight: 100;
+}
+
+#disclaimer .container {
+  position: relative;
+}
+
+#disclaimer a {
+  position: absolute;
+  right: 0;
+}
+
+.clear {
+  clear: both;
+}

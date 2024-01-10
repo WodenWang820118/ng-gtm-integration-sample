@@ -1,0 +1,100 @@
+@if (!(orderService.orders$ | async)?.length) {
+<div>
+  <div class="container">There are no items in your basket.</div>
+</div>
+} @else { @if (((windowSizeService.width$ | async) ?? 0) > 480) {
+<div class="container table-no-col-borders table-striped table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Image</th>
+        <th scope="col">Destination</th>
+        <th scope="col">Travelers</th>
+        <th scope="col">Total Price</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of basketItems$ | async; track item) {
+      <tr>
+        <td><img src="{{ item.image }}" /></td>
+        <td>{{ item.title }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.value }}</td>
+        <td>
+          <fa-icon
+            style="cursor: pointer"
+            (click)="updateCart(item.id)"
+            [icon]="faEdit"
+            size="lg"
+          ></fa-icon>
+          <fa-icon
+            style="cursor: pointer"
+            class="mx-2"
+            (click)="removeFromCart(item)"
+            [icon]="faTrashCan"
+            size="lg"
+          ></fa-icon>
+        </td>
+      </tr>
+      }
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="3" class="text-center align-middle h3">
+          Total: ${{ calculateTotalPrice() | async }}
+        </td>
+        <td colspan="2" class="text-center align-middle h3 styled-link">
+          <a
+            style="cursor: pointer"
+            (click)="navigateToBeginCheckout()"
+            (click)="beginCheckout()"
+            >Checkout</a
+          >
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+} @if (((windowSizeService.width$ | async) ?? 0) <= 480) {
+<div class="container">
+  @for (item of basketItems$ | async; track item) {
+  <div class="card mb-3">
+    <div class="row g-0">
+      <div class="col-md-4" style="padding: 1rem">
+        <img
+          src="{{ item.image }}"
+          class="img-fluid rounded-start"
+          style="width: 100%"
+          alt="destination-img"
+        />
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">{{ item.title }}</h5>
+          <p class="card-text">Travelers: {{ item.quantity }}</p>
+          <p class="card-text">
+            <small>Total Price: ${{ item.value }}</small>
+          </p>
+          <button (click)="updateCart(item.id)" class="btn btn-primary">
+            Edit
+          </button>
+          <button (click)="removeFromCart(item)" class="btn btn-danger mx-2">
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+  <div class="total-price">
+    <h3>Total: ${{ calculateTotalPrice() | async }}</h3>
+    <a
+      (click)="navigateToBeginCheckout()"
+      class="btn btn-success"
+      (click)="beginCheckout()"
+      >Proceed to Checkout</a
+    >
+  </div>
+</div>
+} }

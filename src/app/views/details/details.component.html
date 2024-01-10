@@ -1,0 +1,81 @@
+<div
+  id="content-{{ (destination$ | async)?.title?.toLowerCase() }}"
+  class="container"
+>
+  <div class="page-header rwd-page-header">
+    <h2>
+      {{ (destination$ | async)?.title }}
+      <small style="font-size: 18px">{{
+        (destination$ | async)?.smallTitle
+      }}</small>
+      <br />
+      <a
+        class="all-destinations rwd-all-destinations"
+        (click)="navigateToDestinations()"
+        >All Destinations</a
+      >
+    </h2>
+  </div>
+  <div class="d-flex flex-row rwd-mobile">
+    <div class="flex-grow-1 p-2">
+      <h3>Go to {{ (destination$ | async)?.title }}</h3>
+      <div style="height: 66%">
+        <p>
+          {{ (destination$ | async)?.description }}
+        </p>
+      </div>
+      <div class="add2Cart">
+        <h4>${{ (destination$ | async)?.price }} / 6 Nights</h4>
+        <div class="d-flex justify-content-end">
+          <select
+            [formControl]="numberOfPersonsControl"
+            class="mx-2 form-select"
+          >
+            <option value="1">1 person</option>
+            <option value="2">2 persons</option>
+            <option value="3">3 persons</option>
+            <option value="4">4 persons</option>
+            <option value="5">5 persons</option>
+            <option value="6">6 persons</option>
+          </select>
+          <button
+            class="btn btn-primary"
+            data-name="{{ (destination$ | async)?.title }}"
+            (click)="addToCart(destination$)"
+          >
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="flex-grow-1 p-3">
+      <div>
+        <img
+          class="img-thumbnail img-main"
+          src="{{ (destination$ | async)?.imageBig }}"
+          alt=""
+        />
+      </div>
+      @if ((windowSizeService.width$ | async) ?? 0 > 480) {
+      <div class="d-flex flex-row justify-content-between">
+        <div class="img-thumbnail">
+          <img
+            class="img-sub"
+            src="{{ (destination$ | async)?.image2 }}"
+            alt=""
+          />
+        </div>
+        <div class="img-thumbnail">
+          <img
+            class="img-sub"
+            src="{{ (destination$ | async)?.image3 }}"
+            alt=""
+          />
+        </div>
+      </div>
+      } @else {
+      <div class="d-flex flex-row rwd-mobile-img"></div>
+      }
+    </div>
+  </div>
+</div>

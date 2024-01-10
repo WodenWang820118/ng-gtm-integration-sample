@@ -1,0 +1,58 @@
+<div class="container p-0" id="shippingForm">
+  <form [formGroup]="shippingForm" (ngSubmit)="continue()">
+    <div class="mb-3 row">
+      <label for="name" class="col-sm-2 col-form-label">Name:</label>
+      <div class="col-sm-10">
+        <input
+          formControlName="name"
+          type="text"
+          class="form-control"
+          id="name"
+        />
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="address" class="col-sm-2 col-form-label">Address:</label>
+      <div class="col-sm-10">
+        <input
+          formControlName="address"
+          type="text"
+          class="form-control"
+          id="address"
+        />
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="zip" class="col-sm-2 col-form-label">Zip Code:</label>
+      <div class="col-sm-10">
+        <input
+          formControlName="zip"
+          type="text"
+          class="form-control"
+          id="zip"
+        />
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="city" class="col-sm-2 col-form-label">City:</label>
+      <div class="col-sm-10">
+        <input
+          formControlName="city"
+          type="text"
+          class="form-control"
+          id="city"
+        />
+      </div>
+    </div>
+    <div
+      id="confirmReservation"
+      [ngClass]="
+        (checkoutFormManager.isShippingFormSubmitted | async)
+          ? 'hidden'
+          : 'visible'
+      "
+    >
+      <button class="btn btn-primary">Continue</button>
+    </div>
+  </form>
+</div>

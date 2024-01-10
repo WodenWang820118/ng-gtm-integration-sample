@@ -1,0 +1,35 @@
+header,
+footer {
+  background: #C0D0E5;
+}
+
+#shippingForm label,
+#paymentMethod label {
+  width: 100%;
+  color: steelblue;
+  text-transform: lowercase;
+  font-variant: small-caps;
+  font-size: 16px;
+}
+
+#shippingForm input,
+#shippingForm textarea {
+  width: 100%;
+}
+
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: block;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.block-center {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
