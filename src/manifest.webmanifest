@@ -1,6 +1,6 @@
 {
-  "name": "ng-gtm-site",
-  "short_name": "ng-gtm-site",
+  "name": "ng-gtm-integration-sample",
+  "short_name": "ng-gtm-integration-sample",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",
