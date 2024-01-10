@@ -38,14 +38,14 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/WodenWang820118/ng-gtm-site/tree/main/my-website',
+            'https://github.com/WodenWang820118/ng-gtm-integration-sample/tree/main/my-website',
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/WodenWang820118/ng-gtm-site/tree/main/my-website',
+            'https://github.com/WodenWang820118/ng-gtm-integration-sample/tree/main/my-website',
         },
         theme: {
           customCss: './src/css/custom.css',
