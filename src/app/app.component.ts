@@ -32,7 +32,7 @@ import { LoadingService } from './services/loading/loading.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, AfterViewChecked {
-  title = 'ng-gtm-site';
+  title = 'ng-gtm-integration-sample';
   @ViewChild('loadingDiv', { static: false }) loadingDiv!: ElementRef;
   private destroy$ = new Subject<void>();
 

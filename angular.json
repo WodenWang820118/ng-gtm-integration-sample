@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ng-gtm-site": {
+    "ng-gtm-integration-sample": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -24,7 +24,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ng-gtm-site",
+            "outputPath": "dist/ng-gtm-integration-sample",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -77,10 +77,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "ng-gtm-site:build:production"
+              "buildTarget": "ng-gtm-integration-sample:build:production"
             },
             "development": {
-              "buildTarget": "ng-gtm-site:build:development"
+              "buildTarget": "ng-gtm-integration-sample:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -88,7 +88,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "ng-gtm-site:build"
+            "buildTarget": "ng-gtm-integration-sample:build"
           }
         },
         "test": {

@@ -70,7 +70,7 @@ A Progressive Web App (PWA) is designed to work offline, mimicking a native app 
 Use the following steps to test the PWA functionality:
 
 1. Run `ng build` to build the project.
-2. Use `http-server` and run `npx http-server -p 8080 -c-1 dist/ng-gtm-site`
+2. Use `http-server` and run `npx http-server -p 8080 -c-1 dist/ng-gtm-integration-sample`
 3. Follow and click the port number link in the terminal to open the PWA.
 4. Turn off the network and trigger some events.
 5. Turn on the network and check the events in the data layer object.
@@ -159,14 +159,17 @@ Single Page Applications (SPAs) present unique challenges for scroll tracking du
 In addressing the scroll tracking issue within our Angular SPA, the logic is divided into three critical parts to ensure accurate and meaningful event firing:
 
 ### Detecting Completion of Lazy Loading
+
 The Angular SPA is designed to initially display a loading Div while deferring the loading of components. To track the completion of this process, the ngAfterViewChecked lifecycle hook is employed. This hook is part of Angular's change detection mechanism, which runs after every cycle of view checks. By implementing a check within this hook, the app continuously monitors the presence of the loading Div. Once this Div is no longer found in the DOM, it's interpreted that all deferred components have finished loading. This transition signifies that the page is fully rendered and interactive, marking an ideal point to initiate scroll tracking.
 
 ### Accurate Scroll Event Handling
+
 In pages where content length doesn't necessitate scrolling, traditional scroll tracking might inaccurately report a 100% scroll event. To address this, a custom JavaScript variable, as suggested by [Simo Ahava](https://www.simoahava.com/analytics/customize-scroll-depth-trigger/), is implemented. This variable introduces a refined logic that discerns between meaningful and unmeaningful scroll events. It accounts for various factors like the viewport size, content length, and user interaction to determine if a scroll event genuinely represents user engagement or is merely a default behavior in a non-scrollable context. By integrating this variable, the scroll tracking becomes more precise, only firing events that truly reflect user interaction and intent.
 
 By combining these two strategies, the Angular SPA not only ensures that all components are fully loaded before initiating scroll tracking but also refines the scroll tracking mechanism to report only meaningful interactions. This dual approach significantly enhances the accuracy of engagement metrics, providing more reliable data for understanding user behavior and optimizing the website experience.
 
 ### Custom HTML script
+
 By implementing this custom method, the project can more accurately track user engagement and scroll behavior throughout the entire SPA, regardless of how content is loaded or how users navigate between sections. You may involve the logic in the sample app. The usual triggers would be `window loaded` for the initial page loading and the `history change` trigger when route changes.
 
 <details>
@@ -297,7 +300,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 
 ## Documentation as a static site (Experimental)
 
-Utilizing [Docusaurus](https://docusaurus.io/), this project's [REAEMD.md](https://ng-gtm-site-docs.netlify.app/docs/Overview) is transformed into a static website, which is hosted via Netlify. It is designed specifically for non-technical users, providing an easy-to-understand overview of the project and topics related to GTM, without the need for familiarity with GitHub or GitLab.
+Utilizing [Docusaurus](https://docusaurus.io/), this project's [REAEMD.md](https://ng-gtm-integration-sample-docs.netlify.app/docs/Overview) is transformed into a static website, which is hosted via Netlify. It is designed specifically for non-technical users, providing an easy-to-understand overview of the project and topics related to GTM, without the need for familiarity with GitHub or GitLab.
 
 ## License
 

@@ -39,7 +39,7 @@ For now, the app supports:
 
 This section guides you through running this project on your local machine without deep technical knowledge.
 
-Please install [data layer checker extension](https://chrome.google.com/webstore/detail/datalayer-checker/ffljdddodmkedhkcjhpmdajhjdbkogke) to inject the GTM ID on the [GitHub page](https://wodenwang820118.github.io/ng-gtm-site/#/). Then, you can send the data back to your GA4 property accordingly.
+Please install [data layer checker extension](https://chrome.google.com/webstore/detail/datalayer-checker/ffljdddodmkedhkcjhpmdajhjdbkogke) to inject the GTM ID on the [GitHub page](https://wodenwang820118.github.io/ng-gtm-integration-sample/). Then, you can send the data back to your GA4 property accordingly.
 
 ## How to use (technical)
 
@@ -79,7 +79,7 @@ A Progressive Web App (PWA) is designed to work offline, mimicking a native app 
 Use the following steps to test the PWA functionality:
 
 1. Run `ng build` to build the project.
-2. Use `http-server` and run `npx http-server -p 8080 -c-1 dist/ng-gtm-site`
+2. Use `http-server` and run `npx http-server -p 8080 -c-1 dist/ng-gtm-integration-sample`
 3. Follow and click the port number link in the terminal to open the PWA.
 4. Turn off the network and trigger some events.
 5. Turn on the network and check the events in the data layer object.
