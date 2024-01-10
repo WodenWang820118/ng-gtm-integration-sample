@@ -1,14 +1,14 @@
 {
-  "name": "ng-gtm-site",
+  "name": "ng-gtm-integration-sample",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "backend": "json-server --watch db.json",
-    "build": "ng build --configuration production --base-href https://wodenwang820118.github.io/ng-gtm-site/",
-    "copy-readme": "shx cp README.md my-website/docs/ng-gtm-site/ng-gtm-site.md",
+    "build": "ng build --configuration production --base-href https://wodenwang820118.github.io/ng-gtm-integration-sample/",
+    "copy-readme": "shx cp README.md my-website/docs/ng-gtm-integration-sample/ng-gtm-site.md",
     "build-file": "ng build --configuration production --base-href ./",
-    "build-github": "ng build --configuration production --base-href https://wodenwang820118.github.io/ng-gtm-site/ && ngh --dir=dist/ng-gtm-site",
+    "build-github": "ng build --configuration production --base-href https://wodenwang820118.github.io/ng-gtm-integration-sample/ && ngh --dir=dist/ng-gtm-integration-sample",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
