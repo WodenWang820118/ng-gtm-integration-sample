@@ -11,7 +11,7 @@
 - [YouTube video tracking](#youtube-video-tracking)
 - [Consent mode v2](#consent-mode-v2)
 - [Enhancing Scroll Tracking in Single Page Applications](#enhancing-scroll-tracking-in-single-page-applications)
-- [Deep Linking](#deep-linking)
+- [Deep Linking](#deep-linking-Android)
 - [Development server](#development-server)
 - [Build](#build)
 - [Documentation as a static site (Experimental)](#documentation-as-a-static-site-experimental)
