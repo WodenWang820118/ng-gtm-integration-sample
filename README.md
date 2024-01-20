@@ -11,6 +11,7 @@
 - [YouTube video tracking](#youtube-video-tracking)
 - [Consent mode v2](#consent-mode-v2)
 - [Enhancing Scroll Tracking in Single Page Applications](#enhancing-scroll-tracking-in-single-page-applications)
+- [Deep Linking](#deep-linking-Android)
 - [Development server](#development-server)
 - [Build](#build)
 - [Documentation as a static site (Experimental)](#documentation-as-a-static-site-experimental)
@@ -287,6 +288,41 @@ By implementing this custom method, the project can more accurately track user e
 ```
 
 </details>
+
+## Deep Linking (Android)
+
+### Overview
+
+The deep linking feature allows users to open the app from the website. The project demonstrates how to implement deep linking in the Android application. The implementation is based on the [documentation](https://developer.android.com/training/app-links/deep-linking).
+
+### Website
+
+The website implementation uses `a` tag with the `href` attribute. i.e., `<a href="https://wodenwang820118.github.io/ng-gtm-integration-sample/?utm_source=ng-gtm-integration-sample&utm_medium=website&utm_campaign=app_download">App</a>`. It intends to have UTM parameters to test Firebase UTM tracking. After clicking the link on the mobile browser, the Android application will be opened.
+
+### Android Emulator
+
+Please note that in the `Settings` -> `Apps` -> `All apps` -> `App info` -> `Open by default` settings (or any other way to access the app's setting), the `Links to open in this app` should be enabled with `wodenwang820118.github.io` as the domain. Otherwise, the app will not be opened.
+
+### AndroidManifest.xml
+
+We'll need to add the following code in the `AndroidManifest.xml` file to support deep linking.
+
+```xml
+ <intent-filter android:autoVerify="true">
+    <action android:name="android.intent.action.VIEW" />
+    <action android:name="android.intent.action.MAIN" />
+    <category android:name="android.intent.category.DEFAULT" />
+    <category android:name="android.intent.category.LAUNCHER" />
+    <category android:name="android.intent.category.BROWSABLE" />
+    <!-- Accepts URIs that begin with
+    "https://wodenwang820118.github.io/ng-gtm-integration-sample/" -->
+    <data android:scheme="https" />
+    <data android:host="wodenwang820118.github.io" />
+    <!-- note that the leading "/" is required for pathPrefix-->
+</intent-filter>
+```
+
+Please refer to the [Deep Linking documentation](https://developer.android.com/training/app-links/deep-linking) for more information about testing deep linking.
 
 ## Development server
 
