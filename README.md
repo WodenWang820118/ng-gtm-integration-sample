@@ -324,6 +324,18 @@ We'll need to add the following code in the `AndroidManifest.xml` file to suppor
 
 Please refer to the [Deep Linking documentation](https://developer.android.com/training/app-links/deep-linking) for more information about testing deep linking.
 
+### Localhost testing on an emulator
+
+If you want to test the deep linking feature on an emulator, you could open the development server on the Android emulator Please refer to the [StackOverflow post](https://stackoverflow.com/questions/5806220/how-to-connect-to-my-http-localhost-web-server-from-android-emulator) to open the development server on the Android emulator.
+
+```bash
+ng serve --disable-host-check --host 0.0.0.0
+```
+
+The default port is 4200.
+
+Then, on the emulator, open the browser and type: `10.0.2.2:4200`
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.

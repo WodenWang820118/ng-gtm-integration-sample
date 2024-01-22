@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "on-emulator": "ng serve --disable-host-check --host 0.0.0.0",
     "backend": "json-server --watch db.json",
     "build": "ng build --configuration production --base-href https://wodenwang820118.github.io/ng-gtm-integration-sample/",
     "build-file": "ng build --configuration production --base-href ./",
