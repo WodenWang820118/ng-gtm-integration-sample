@@ -326,7 +326,7 @@ Please refer to the [Deep Linking documentation](https://developer.android.com/t
 
 ### Localhost testing on an emulator
 
-If you want to test the deep linking feature on an emulator, you could open the development server on the Android emulator Please refer to the [StackOverflow post](https://stackoverflow.com/questions/5806220/how-to-connect-to-my-http-localhost-web-server-from-android-emulator) to open the development server on the Android emulator.
+If you want to test the deep linking feature on an emulator, you could open the development server on the Android emulator. Please refer to the [stackoverflow post](https://stackoverflow.com/questions/5806220/how-to-connect-to-my-http-localhost-web-server-from-android-emulator). Start the server with the command:
 
 ```bash
 ng serve --disable-host-check --host 0.0.0.0
