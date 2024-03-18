@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1705902151874,
+  "timestamp": 1710744533594,
   "index": "https://wodenwang820118.github.io/ng-gtm-integration-sample/index.html",
   "assetGroups": [
     {
@@ -15,7 +15,7 @@
         "https://wodenwang820118.github.io/ng-gtm-integration-sample/913.556a7826c3315574.js",
         "https://wodenwang820118.github.io/ng-gtm-integration-sample/favicon.ico",
         "https://wodenwang820118.github.io/ng-gtm-integration-sample/index.html",
-        "https://wodenwang820118.github.io/ng-gtm-integration-sample/main.a4f1e25a02a6f8ee.js",
+        "https://wodenwang820118.github.io/ng-gtm-integration-sample/main.017ca886323f3511.js",
         "https://wodenwang820118.github.io/ng-gtm-integration-sample/manifest.webmanifest",
         "https://wodenwang820118.github.io/ng-gtm-integration-sample/polyfills.a4c75c643fb76f53.js",
         "https://wodenwang820118.github.io/ng-gtm-integration-sample/runtime.cf91b38731ec56c8.js",
@@ -143,8 +143,8 @@
     "https://wodenwang820118.github.io/ng-gtm-integration-sample/bootstrap-icons.0b6b73b0fd96e41b.woff": "56c1142eef349c581d14dcd45a1c2eba9b9463c1",
     "https://wodenwang820118.github.io/ng-gtm-integration-sample/bootstrap-icons.a0e283a44c6f3530.woff2": "9d95f6fe35540b602284c9f2bfa67d2b464448f7",
     "https://wodenwang820118.github.io/ng-gtm-integration-sample/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
-    "https://wodenwang820118.github.io/ng-gtm-integration-sample/index.html": "acbdefd9e9370c098593beb3221e56efcddd8e22",
-    "https://wodenwang820118.github.io/ng-gtm-integration-sample/main.a4f1e25a02a6f8ee.js": "38c95bcf7ad8e72e78c251335bcdebfbfc391629",
+    "https://wodenwang820118.github.io/ng-gtm-integration-sample/index.html": "e7bc60b18fbb21d770db02b3fb5a71be0a36c9e0",
+    "https://wodenwang820118.github.io/ng-gtm-integration-sample/main.017ca886323f3511.js": "be64868269b4728388d1d0cbe91ce8f36ff19178",
     "https://wodenwang820118.github.io/ng-gtm-integration-sample/manifest.webmanifest": "41d0702f87a89fb9dae5fb0976855379c55179e1",
     "https://wodenwang820118.github.io/ng-gtm-integration-sample/polyfills.a4c75c643fb76f53.js": "0a472fddb9338c22d7a574621a3644e76c36f746",
     "https://wodenwang820118.github.io/ng-gtm-integration-sample/runtime.cf91b38731ec56c8.js": "003f3d064ec00b6570b0fc259fe9010d417825ce",
