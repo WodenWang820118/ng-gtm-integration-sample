@@ -18,6 +18,7 @@ export class AnalyticsService {
   ) {
     window.addEventListener('online', () => this.syncDataLayerEvents());
     window.dataLayer = window.dataLayer || [];
+    this.loadInitialData();
   }
 
   saveDataLayerEvent(eventName: string, eventData: any) {
@@ -111,6 +112,11 @@ export class AnalyticsService {
   }
 
   setCheckoutOrders(orders: Order[]): void {
+    this._checkoutOrders.next(orders);
+  }
+
+  private loadInitialData(): void {
+    const orders = JSON.parse(localStorage.getItem('orders') || '[]');
     this._checkoutOrders.next(orders);
   }
 }
