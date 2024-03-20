@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1710930170877,
+  "timestamp": 1710940236903,
   "index": "https://wodenwang820118.github.io/ng-gtm-integration-sample/index.html",
   "assetGroups": [
     {
@@ -146,7 +146,7 @@
     "https://wodenwang820118.github.io/ng-gtm-integration-sample/chunk-NHHJLADF.js": "9d2ea9506c7a1c5d4b831f860ae90a1e78b5b3e8",
     "https://wodenwang820118.github.io/ng-gtm-integration-sample/chunk-RJTPAGRS.js": "706da53dd6a4e000f340eb05439c591c24f56c34",
     "https://wodenwang820118.github.io/ng-gtm-integration-sample/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
-    "https://wodenwang820118.github.io/ng-gtm-integration-sample/index.html": "91e830a251ba2e27af14c272b713eee39dc9270b",
+    "https://wodenwang820118.github.io/ng-gtm-integration-sample/index.html": "fd0654058139a86e63a891aa594764b8be47d5dd",
     "https://wodenwang820118.github.io/ng-gtm-integration-sample/main-HPFYT2HN.js": "804d9a92aa2f620277c87c04f90b62f1bdb280c1",
     "https://wodenwang820118.github.io/ng-gtm-integration-sample/manifest.webmanifest": "41d0702f87a89fb9dae5fb0976855379c55179e1",
     "https://wodenwang820118.github.io/ng-gtm-integration-sample/polyfills-RT5I6R6G.js": "fe9f024576f21ff6314cf8f8332cde58b9a12416",
