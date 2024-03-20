@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1710744533594,
+  "timestamp": 1710930170877,
   "index": "https://wodenwang820118.github.io/ng-gtm-integration-sample/index.html",
   "assetGroups": [
     {
@@ -11,16 +11,19 @@
         "ignoreVary": true
       },
       "urls": [
-        "https://wodenwang820118.github.io/ng-gtm-integration-sample/754.09ee28222b021845.js",
-        "https://wodenwang820118.github.io/ng-gtm-integration-sample/913.556a7826c3315574.js",
+        "https://wodenwang820118.github.io/ng-gtm-integration-sample/chunk-AJRFZDJF.js",
+        "https://wodenwang820118.github.io/ng-gtm-integration-sample/chunk-E44QJQ52.js",
+        "https://wodenwang820118.github.io/ng-gtm-integration-sample/chunk-EFJRGLXM.js",
+        "https://wodenwang820118.github.io/ng-gtm-integration-sample/chunk-LZSNLSS6.js",
+        "https://wodenwang820118.github.io/ng-gtm-integration-sample/chunk-NHHJLADF.js",
+        "https://wodenwang820118.github.io/ng-gtm-integration-sample/chunk-RJTPAGRS.js",
         "https://wodenwang820118.github.io/ng-gtm-integration-sample/favicon.ico",
         "https://wodenwang820118.github.io/ng-gtm-integration-sample/index.html",
-        "https://wodenwang820118.github.io/ng-gtm-integration-sample/main.017ca886323f3511.js",
+        "https://wodenwang820118.github.io/ng-gtm-integration-sample/main-HPFYT2HN.js",
         "https://wodenwang820118.github.io/ng-gtm-integration-sample/manifest.webmanifest",
-        "https://wodenwang820118.github.io/ng-gtm-integration-sample/polyfills.a4c75c643fb76f53.js",
-        "https://wodenwang820118.github.io/ng-gtm-integration-sample/runtime.cf91b38731ec56c8.js",
-        "https://wodenwang820118.github.io/ng-gtm-integration-sample/scripts.3e75d50128144df1.js",
-        "https://wodenwang820118.github.io/ng-gtm-integration-sample/styles.5f66a75bad71135d.css"
+        "https://wodenwang820118.github.io/ng-gtm-integration-sample/polyfills-RT5I6R6G.js",
+        "https://wodenwang820118.github.io/ng-gtm-integration-sample/scripts-EEEIPNC3.js",
+        "https://wodenwang820118.github.io/ng-gtm-integration-sample/styles-ASBAHBCU.css"
       ],
       "patterns": []
     },
@@ -80,17 +83,13 @@
         "https://wodenwang820118.github.io/ng-gtm-integration-sample/assets/images/switzerland_1.jpg",
         "https://wodenwang820118.github.io/ng-gtm-integration-sample/assets/images/switzerland_2.jpg",
         "https://wodenwang820118.github.io/ng-gtm-integration-sample/assets/images/switzerland_3.jpg",
-        "https://wodenwang820118.github.io/ng-gtm-integration-sample/assets/images/switzerland_big.jpg",
-        "https://wodenwang820118.github.io/ng-gtm-integration-sample/bootstrap-icons.0b6b73b0fd96e41b.woff",
-        "https://wodenwang820118.github.io/ng-gtm-integration-sample/bootstrap-icons.a0e283a44c6f3530.woff2"
+        "https://wodenwang820118.github.io/ng-gtm-integration-sample/assets/images/switzerland_big.jpg"
       ],
       "patterns": []
     }
   ],
   "dataGroups": [],
   "hashTable": {
-    "https://wodenwang820118.github.io/ng-gtm-integration-sample/754.09ee28222b021845.js": "0174c36a51ca64412533e9913fe29fbbe971bafc",
-    "https://wodenwang820118.github.io/ng-gtm-integration-sample/913.556a7826c3315574.js": "587a6bf57a22d5a6f0fb467780791624a41d3cbc",
     "https://wodenwang820118.github.io/ng-gtm-integration-sample/assets/icons/icon-128x128.png": "f912963bdc6d5a38d8f1dd0afbaab2ce8d657acb",
     "https://wodenwang820118.github.io/ng-gtm-integration-sample/assets/icons/icon-144x144.png": "b155fd5f2fd5d2ea7760721063003c4cd95fd783",
     "https://wodenwang820118.github.io/ng-gtm-integration-sample/assets/icons/icon-152x152.png": "eae6e0f0c8afb8aaae339e2a569b43e9238e5e6c",
@@ -140,16 +139,19 @@
     "https://wodenwang820118.github.io/ng-gtm-integration-sample/assets/images/switzerland_2.jpg": "4db22ae2e994f646f7a30669d316a6b54b95e4fc",
     "https://wodenwang820118.github.io/ng-gtm-integration-sample/assets/images/switzerland_3.jpg": "2dfcff2e4b5a3ada7b3b4d79cfca035639f1770f",
     "https://wodenwang820118.github.io/ng-gtm-integration-sample/assets/images/switzerland_big.jpg": "a3ae9b8993a1791fa105a364093f22381fe4d739",
-    "https://wodenwang820118.github.io/ng-gtm-integration-sample/bootstrap-icons.0b6b73b0fd96e41b.woff": "56c1142eef349c581d14dcd45a1c2eba9b9463c1",
-    "https://wodenwang820118.github.io/ng-gtm-integration-sample/bootstrap-icons.a0e283a44c6f3530.woff2": "9d95f6fe35540b602284c9f2bfa67d2b464448f7",
+    "https://wodenwang820118.github.io/ng-gtm-integration-sample/chunk-AJRFZDJF.js": "8d8b5fd71cd7e8d0e806efa160dd2f6334f6c85a",
+    "https://wodenwang820118.github.io/ng-gtm-integration-sample/chunk-E44QJQ52.js": "3e4732c55a3765fe1e1f052f3fb1ba512270a336",
+    "https://wodenwang820118.github.io/ng-gtm-integration-sample/chunk-EFJRGLXM.js": "3b6171d5a7656d86cd9805f2ab15ffe348773328",
+    "https://wodenwang820118.github.io/ng-gtm-integration-sample/chunk-LZSNLSS6.js": "4c99de6e8e547566b2ae8dd32ac96b32e8715612",
+    "https://wodenwang820118.github.io/ng-gtm-integration-sample/chunk-NHHJLADF.js": "9d2ea9506c7a1c5d4b831f860ae90a1e78b5b3e8",
+    "https://wodenwang820118.github.io/ng-gtm-integration-sample/chunk-RJTPAGRS.js": "706da53dd6a4e000f340eb05439c591c24f56c34",
     "https://wodenwang820118.github.io/ng-gtm-integration-sample/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
-    "https://wodenwang820118.github.io/ng-gtm-integration-sample/index.html": "e7bc60b18fbb21d770db02b3fb5a71be0a36c9e0",
-    "https://wodenwang820118.github.io/ng-gtm-integration-sample/main.017ca886323f3511.js": "be64868269b4728388d1d0cbe91ce8f36ff19178",
+    "https://wodenwang820118.github.io/ng-gtm-integration-sample/index.html": "91e830a251ba2e27af14c272b713eee39dc9270b",
+    "https://wodenwang820118.github.io/ng-gtm-integration-sample/main-HPFYT2HN.js": "804d9a92aa2f620277c87c04f90b62f1bdb280c1",
     "https://wodenwang820118.github.io/ng-gtm-integration-sample/manifest.webmanifest": "41d0702f87a89fb9dae5fb0976855379c55179e1",
-    "https://wodenwang820118.github.io/ng-gtm-integration-sample/polyfills.a4c75c643fb76f53.js": "0a472fddb9338c22d7a574621a3644e76c36f746",
-    "https://wodenwang820118.github.io/ng-gtm-integration-sample/runtime.cf91b38731ec56c8.js": "003f3d064ec00b6570b0fc259fe9010d417825ce",
-    "https://wodenwang820118.github.io/ng-gtm-integration-sample/scripts.3e75d50128144df1.js": "d72da9ade03467f91c011aebc90808b70f6e9dbb",
-    "https://wodenwang820118.github.io/ng-gtm-integration-sample/styles.5f66a75bad71135d.css": "51fc5c45b5ef40369fcaa56d4c459884fce085c4"
+    "https://wodenwang820118.github.io/ng-gtm-integration-sample/polyfills-RT5I6R6G.js": "fe9f024576f21ff6314cf8f8332cde58b9a12416",
+    "https://wodenwang820118.github.io/ng-gtm-integration-sample/scripts-EEEIPNC3.js": "2318ded8c885787a1645385a82c1ca883c359034",
+    "https://wodenwang820118.github.io/ng-gtm-integration-sample/styles-ASBAHBCU.css": "c970b0eeccb21008aaf380ed40c923ece7f20d8f"
   },
   "navigationUrls": [
     {
