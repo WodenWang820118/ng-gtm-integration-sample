@@ -8,7 +8,7 @@
     "backend": "json-server --watch db.json",
     "build": "ng build --configuration production --base-href https://wodenwang820118.github.io/ng-gtm-integration-sample/browser",
     "build-file": "ng build --configuration production --base-href ./",
-    "build-github": "ng build --configuration production --base-href https://wodenwang820118.github.io/ng-gtm-integration-sample/ && ngh --dir=dist/ng-gtm-integration-sample",
+    "build-github": "ng build --configuration production --base-href https://wodenwang820118.github.io/ng-gtm-integration-sample/browser && ngh --dir=dist/ng-gtm-integration-sample/browser",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "bundle-report": "ng build --configuration production --source-map && source-map-explorer dist/ng-gtm-integration-sample/browser/*.js"
