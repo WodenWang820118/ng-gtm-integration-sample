@@ -10,7 +10,8 @@
     "build-file": "ng build --configuration production --base-href ./",
     "build-github": "ng build --configuration production --base-href https://wodenwang820118.github.io/ng-gtm-integration-sample/ && ngh --dir=dist/ng-gtm-integration-sample",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "bundle-report": "ng build --configuration production --source-map && source-map-explorer dist/ng-gtm-integration-sample/*.js"
   },
   "private": true,
   "dependencies": {
@@ -53,6 +54,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "shx": "^0.3.4",
+    "source-map-explorer": "^2.5.3",
     "typescript": "~5.2.2"
   }
 }
