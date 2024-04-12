@@ -6,9 +6,10 @@
     "start": "ng serve",
     "on-emulator": "ng serve --disable-host-check --host 0.0.0.0",
     "backend": "json-server --watch db.json",
-    "build": "ng build --configuration production --base-href https://wodenwang820118.github.io/ng-gtm-integration-sample/browser",
+    "build": "ng build --configuration production --base-href https://wodenwang820118.github.io/ng-gtm-integration-sample/browser --optimization --output-path=dist/ng-gtm-integration-sample",
     "build-file": "ng build --configuration production --base-href ./",
-    "build-github": "ng build --configuration production --base-href https://wodenwang820118.github.io/ng-gtm-integration-sample/browser && ngh --dir=dist/ng-gtm-integration-sample/browser",
+    "deploy": "ngh --dir=dist/ng-gtm-integration-sample/browser",
+    "build-github": "npm run build && npm run deploy",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "bundle-report": "ng build --configuration production --source-map && source-map-explorer dist/ng-gtm-integration-sample/browser/*.js"
