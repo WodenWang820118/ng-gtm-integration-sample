@@ -1,4 +1,4 @@
-import { CookieService } from './services/cookie/cookie.service';
+import { CookieService } from './shared/services/cookie/cookie.service';
 import {
   AfterViewChecked,
   Component,
@@ -8,14 +8,14 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { HeaderComponent } from './components/header/header.component';
-import { FooterComponent } from './components/footer/footer.component';
-import { DisclaimerComponent } from './components/disclaimer/disclaimer.component';
-import { AuthService } from './services/auth/auth.service';
+import { NavbarComponent } from './shared/components/navbar/navbar.component';
+import { HeaderComponent } from './shared/components/header/header.component';
+import { FooterComponent } from './shared/components/footer/footer.component';
+import { DisclaimerComponent } from './shared/components/disclaimer/disclaimer.component';
+import { AuthService } from './shared/services/auth/auth.service';
 import { Subject, first, take, tap } from 'rxjs';
-import { UrlTrackerService } from './services/url-tracker/url-tracker.service';
-import { LoadingService } from './services/loading/loading.service';
+import { UrlTrackerService } from './shared/services/url-tracker/url-tracker.service';
+import { LoadingService } from './shared/services/loading/loading.service';
 
 @Component({
   selector: 'app-root',
@@ -28,8 +28,19 @@ import { LoadingService } from './services/loading/loading.service';
     FooterComponent,
     DisclaimerComponent,
   ],
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  template: `
+    <app-navbar></app-navbar>
+    <header>
+      <app-header></app-header>
+    </header>
+    @defer (on viewport) {
+    <router-outlet></router-outlet>
+    <app-footer></app-footer>
+    <app-disclaimer></app-disclaimer>
+    } @placeholder {
+    <div #loadingDiv>Loading..</div>
+    }
+  `,
 })
 export class AppComponent implements OnInit, AfterViewChecked {
   title = 'ng-gtm-integration-sample';

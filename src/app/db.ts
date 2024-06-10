@@ -1,5 +1,5 @@
-import { JavascriptInterfaceService } from './services/javascript-interface/javascript-interface.service';
-import { EnvDetectorService } from './services/env-detector/env-detector.service';
+import { JavascriptInterfaceService } from './shared/services/javascript-interface/javascript-interface.service';
+import { EnvDetectorService } from './shared/services/env-detector/env-detector.service';
 import Dexie, { Table, liveQuery } from 'dexie';
 import { from, take, tap } from 'rxjs';
 
