@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormsModule,
@@ -19,36 +19,16 @@ import { NavigationService } from '../../../../shared/services/navigation/naviga
       id="main"
     >
       <div id="msg"></div>
-      <form [formGroup]="signInForm" id="signInForm" (ngSubmit)="login()">
-        <div class="mb-3">
-          <label for="login55" class="form-label">Username :</label>
-          <input
-            type="text"
-            class="form-control"
-            name="login"
-            id="login55"
-            formControlName="username"
-          />
-        </div>
-        <div class="mb-3">
-          <label for="password55" class="form-label">Password :</label>
-          <input
-            type="password"
-            class="form-control"
-            name="password"
-            id="password55"
-            formControlName="password"
-          />
-        </div>
-        <div class="mb-3">
-          <button class="btn btn-primary">Sign-in</button>
-        </div>
-      </form>
+      <div>
+        <button class="btn btn-primary" (click)="loginWithGoogle()">
+          Sign-in with Google
+        </button>
+      </div>
     </div>
   `,
   styles: [``],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   signInForm = this.fb.group({
     username: ['', Validators.required],
     password: ['', Validators.required],
@@ -59,29 +39,19 @@ export class LoginComponent {
     private navigationService: NavigationService
   ) {}
 
-  login() {
-    if (this.signInForm.invalid) {
-      alert('Please fill out the form completely.');
-      return;
-    }
+  ngOnInit(): void {
+    this.authService
+      .isLoggedIn()
+      .pipe(
+        tap((isLoggedIn) => {
+          console.log('isLoggedIn', isLoggedIn);
+          if (isLoggedIn) this.navigationService.navigateToHome();
+        })
+      )
+      .subscribe();
+  }
 
-    const username = this.signInForm.controls.username.value;
-    const password = this.signInForm.controls.password.value;
-
-    if (username && password) {
-      this.authService
-        .login(username, password)
-        .pipe(
-          tap((user) => {
-            take(1);
-            if (user) {
-              this.navigationService.navigateToHome();
-            } else {
-              alert('Login failed.');
-            }
-          })
-        )
-        .subscribe();
-    }
+  loginWithGoogle(): void {
+    this.authService.loginWithGoogle().subscribe();
   }
 }

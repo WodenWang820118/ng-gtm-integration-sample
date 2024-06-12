@@ -12,8 +12,7 @@ import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { DisclaimerComponent } from './shared/components/disclaimer/disclaimer.component';
-import { AuthService } from './shared/services/auth/auth.service';
-import { Subject, first, take, tap } from 'rxjs';
+import { Subject, first, tap } from 'rxjs';
 import { UrlTrackerService } from './shared/services/url-tracker/url-tracker.service';
 import { LoadingService } from './shared/services/loading/loading.service';
 
@@ -49,7 +48,6 @@ export class AppComponent implements OnInit, AfterViewChecked {
 
   constructor(
     private cookieService: CookieService,
-    private authService: AuthService,
     private urlTrackerService: UrlTrackerService,
     private loadingService: LoadingService
   ) {}
@@ -57,19 +55,6 @@ export class AppComponent implements OnInit, AfterViewChecked {
   ngOnInit() {
     // TODO: implement consent banner and monitor consent
     this.cookieService.createCookie('visit', 'true', 1);
-    this.authService
-      .checkIsLoggedIn()
-      .pipe(
-        take(1),
-        tap((isLoggedIn) => {
-          if (isLoggedIn) {
-            this.authService.setIsLoggedIn(true);
-          } else {
-            this.authService.setIsLoggedIn(false);
-          }
-        })
-      )
-      .subscribe();
 
     this.loadingService
       .getLoadingState()
