@@ -1,25 +1,30 @@
 import {
   Component,
   ElementRef,
+  OnInit,
   Type,
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { DestinationService } from '../../../../shared/services/destination/destination.service';
-import { UtilsService } from '../../../../shared/services/utils/utils.service';
-import { WindowSizeService } from '../../../../shared/services/window-size/window-size.service';
-import { NavigationService } from '../../../../shared/services/navigation/navigation.service';
+import { AsyncPipe, NgClass } from '@angular/common';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   FormsModule,
 } from '@angular/forms';
-import { SearchService } from '../../../../shared/services/search/search.service';
+import { take, tap } from 'rxjs';
 import { YouTubePlayerModule } from '@angular/youtube-player';
+import { NavigationService } from '../../../../shared/services/navigation/navigation.service';
+import { WindowSizeService } from '../../../../shared/services/window-size/window-size.service';
+import { UtilsService } from '../../../../shared/services/utils/utils.service';
+import { DestinationService } from '../../../../shared/services/destination/destination.service';
+import { SearchService } from '../../../../shared/services/search/search.service';
 import { YoutubeService } from '../../../../shared/services/youtube/youtube.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { AsyncPipe, NgClass } from '@angular/common';
+import { FirestoreCountryService } from '../../../../shared/services/firestore-country/firestore-country.service';
+import { AnalyticsService } from '../../../../shared/services/analytics/analytics.service';
+import { Destination } from '../../../../shared/models/destination.model';
 
 @Component({
   selector: 'app-destination',
@@ -35,8 +40,8 @@ import { AsyncPipe, NgClass } from '@angular/common';
   styleUrls: ['./destination.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class DestinationComponent {
-  destinations = this.searchService.searchResults$;
+export class DestinationComponent implements OnInit {
+  destinations: Destination[] = [];
   searchForm: FormGroup = new FormGroup({
     searchTerm: new FormControl(''),
   });
@@ -57,8 +62,76 @@ export class DestinationComponent {
     private navigationService: NavigationService,
     public searchService: SearchService,
     private youtubeService: YoutubeService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private firestoreCountryService: FirestoreCountryService,
+    private analyticsService: AnalyticsService
   ) {}
+
+  ngOnInit() {
+    this.firestoreCountryService
+      .getFirstDestinationsData()
+      .pipe(
+        take(1),
+        tap((destinations) => {
+          this.destinations = destinations;
+          this.trackViewItemList(destinations);
+        })
+      )
+      .subscribe();
+
+    this.searchService.searchResults$
+      .pipe(
+        tap((results) => {
+          this.destinations = results;
+        })
+      )
+      .subscribe();
+  }
+
+  getNextDestinations() {
+    this.firestoreCountryService
+      .getNextDestinationsData()
+      .pipe(
+        take(1),
+        tap((destinations) => {
+          this.destinations = destinations;
+          this.trackViewItemList(destinations);
+        })
+      )
+      .subscribe();
+  }
+
+  getPreviousDestinations() {
+    if (this.isPreviousDisabled()) return;
+    this.firestoreCountryService
+      .getPreviousDestinationsData()
+      .pipe(
+        take(1),
+        tap((destinations) => {
+          this.destinations = destinations;
+          this.trackViewItemList(destinations);
+        })
+      )
+      .subscribe();
+  }
+
+  trackViewItemList(destinations: Destination[]) {
+    this.analyticsService.trackEvent('view_item_list', {
+      ecommerce: {
+        items: destinations.map((destination) => ({
+          item_id: destination.id,
+          item_name: destination.title,
+          item_category: destination.title,
+          price: destination.price,
+          quantity: 1,
+        })),
+      },
+    });
+  }
+
+  isPreviousDisabled() {
+    return this.firestoreCountryService.getPreviousDocsStackLength() < 2;
+  }
 
   navigateToHome() {
     this.navigationService.navigateToHome();
@@ -80,7 +153,6 @@ export class DestinationComponent {
 
   onSubmit(f: FormGroup): void {
     const query = f.value.searchTerm;
-    this.searchService.search(query);
     this.navigateToSearchResults(query);
   }
 

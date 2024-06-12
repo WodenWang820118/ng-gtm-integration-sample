@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
-import { destinations } from '../destination/destinations';
 import Fuse from 'fuse.js';
 import { BehaviorSubject } from 'rxjs';
 import { AnalyticsService } from '../analytics/analytics.service';
+import { FirestoreCountryService } from '../firestore-country/firestore-country.service';
+import { Destination } from '../../models/destination.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SearchService {
-  private _destinations = [...destinations]; // Cache the original list
-  private _searchResults = new BehaviorSubject(this._destinations);
+  private _searchResults = new BehaviorSubject(
+    this.firestoreCountryService.getPreviousDocsStack()
+  );
   readonly searchResults$ = this._searchResults.asObservable();
 
   private options = {
@@ -18,27 +20,41 @@ export class SearchService {
     threshold: 0.2,
   };
 
-  constructor(private analyticsService: AnalyticsService) {}
+  constructor(
+    private analyticsService: AnalyticsService,
+    private firestoreCountryService: FirestoreCountryService
+  ) {}
 
   search(query: string): void {
     if (!query) {
-      this._searchResults.next(this._destinations);
+      this._searchResults.next(
+        this.firestoreCountryService.getPreviousDocsStack()
+      );
       return;
     }
 
     if (query == 'all') {
-      this._searchResults.next(this._destinations);
+      this._searchResults.next(
+        this.firestoreCountryService.getPreviousDocsStack()
+      );
       this.analyticsService.trackEvent('search', query);
       return;
     }
 
-    this.analyticsService.trackEvent('search', query);
-    const fuse = new Fuse(this._destinations, this.options);
-    const results = fuse.search(query).map((result) => result.item);
-    this._searchResults.next(results);
+    this.firestoreCountryService
+      .getSearchResultsData(query, 10)
+      .subscribe((destinations: Destination[]) => {
+        this.analyticsService.trackEvent('search', query);
+        const fuse = new Fuse(destinations, this.options);
+        const results = fuse.search(query).map((result) => result.item);
+        console.log(results);
+        this._searchResults.next(results);
+      });
   }
 
   resetSearch(): void {
-    this._searchResults.next(this._destinations);
+    this._searchResults.next(
+      this.firestoreCountryService.getPreviousDocsStack()
+    );
   }
 }

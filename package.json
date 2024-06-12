@@ -34,6 +34,7 @@
     "bootstrap": "^5.3.2",
     "bootstrap-icons": "^1.11.1",
     "dexie": "^3.2.4",
+    "firebase": "^10.12.2",
     "fuse.js": "^7.0.0",
     "json-server": "^0.17.4",
     "rxjs": "~7.8.0",

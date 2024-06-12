@@ -9,5 +9,4 @@ export interface Destination {
   imageHuge: string;
   price: number;
   description: string;
-  route: string;
 }

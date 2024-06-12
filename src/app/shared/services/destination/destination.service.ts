@@ -18,7 +18,6 @@ export class DestinationService {
     imageHuge: '',
     price: 0,
     description: '',
-    route: '',
   });
 
   constructor(private analyticsService: AnalyticsService) {

@@ -73,7 +73,7 @@ export class NavigationService {
   }
 
   navigateToDestinationResults(query: string) {
-    this.navigate('/destinations', {
+    this.navigate('product/destinations', {
       search_term: query,
     });
   }
