@@ -71,22 +71,6 @@ export class AnalyticsService {
   }
 
   trackPageViewECEvent(url: string): void {
-    if (url.includes('/destinations')) {
-      const items = destinations.map((destination) => ({
-        item_id: destination.id,
-        item_name: destination.title,
-        item_category: destination.title,
-        price: destination.price,
-        quantity: 1,
-      }));
-
-      this.trackEvent('view_item_list', {
-        ecommerce: {
-          items,
-        },
-      });
-    }
-
     if (url.includes('/checkout')) {
       this._checkoutOrders
         .pipe(

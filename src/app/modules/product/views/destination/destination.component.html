@@ -31,7 +31,7 @@
   <div id="destinationsVideos"></div>
   @defer (on viewport) {
   <div id="content-chooser">
-    @for (destination of destinations | async; track destination) {
+    @for (destination of destinations; track destination) {
     <div>
       <div class="page-header">
         <h2>
@@ -120,6 +120,30 @@
       </div>
     </div>
     }
+    <nav aria-label="Page navigation">
+      <ul class="pagination justify-content-center">
+        <li
+          class="page-item"
+          (click)="getPreviousDestinations()"
+          [class.disabled]="isPreviousDisabled()"
+          style="cursor: pointer"
+        >
+          <a
+            class="page-link"
+            tabindex="-1"
+            [attr.aria-disabled]="isPreviousDisabled()"
+            >Previous</a
+          >
+        </li>
+        <li
+          class="page-item"
+          (click)="getNextDestinations()"
+          style="cursor: pointer"
+        >
+          <a class="page-link">Next</a>
+        </li>
+      </ul>
+    </nav>
   </div>
   } @placeholder {
   <div>Loading..</div>
