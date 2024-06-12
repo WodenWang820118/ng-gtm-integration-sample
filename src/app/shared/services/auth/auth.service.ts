@@ -1,96 +1,77 @@
-import { BehaviorSubject, Observable, catchError, map, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import {
+  BehaviorSubject,
+  Observable,
+  catchError,
+  defer,
+  from,
+  map,
+  of,
+} from 'rxjs';
 import { Injectable } from '@angular/core';
 import { AnalyticsService } from '../analytics/analytics.service';
-
-interface User {
-  username: string;
-  password: string;
-}
+import { signInWithPopup, GoogleAuthProvider, User } from 'firebase/auth';
+import { auth } from '../../../firebase/auth';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:3000'; // for http mocking
-  private isLoggedIn = new BehaviorSubject<boolean>(false);
-  private readonly mockUsername = 'admin';
-  private readonly mockPassword = 'admin';
+  private user = new BehaviorSubject<User | undefined>(undefined);
 
-  constructor(
-    private http: HttpClient,
-    private analyticsService: AnalyticsService
-  ) {}
+  constructor(private analyticsService: AnalyticsService) {}
 
-  login(username: string, password: string): Observable<User | undefined> {
-    if (username === this.mockUsername && password === this.mockPassword) {
-      // If user is found, login is successful.
-      localStorage.setItem('user', JSON.stringify({ username, password }));
-      localStorage.setItem('isLoggedIn', 'true');
-      this.setIsLoggedIn(true);
-      this.analyticsService.trackEvent('login', {
-        method: 'username/password',
-      });
-      return of({ username, password });
-    } else {
-      console.log('User not found.');
-      return of(undefined);
-    }
+  loginWithGoogle() {
+    const provider = new GoogleAuthProvider();
+    return defer(() =>
+      from(
+        signInWithPopup(auth, provider)
+          .then((result) => {
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            const token = credential?.accessToken;
+            // The signed-in user info.
+            const user = result.user;
+            if (user) this.user.next(user);
+            // IdP data available using getAdditionalUserInfo(result)
+            // ...
+            this.analyticsService.trackEvent('login', { method: 'google' });
+          })
+          .catch((error) => {
+            // Handle Errors here.
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // The email of the user's account used.
+            const email = error.customData.email;
+            // The AuthCredential type that was used.
+            const credential = GoogleAuthProvider.credentialFromError(error);
+            // ...
+          })
+      )
+    ).pipe(
+      catchError((error) => {
+        console.error('loginWithGoogle error', error);
+        return of(undefined);
+      })
+    );
   }
 
-  // login(username: string, password: string): Observable<User | undefined> {
-  //   return this.http.get<User[]>(`${this.baseUrl}/users`).pipe(
-  //     map((users) => {
-  //       console.log('users', users);
-  //       const user = users.find(
-  //         (x) => x.username === username && x.password === password
-  //       );
-
-  //       if (user) {
-  //         // If user is found, login is successful.
-  //         localStorage.setItem('user', JSON.stringify(user));
-  //         localStorage.setItem('isLoggedIn', 'true');
-  //         this.setIsLoggedIn(true);
-  //         this.analyticsService.trackEvent('login', {
-  //           method: 'username/password',
-  //         });
-  //         return user;
-  //       } else {
-  //         console.log('User not found.');
-  //         return undefined;
-  //       }
-  //     }),
-  //     catchError((error) => {
-  //       // In case of error, login failed.
-  //       console.error(error.message);
-  //       return of(undefined);
-  //     })
-  //   );
-  // }
-
-  logout(): void {
-    // Logic for logout.
-    localStorage.removeItem('user');
-    localStorage.removeItem('isLoggedIn');
-    this.setIsLoggedIn(false);
-    this.analyticsService.trackEvent('logout', {});
+  isLoggedIn(): Observable<boolean> {
+    return this.user.pipe(map((user) => !!user));
   }
 
-  setIsLoggedIn(value: boolean) {
-    this.isLoggedIn.next(value);
+  getUser(): Observable<User | undefined> {
+    return this.user;
   }
 
-  getIsLoggedIn(): Observable<boolean> {
-    return this.isLoggedIn.asObservable();
-  }
-
-  checkIsLoggedIn() {
-    // Logic for checking if user is logged in.
-    const isLoggedIn = localStorage.getItem('isLoggedIn');
-    if (isLoggedIn) {
-      return of(true);
-    } else {
-      return of(false);
-    }
+  logout() {
+    this.user.next(undefined);
+    return defer(() =>
+      from(auth.signOut()).pipe(
+        catchError((error) => {
+          console.error('logout error', error);
+          return of(undefined);
+        })
+      )
+    );
   }
 }
