@@ -1,5 +1,9 @@
 import { ApplicationConfig, isDevMode } from '@angular/core';
-import { provideRouter, withHashLocation } from '@angular/router';
+import {
+  provideRouter,
+  withPreloading,
+  PreloadAllModules,
+} from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
@@ -8,7 +12,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes),
+    provideRouter(routes, withPreloading(PreloadAllModules)),
     provideHttpClient(),
     provideAnimationsAsync(),
     provideServiceWorker('ngsw-worker.js', {
