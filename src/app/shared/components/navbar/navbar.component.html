@@ -59,6 +59,15 @@
             >Admin</a
           >
         </li>
+        } @if ( (authService.isLoggedIn() | async) === true) {
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLinkActive="active"
+            (click)="navigateToAddData()"
+            >Add Data</a
+          >
+        </li>
         }
         <li class="nav-item">
           <a

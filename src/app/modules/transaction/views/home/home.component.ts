@@ -6,7 +6,7 @@ import { DisclaimerComponent } from '../../../../shared/components/disclaimer/di
 import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-transaction-home',
   standalone: true,
   imports: [
     HeaderComponent,

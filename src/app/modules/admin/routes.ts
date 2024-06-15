@@ -13,6 +13,13 @@ export const ADMIN_ROUTES: Routes = [
             (m) => m.DashboardComponent
           ),
       },
+      {
+        path: 'add-data',
+        loadComponent: () =>
+          import('./views/add-data/add-data.component').then(
+            (m) => m.AddDataComponent
+          ),
+      },
     ],
   },
 ];

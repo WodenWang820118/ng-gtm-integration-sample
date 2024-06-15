@@ -68,6 +68,10 @@ export class NavigationService {
     this.navigate('admin/dashboard');
   }
 
+  navigateToAddData() {
+    this.navigate('admin/add-data');
+  }
+
   navigateToThankYou() {
     this.navigate('transaction/thankyou');
   }
