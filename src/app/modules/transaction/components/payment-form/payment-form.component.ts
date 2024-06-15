@@ -66,6 +66,17 @@ import { AsyncPipe, NgClass } from '@angular/common';
       </form>
     </div>
   `,
+  styles: [
+    `
+      #paymentMethod label {
+        width: 100%;
+        color: steelblue;
+        text-transform: lowercase;
+        font-variant: small-caps;
+        font-size: 16px;
+      }
+    `,
+  ],
 })
 export class PaymentFormComponent implements OnInit {
   paymentForm!: FormGroup;

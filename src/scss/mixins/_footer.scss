@@ -1,0 +1,12 @@
+@media screen and (max-width: $mobile-max-width) {
+  footer .container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  footer #newsletter-form,
+  footer #externalLinks {
+    float: none !important;
+    width: 100% !important;
+  }
+}

@@ -51,6 +51,10 @@ export class NavbarComponent {
     this.navigationService.navigateToLogin();
   }
 
+  navigateToAdmin() {
+    this.navigationService.navigateToAdmin();
+  }
+
   navigateToBasket() {
     this.navigationService.navigateToBasket();
   }

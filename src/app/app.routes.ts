@@ -16,5 +16,10 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./modules/transaction/routes').then((m) => m.TRANSACTION_ROUTES),
   },
+  {
+    path: 'admin',
+    loadChildren: () =>
+      import('./modules/admin/routes').then((m) => m.ADMIN_ROUTES),
+  },
   // { path: '**', redirectTo: '' },
 ];

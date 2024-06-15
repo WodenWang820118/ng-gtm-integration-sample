@@ -18,6 +18,7 @@ import { CommonModule } from '@angular/common';
       header {
         padding: 75px 0 15px 0;
         margin-bottom: 30px;
+        background: #c0d0e5;
       }
 
       header h1 {

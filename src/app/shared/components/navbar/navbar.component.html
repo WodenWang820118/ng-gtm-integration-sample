@@ -50,6 +50,16 @@
           >
           }
         </li>
+        @if ( (authService.isLoggedIn() | async) === true) {
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLinkActive="active"
+            (click)="navigateToAdmin()"
+            >Admin</a
+          >
+        </li>
+        }
         <li class="nav-item">
           <a
             class="nav-link"

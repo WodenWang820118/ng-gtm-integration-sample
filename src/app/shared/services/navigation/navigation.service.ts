@@ -64,6 +64,10 @@ export class NavigationService {
     this.navigate('/login');
   }
 
+  navigateToAdmin() {
+    this.navigate('admin/dashboard');
+  }
+
   navigateToThankYou() {
     this.navigate('transaction/thankyou');
   }

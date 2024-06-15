@@ -35,7 +35,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
       <div class="row rwd-mobile" style="gap: 1rem">
         <div class="p-3 col text-center">
           <h3>
-            <fa-icon [icon]="faHome" size="xs"></fa-icon>
             <i class="fas fa-home" style="vertical-align: middle"></i> Luxurious
             Accommodations
           </h3>
@@ -47,7 +46,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
         </div>
         <div class="p-3 col text-center">
           <h3>
-            <fa-icon [icon]="faGlobe" size="xs"></fa-icon>
             <i class="fas fa-globe" style="vertical-align: middle"></i>
             Incredible Locations
           </h3>
@@ -86,8 +84,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit {
-  faHome = faHome;
-  faGlobe = faGlobe;
   faTag = faTag;
   faCookie = faCookie;
   showCookieModal!: boolean;

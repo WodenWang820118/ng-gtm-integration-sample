@@ -82,6 +82,10 @@ import { destinations } from '../../../../shared/services/destination/destinatio
           height: 300px;
         }
       }
+
+      h4 {
+        color: white;
+      }
     `,
   ],
 })
