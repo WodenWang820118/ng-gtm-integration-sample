@@ -77,6 +77,19 @@ import { AsyncPipe, NgClass } from '@angular/common';
         font-size: 20px;
         padding: 10px;
       }
+
+      #shippingForm label {
+        width: 100%;
+        color: steelblue;
+        text-transform: lowercase;
+        font-variant: small-caps;
+        font-size: 16px;
+      }
+
+      #shippingForm input,
+      #shippingForm textarea {
+        width: 100%;
+      }
     `,
   ],
 })

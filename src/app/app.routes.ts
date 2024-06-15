@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
-    path: '',
+    path: 'home',
     loadChildren: () =>
       import('./modules/home/routes').then((m) => m.HOME_ROUTES),
   },
@@ -16,5 +16,10 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./modules/transaction/routes').then((m) => m.TRANSACTION_ROUTES),
   },
-  // { path: '**', redirectTo: '' },
+  {
+    path: 'admin',
+    loadChildren: () =>
+      import('./modules/admin/routes').then((m) => m.ADMIN_ROUTES),
+  },
+  { path: '**', redirectTo: 'home' },
 ];

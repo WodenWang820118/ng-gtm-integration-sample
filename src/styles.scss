@@ -1,32 +1,26 @@
-html,
-body {
-  height: 100%;
-}
+@import "scss/variables";
 
-body {
-  margin: 0;
-  padding: 0;
-  background: #f5f5f5 !important;
-}
+/* fonts-icon */
+@import "scss/fonts/fontawesome/scss/fontawesome";
+@import "scss/fonts/feather/iconfont";
 
-header,
-footer {
-  background: #c0d0e5;
-}
+@import "scss/general";
+@import "scss/generic";
+@import "scss/mixins/function";
+@import "scss/mixins/footer";
+@import "scss/mixins/main";
+@import "scss/mixins/details";
 
-#shippingForm label,
-#paymentMethod label {
-  width: 100%;
-  color: steelblue;
-  text-transform: lowercase;
-  font-variant: small-caps;
-  font-size: 16px;
-}
+/* important element */
+@import "scss/menu/menu-lite";
 
-#shippingForm input,
-#shippingForm textarea {
-  width: 100%;
-}
+/* basic elements */
+@import "scss/theme-elements/theme-elements";
+
+/* third party modules style*/
+@import "scss/plugins/plugins";
+
+@import "scss/custom";
 
 .hidden {
   display: none;

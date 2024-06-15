@@ -1,5 +1,3 @@
-@import "../../../../../variables.scss";
-
 .all-destinations {
   position: absolute;
   right: 90px;
@@ -34,24 +32,6 @@
   margin: 0;
   background: #e9e9e9;
   padding: 10px 6px;
-}
-
-@media screen and (max-width: $mobile-max-width) {
-  .rwd-mobile {
-    display: flex !important;
-    flex-direction: column !important;
-  }
-
-  .rwd-mobile-img {
-    img {
-      display: none;
-    }
-  }
-
-  .rwd-all-destinations {
-    position: relative;
-    right: 0;
-  }
 }
 
 .img-main {
