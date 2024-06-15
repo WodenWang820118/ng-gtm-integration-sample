@@ -1,61 +1,42 @@
-import { CookieService } from './shared/services/cookie/cookie.service';
 import {
+  AfterContentInit,
   AfterViewChecked,
   Component,
   ElementRef,
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { NavbarComponent } from './shared/components/navbar/navbar.component';
-import { HeaderComponent } from './shared/components/header/header.component';
-import { FooterComponent } from './shared/components/footer/footer.component';
-import { DisclaimerComponent } from './shared/components/disclaimer/disclaimer.component';
 import { Subject, first, tap } from 'rxjs';
 import { UrlTrackerService } from './shared/services/url-tracker/url-tracker.service';
 import { LoadingService } from './shared/services/loading/loading.service';
+import { StyleLoadService } from './shared/services/style-load/style-load.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterOutlet,
-    NavbarComponent,
-    HeaderComponent,
-    FooterComponent,
-    DisclaimerComponent,
-  ],
+  imports: [RouterOutlet],
   template: `
-    <app-navbar></app-navbar>
-    <header>
-      <app-header></app-header>
-    </header>
-    @defer (on viewport) {
+    @defer (on immediate) {
     <router-outlet></router-outlet>
-    <app-footer></app-footer>
-    <app-disclaimer></app-disclaimer>
-    } @placeholder {
-    <div #loadingDiv>Loading..</div>
     }
   `,
 })
-export class AppComponent implements OnInit, AfterViewChecked {
+export class AppComponent
+  implements OnInit, AfterContentInit, AfterViewChecked
+{
   title = 'ng-gtm-integration-sample';
   @ViewChild('loadingDiv', { static: false }) loadingDiv!: ElementRef;
   private destroy$ = new Subject<void>();
 
   constructor(
-    private cookieService: CookieService,
     private urlTrackerService: UrlTrackerService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private styleLoadService: StyleLoadService
   ) {}
 
   ngOnInit() {
-    // TODO: implement consent banner and monitor consent
-    this.cookieService.createCookie('visit', 'true', 1);
-
+    this.styleLoadService.appendAllStyles();
     this.loadingService
       .getLoadingState()
       .pipe(
@@ -70,6 +51,10 @@ export class AppComponent implements OnInit, AfterViewChecked {
       )
       .subscribe();
     this.urlTrackerService.initializeUrlTracking();
+  }
+
+  ngAfterContentInit() {
+    window.onload = () => {};
   }
 
   ngAfterViewChecked() {

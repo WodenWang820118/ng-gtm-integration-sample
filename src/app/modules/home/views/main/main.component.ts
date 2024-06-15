@@ -1,12 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CarouselComponent } from '../../components/carousel/carousel.component';
 import { DisclaimerComponent } from '../../../../shared/components/disclaimer/disclaimer.component';
-import {
-  faHome,
-  faGlobe,
-  faTag,
-  faCookie,
-} from '@fortawesome/free-solid-svg-icons';
+import { faTag, faCookie } from '@fortawesome/free-solid-svg-icons';
 import { NavigationService } from '../../../../shared/services/navigation/navigation.service';
 import { CookieConsentComponent } from '../../../../shared/components/cookie-consent/cookie-consent.component';
 import { ConsentService } from '../../../../shared/services/consent/consent.service';
@@ -27,7 +22,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
         <app-carousel></app-carousel>
       </div>
       <div id="viewDestination">
-        <a (click)="navigateToDestinations()" class="btn btn-primary btn-large">
+        <a (click)="navigateToDestinations()" class="btn btn-primary">
           <h2>View Destinations</h2>
         </a>
       </div>

@@ -2,13 +2,9 @@ import { JavascriptInterfaceService } from './shared/services/javascript-interfa
 import { EnvDetectorService } from './shared/services/env-detector/env-detector.service';
 import Dexie, { Table, liveQuery } from 'dexie';
 import { from, take, tap } from 'rxjs';
+import { DataLayerEvent } from './shared/models/data-layer-event.model';
 
-export interface DataLayerEvent {
-  id?: string;
-  eventName: string;
-  eventData: any;
-  timestamp: number;
-}
+//FIXME: bugs cannot push events
 
 export class DataLayerDatabase extends Dexie {
   events!: Table<DataLayerEvent, string>;

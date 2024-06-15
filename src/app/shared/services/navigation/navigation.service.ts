@@ -45,7 +45,7 @@ export class NavigationService {
   }
 
   navigateToHome() {
-    this.navigate('/');
+    this.navigate('/home');
   }
 
   navigateToDestinations() {
@@ -61,7 +61,7 @@ export class NavigationService {
   }
 
   navigateToLogin() {
-    this.navigate('/login');
+    this.navigate('/home/login');
   }
 
   navigateToAdmin() {
