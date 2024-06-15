@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AnalyticsEventTrackerFactory } from './analytics-factory';
-import { BehaviorSubject, of, take, tap, defer, from, catchError } from 'rxjs';
+import { BehaviorSubject, of, take, tap, from } from 'rxjs';
 import { Order } from '../../models/order.model';
 import { JavascriptInterfaceService } from '../javascript-interface/javascript-interface.service';
 import { v4 as uuidv4 } from 'uuid';

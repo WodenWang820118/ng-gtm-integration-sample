@@ -4,14 +4,12 @@ import Dexie, { Table, liveQuery } from 'dexie';
 import { from, take, tap } from 'rxjs';
 import { DataLayerEvent } from './shared/models/data-layer-event.model';
 
-//FIXME: bugs cannot push events
-
 export class DataLayerDatabase extends Dexie {
   events!: Table<DataLayerEvent, string>;
   javascriptInterfaceService: JavascriptInterfaceService;
   envDetectorService: EnvDetectorService;
   constructor() {
-    super('ngdexieliveQuery');
+    super('ng-gtm-integration-events');
     this.version(3).stores({
       events: '++id, eventName, eventData, timestamp',
     });
