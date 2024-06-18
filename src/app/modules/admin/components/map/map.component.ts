@@ -4,7 +4,11 @@ import * as am5map from '@amcharts/amcharts5/map';
 import am5geodata_worldLow from '@amcharts/amcharts5-geodata/worldLow';
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 import am5themes_Dark from '@amcharts/amcharts5/themes/Dark';
-import { geojson } from './geojson';
+import { FirestoreCountryService } from '../../../../shared/services/firestore-country/firestore-country.service';
+import { take, tap } from 'rxjs';
+import { Destination } from 'src/app/shared/models/destination.model';
+
+// TODO: should have a button to refresh the map and fetch the latest data from Firestore
 
 @Component({
   selector: 'app-map',
@@ -13,9 +17,50 @@ import { geojson } from './geojson';
   styles: [``],
 })
 export class MapComponent implements OnInit {
-  constructor() {}
+  destinations: Destination[] = [];
+  constructor(private firestoreCountryService: FirestoreCountryService) {}
 
   ngOnInit(): void {
+    this.firestoreCountryService
+      .getAllDestinationsData()
+      .pipe(
+        take(1),
+        tap((data) => {
+          if (data) {
+            this.destinations = data;
+            const geoJsonData = this.destinations.map((destination) =>
+              this.transformDestinationToGeoJson(destination)
+            );
+            const geoJsonFeatureData: GeoJSON.GeoJSON = {
+              type: 'FeatureCollection',
+              features: geoJsonData,
+            };
+            this.initializeMap(geoJsonFeatureData);
+          }
+        })
+      )
+      .subscribe();
+  }
+
+  transformDestinationToGeoJson(
+    destination: Destination
+  ): GeoJSON.Feature<GeoJSON.Geometry, GeoJSON.GeoJsonProperties> {
+    const country = destination.country;
+    const name = destination.title;
+    return {
+      type: 'Feature',
+      properties: {
+        country: country,
+        name: name,
+      },
+      geometry: {
+        type: 'Point',
+        coordinates: [destination.longitude, destination.latitude],
+      },
+    };
+  }
+
+  initializeMap(geoJsonCollection: GeoJSON.GeoJSON) {
     let root = am5.Root.new('chartdiv');
 
     root.setThemes([am5themes_Animated.new(root), am5themes_Dark.new(root)]);
@@ -46,7 +91,7 @@ export class MapComponent implements OnInit {
 
     let pointSeries = chart.series.push(
       am5map.MapPointSeries.new(root, {
-        geoJSON: geojson,
+        geoJSON: geoJsonCollection,
       })
     );
 

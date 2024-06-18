@@ -7,6 +7,7 @@ import {
   limit,
   orderBy,
   query,
+  QueryDocumentSnapshot,
   QuerySnapshot,
   startAfter,
   startAt,
@@ -22,19 +23,54 @@ import {
   map,
   switchMap,
   Observable,
+  take,
 } from 'rxjs';
 import { FirebaseStorageService } from '../firebase-storage/firebase-storage.service';
 import { Destination } from '../../models/destination.model';
+import { IndexdbCountryService } from '../indexeddb-country/indexeddb-country.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FirestoreCountryService {
-  lastVisibleDocs = new BehaviorSubject<any | null>(null);
-  previousDocsStack: any[] = [];
+  lastVisibleDocs = new BehaviorSubject<QueryDocumentSnapshot<
+    DocumentData,
+    DocumentData
+  > | null>(null);
+  previousDocsStack: QueryDocumentSnapshot<DocumentData, DocumentData>[] = [];
+  db: any;
 
-  constructor(private firebaseStorageService: FirebaseStorageService) {}
+  constructor(
+    private firebaseStorageService: FirebaseStorageService,
+    private indexeddbCountryService: IndexdbCountryService
+  ) {}
 
+  getAllDestinationsData(): Observable<Destination[]> {
+    return this.indexeddbCountryService.getAllDestinations().pipe(
+      switchMap((destinations) => {
+        if (destinations && destinations.length > 0) {
+          return of(destinations);
+        } else {
+          return this.fetchDestinations(() => this.getAllDestinations()).pipe(
+            tap((data) => {
+              if (data && data.length > 0)
+                this.indexeddbCountryService
+                  .addFeatureDestinations(data)
+                  .pipe(
+                    take(1),
+                    tap(() => {
+                      console.log('Added destinations to indexedDB');
+                    })
+                  )
+                  .subscribe();
+            })
+          );
+        }
+      })
+    );
+  }
+
+  // TODO: cache the data locally
   getFirstDestinationsData(queryLimit = 2) {
     return this.fetchDestinations(() => this.getFirstDestinations(queryLimit));
   }
@@ -50,6 +86,12 @@ export class FirestoreCountryService {
   getSearchResultsData(searchQuery: string, queryLimit = 2) {
     return this.fetchDestinations(() =>
       this.getSearchResults(searchQuery, queryLimit)
+    );
+  }
+
+  private getAllDestinations() {
+    return defer(() =>
+      from(getDocs(query(collection(firestore, 'countries'))))
     );
   }
 
@@ -153,10 +195,12 @@ export class FirestoreCountryService {
 
   private fetchDestinations(
     fetchMethod: () => Observable<QuerySnapshot<DocumentData, DocumentData>>
-  ) {
+  ): Observable<Destination[]> {
     return fetchMethod().pipe(
       switchMap((documents) => {
-        const data = documents.docs.map((doc) => doc.data()) as Destination[];
+        const data = documents.docs.map((doc) => {
+          return { ...doc.data(), id: doc.id };
+        }) as Destination[];
         const destinationObservables = data.map((document) => {
           return forkJoin({
             image1: this.firebaseStorageService.getImage(document['image1']),

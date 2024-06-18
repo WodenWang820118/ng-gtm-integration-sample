@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import Fuse from 'fuse.js';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, take, tap } from 'rxjs';
 import { AnalyticsService } from '../analytics/analytics.service';
 import { FirestoreCountryService } from '../firestore-country/firestore-country.service';
 import { Destination } from '../../models/destination.model';
@@ -9,16 +8,8 @@ import { Destination } from '../../models/destination.model';
   providedIn: 'root',
 })
 export class SearchService {
-  private _searchResults = new BehaviorSubject(
-    this.firestoreCountryService.getPreviousDocsStack()
-  );
+  private _searchResults = new BehaviorSubject([] as Destination[]);
   readonly searchResults$ = this._searchResults.asObservable();
-
-  private options = {
-    includeScore: true,
-    keys: ['title', 'smallTitle', 'description'],
-    threshold: 0.2,
-  };
 
   constructor(
     private analyticsService: AnalyticsService,
@@ -26,35 +17,52 @@ export class SearchService {
   ) {}
 
   search(query: string): void {
-    if (!query) {
-      this._searchResults.next(
-        this.firestoreCountryService.getPreviousDocsStack()
-      );
-      return;
-    }
+    switch (query) {
+      case '':
+        this.firestoreCountryService
+          .getPreviousDestinationsData()
+          .pipe(
+            take(1),
+            tap((data) => {
+              this._searchResults.next(data);
+            })
+          )
+          .subscribe();
+        break;
 
-    if (query == 'all') {
-      this._searchResults.next(
-        this.firestoreCountryService.getPreviousDocsStack()
-      );
-      this.analyticsService.trackEvent('search', query);
-      return;
-    }
-
-    this.firestoreCountryService
-      .getSearchResultsData(query, 10)
-      .subscribe((destinations: Destination[]) => {
+      case 'all':
+        this.firestoreCountryService
+          .getAllDestinationsData()
+          .pipe(
+            take(1),
+            tap((data) => {
+              this._searchResults.next(data);
+            })
+          )
+          .subscribe();
         this.analyticsService.trackEvent('search', query);
-        const fuse = new Fuse(destinations, this.options);
-        const results = fuse.search(query).map((result) => result.item);
-        console.log(results);
-        this._searchResults.next(results);
-      });
+        break;
+
+      default:
+        this.firestoreCountryService
+          .getSearchResultsData(query, 10)
+          .subscribe((destinations: Destination[]) => {
+            this.analyticsService.trackEvent('search', query);
+            this._searchResults.next(destinations);
+          });
+        break;
+    }
   }
 
   resetSearch(): void {
-    this._searchResults.next(
-      this.firestoreCountryService.getPreviousDocsStack()
-    );
+    this.firestoreCountryService
+      .getPreviousDestinationsData()
+      .pipe(
+        take(1),
+        tap((data) => {
+          this._searchResults.next(data);
+        })
+      )
+      .subscribe();
   }
 }

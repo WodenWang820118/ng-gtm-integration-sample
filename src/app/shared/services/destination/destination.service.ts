@@ -9,6 +9,11 @@ import { AnalyticsService } from '../analytics/analytics.service';
 export class DestinationService {
   private destinationSource = new BehaviorSubject<Destination>({
     id: '',
+    country: '',
+    city: '',
+    description: '',
+    latitude: 0,
+    longitude: 0,
     title: '',
     smallTitle: '',
     image1: '',
@@ -21,7 +26,6 @@ export class DestinationService {
     imageBigAuthorInfo: '',
     video: '',
     price: 0,
-    description: '',
   });
 
   constructor(private analyticsService: AnalyticsService) {
@@ -43,6 +47,7 @@ export class DestinationService {
     this.destinationSource.next(destination);
     localStorage.setItem('destination', JSON.stringify(destination));
     this.analyticsService.trackEvent('view_item', destination);
+    this.trackSelectItem(destination);
   }
 
   trackSelectItem(destination: any): void {

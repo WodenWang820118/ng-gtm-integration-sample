@@ -16,11 +16,7 @@ import { StyleLoadService } from './shared/services/style-load/style-load.servic
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet],
-  template: `
-    @defer (on immediate) {
-    <router-outlet></router-outlet>
-    }
-  `,
+  template: ` <router-outlet></router-outlet> `,
 })
 export class AppComponent
   implements OnInit, AfterContentInit, AfterViewChecked

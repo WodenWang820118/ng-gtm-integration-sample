@@ -5,9 +5,9 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import countries from 'world-countries';
 import { latitudeValidator, longitudeValidator } from './validators';
 import { FirebaseDestinationUploadService } from '../../../../shared/services/firebase-destination-upload/firebase-destination-upload.service';
+import { CountriesDataService } from '../../../../shared/services/countries-data/countries-data.service';
 
 @Component({
   selector: 'app-add-data',
@@ -17,7 +17,7 @@ import { FirebaseDestinationUploadService } from '../../../../shared/services/fi
   styles: [``],
 })
 export class AddDataComponent {
-  countries = countries;
+  countries!: any[];
   destinationForm = this.fb.group({
     country: ['', Validators.required],
     city: ['', Validators.required],
@@ -27,10 +27,16 @@ export class AddDataComponent {
   });
   constructor(
     private fb: FormBuilder,
+    private countriesDataService: CountriesDataService,
     private firebaseDestinationUploadService: FirebaseDestinationUploadService
-  ) {}
+  ) {
+    this.countriesDataService.getCountries().subscribe((data: any[]) => {
+      this.countries = data;
+    });
+  }
 
   addDestination() {
+    // TODO: Implement this method
     if (this.destinationForm.invalid) {
       console.log('Invalid form');
       console.log(this.destinationForm.value);

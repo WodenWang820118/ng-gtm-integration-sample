@@ -1,5 +1,10 @@
 export interface Destination {
   id: string;
+  country: string;
+  city: string;
+  latitude: number;
+  longitude: number;
+  description: string;
   title: string;
   smallTitle: string;
   image1: string;
@@ -12,5 +17,4 @@ export interface Destination {
   imageBigAuthorInfo: string;
   price: number;
   video: string;
-  description: string;
 }
