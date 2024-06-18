@@ -1,24 +1,43 @@
 import { Injectable } from '@angular/core';
 import { AnalyticsEventTrackerFactory } from './analytics-factory';
-import { BehaviorSubject, of, take, tap, from } from 'rxjs';
+import { BehaviorSubject, of, take, tap, from, defer } from 'rxjs';
 import { Order } from '../../models/order.model';
 import { JavascriptInterfaceService } from '../javascript-interface/javascript-interface.service';
 import { v4 as uuidv4 } from 'uuid';
 import { DataLayerEvent } from '../../models/data-layer-event.model';
-import { db } from '../../../db';
 @Injectable({
   providedIn: 'root',
 })
 export class AnalyticsService {
   private _checkoutOrders = new BehaviorSubject<Order[]>([]);
+  private db: any;
 
   constructor(
     private analyticsEventTrackerFactory: AnalyticsEventTrackerFactory,
     private javascriptInterfaceService: JavascriptInterfaceService
   ) {
-    window.addEventListener('online', () => this.syncDataLayerEvents());
-    window.dataLayer = window.dataLayer || [];
     this.loadInitialData();
+    this.initializeIndexedDB()
+      .pipe(
+        tap(() => {
+          if (this.db) {
+            window.dataLayer = window.dataLayer || [];
+            window.addEventListener('online', () => this.syncDataLayerEvents());
+          }
+        })
+      )
+      .subscribe();
+  }
+
+  private initializeIndexedDB() {
+    return defer(() => {
+      return from(import('../../../db')).pipe(
+        take(1),
+        tap((module) => {
+          this.db = module.db;
+        })
+      );
+    });
   }
 
   saveDataLayerEvent(eventName: string, eventData: any) {
@@ -28,7 +47,7 @@ export class AnalyticsService {
       const id = uuidv4();
       const timestamp = new Date().getTime();
       const event: DataLayerEvent = { id, eventName, eventData, timestamp };
-      return from(db.events.add(event)).pipe(
+      return from(this.db.events.add(event)).pipe(
         tap(() => {
           console.log('Event saved to IndexedDB');
         })
@@ -56,7 +75,7 @@ export class AnalyticsService {
 
   private syncDataLayerEvents() {
     console.log('Syncing events from IndexedDB');
-    db.syncDataLayerEvents().subscribe();
+    this.db.syncDataLayerEvents().subscribe();
   }
 
   trackEvent(eventName: string, eventData: any) {

@@ -9,9 +9,9 @@ export class DataLayerDatabase extends Dexie {
   javascriptInterfaceService: JavascriptInterfaceService;
   envDetectorService: EnvDetectorService;
   constructor() {
-    super('ng-gtm-integration-events');
+    super('ng-gtm-integration');
     this.version(3).stores({
-      events: '++id, eventName, eventData, timestamp',
+      events: '++id, eventName',
     });
     this.envDetectorService = new EnvDetectorService();
     this.javascriptInterfaceService = new JavascriptInterfaceService(
