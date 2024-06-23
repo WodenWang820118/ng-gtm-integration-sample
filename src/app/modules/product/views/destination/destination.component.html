@@ -1,0 +1,151 @@
+<div id="destination_filters">
+  <div class="container">
+    <div id="choix_categories" class="">
+      <a (click)="navigateToSearchResults('all')" class="btn btn-link"
+        >All Destination</a
+      >
+      <a (click)="navigateToSearchResults('islands')" class="btn btn-link"
+        >Islands in the sun</a
+      >
+    </div>
+    <form
+      [formGroup]="searchForm"
+      id="search_destination"
+      (ngSubmit)="onSubmit(searchForm)"
+    >
+      <input
+        formControlName="searchTerm"
+        type="search"
+        class="form-control"
+        placeholder="Destination..."
+      />
+      @if (searchForm.get('searchTerm')?.value) {
+      <button type="submit" class="btn btn-light ms-2">OK</button>
+      } @else {
+      <button type="submit" class="btn btn-light ms-2" disabled>OK</button>
+      }
+    </form>
+  </div>
+</div>
+<div class="container" id="destinations">
+  <div id="destinationsVideos"></div>
+  @defer (on viewport) {
+  <div id="content-chooser">
+    @for (destination of destinations; track destination) {
+    <div>
+      <div class="page-header">
+        <h3>
+          {{ destination.title }} <small>{{ destination.smallTitle }} </small>
+        </h3>
+      </div>
+      <div class="d-flex flex-row justify-content-star mb-3">
+        @if (((windowSizeService.width$ | async) ?? 0) > 480) {
+        <div class="col-md-3">
+          <img src="{{ destination.image1 }}" class="img-thumbnail" alt="" />
+          <div
+            class="author"
+            [innerHTML]="authorInforByPassed(destination.image1AuthorInfo)"
+          ></div>
+        </div>
+        } @if (((windowSizeService.width$ | async) ?? 0) > 480) {
+        <div class="col-md-3">
+          <img src="{{ destination.image2 }}" class="img-thumbnail" alt="" />
+          <div
+            class="author"
+            [innerHTML]="authorInforByPassed(destination.image2AuthorInfo)"
+          ></div>
+        </div>
+        } @if (((windowSizeService.width$ | async) ?? 0) > 480) {
+        <div class="col-md-3">
+          <img src="{{ destination.image3 }}" class="img-thumbnail" alt="" />
+          <div
+            class="author"
+            [innerHTML]="authorInforByPassed(destination.image3AuthorInfo)"
+          ></div>
+        </div>
+        } @if (((windowSizeService.width$ | async) ?? 0) <= 480) {
+        <div class="col-6">
+          <img src="{{ destination.image3 }}" class="img-thumbnail" alt="" />
+          <div
+            class="author"
+            [innerHTML]="authorInforByPassed(destination.image3AuthorInfo)"
+          ></div>
+        </div>
+        }
+        <div class="col-md-3">
+          <h3>{{ destination.title }}</h3>
+          <div style="text-align: justify">
+            {{ utilsService.truncateText(destination.description, 100) }}
+          </div>
+          <div class="mt-2">
+            <a
+              class="btn btn-primary"
+              (click)="goToDetails(destination); selectItem(destination)"
+              >Details</a
+            >
+            <a
+              class="btn btn-primary videos mx-2"
+              data-name="{{ destination.title.toLowerCase() }}"
+              (click)="showModal(destination.video)"
+              >Video</a
+            >
+            @if (videoId === getVideoId(destination.video)) {
+            <div
+              #ytPlayerModal
+              id="yt-player-modal"
+              [ngClass]="{
+                'show-modal': showVideoPlayer,
+                'hide-modal': !showVideoPlayer
+              }"
+              class="modal rwd-mobile"
+            >
+              <!-- Modal content -->
+              <div class="modal-content">
+                <youtube-player
+                  #player
+                  [id]="'yt-player-' + videoId"
+                  class="video-player"
+                  [videoId]="videoId"
+                  [playerVars]="playerVars"
+                  (stateChange)="onStateChange($event)"
+                  disablePlaceholder="true"
+                  placeholderButtonLabel="destination intro video"
+                />
+                <span class="close" (click)="closeModal()">&times;</span>
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+    <nav aria-label="Page navigation">
+      <ul class="pagination justify-content-center">
+        <li
+          class="page-item"
+          (click)="getPreviousDestinations()"
+          [class.disabled]="isPreviousDisabled()"
+          style="cursor: pointer"
+        >
+          <a
+            class="page-link"
+            tabindex="-1"
+            [attr.aria-disabled]="isPreviousDisabled()"
+            >Previous</a
+          >
+        </li>
+        <li
+          class="page-item"
+          (click)="getNextDestinations()"
+          style="cursor: pointer"
+        >
+          <a class="page-link">Next</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  } @placeholder {
+  <div>Loading..</div>
+  }
+</div>

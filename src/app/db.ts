@@ -1,23 +1,17 @@
-import { JavascriptInterfaceService } from './services/javascript-interface/javascript-interface.service';
-import { EnvDetectorService } from './services/env-detector/env-detector.service';
+import { JavascriptInterfaceService } from './shared/services/javascript-interface/javascript-interface.service';
+import { EnvDetectorService } from './shared/services/env-detector/env-detector.service';
 import Dexie, { Table, liveQuery } from 'dexie';
 import { from, take, tap } from 'rxjs';
-
-export interface DataLayerEvent {
-  id?: string;
-  eventName: string;
-  eventData: any;
-  timestamp: number;
-}
+import { DataLayerEvent } from './shared/models/data-layer-event.model';
 
 export class DataLayerDatabase extends Dexie {
   events!: Table<DataLayerEvent, string>;
   javascriptInterfaceService: JavascriptInterfaceService;
   envDetectorService: EnvDetectorService;
   constructor() {
-    super('ngdexieliveQuery');
+    super('ng-gtm-integration');
     this.version(3).stores({
-      events: '++id, eventName, eventData, timestamp',
+      events: '++id, eventName',
     });
     this.envDetectorService = new EnvDetectorService();
     this.javascriptInterfaceService = new JavascriptInterfaceService(

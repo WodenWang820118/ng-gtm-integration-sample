@@ -37,9 +37,21 @@
               "src/manifest.webmanifest"
             ],
             "styles": [
-              "node_modules/bootstrap/scss/bootstrap.scss",
-              "node_modules/bootstrap-icons/font/bootstrap-icons.css",
-              "src/styles.scss"
+              {
+                "input": "node_modules/bootstrap/scss/bootstrap.scss",
+                "bundleName": "bootstrap",
+                "inject": false
+              },
+              {
+                "input": "node_modules/bootstrap-icons/font/bootstrap-icons.css",
+                "bundleName": "bootstrap-icons",
+                "inject": false
+              },
+              {
+                "input": "src/styles.scss",
+                "bundleName": "styles",
+                "inject": false
+              }
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"

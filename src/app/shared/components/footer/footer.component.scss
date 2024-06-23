@@ -1,0 +1,75 @@
+footer {
+  margin: 40px 0 0 0;
+  padding: 35px 0 30px 0;
+  border-top: 2px dotted #c0d0e5;
+  background: #c0d0e5;
+}
+
+footer #newsletter-form,
+footer #externalLinks {
+  float: left;
+  width: 50%;
+}
+
+footer #externalLinks li {
+  list-style: square;
+  color: #333;
+  padding: 2px 0;
+  font-size: 15px;
+  color: #333;
+}
+
+footer #externalLinks li a {
+  color: inherit;
+  font-size: 15px;
+  transition: all 0.15s;
+}
+
+footer #externalLinks a:hover {
+  color: steelblue;
+}
+
+/*NEWSLETTER*/
+footer #newsletter-form {
+  font-size: 0px;
+  text-align: right;
+  margin: 0;
+  padding: 0;
+}
+
+#reponse {
+  display: none;
+  font-size: 20px;
+  color: blue;
+}
+
+footer #newsletter-form input[type="text"] {
+  margin: 0;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+}
+
+footer #newsletter-form input[type="submit"],
+footer #newsletter-form button {
+  margin: 0 0 0 1px;
+  padding: 4px 6px;
+  border: 1px solid silver;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+}
+
+#reponse p.error_msg {
+  color: red;
+  font-weight: bold;
+}
+
+#reponse p.ok_msg {
+  color: green;
+  font-weight: bold;
+}
+
+.clear {
+  clear: both;
+}
