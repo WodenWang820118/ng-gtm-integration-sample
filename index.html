@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" data-critters-container>
+  <head>
+    <base href="https://wodenwang820118.github.io/ng-gtm-integration-sample/browser">
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        style-src * 'unsafe-inline';
+        script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.youtube.com https://www.googletagmanager.com https://apis.google.com https://ng-gtm-integration.firebaseapp.com;
+        img-src * data: 'unsafe-inline';
+        connect-src * 'unsafe-inline';
+        frame-src 'self' https://www.youtube.com https://www.googletagmanager.com https://identitytoolkit.googleapis.com https://ng-gtm-integration.firebaseapp.com;
+        font-src * 'unsafe-inline';
+    ">
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-NBMX2DWS");
+    </script>
+    <meta charset="utf-8">
+    <title>Ng GTM Integration App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta name="theme-color" content="#1976d2">
+  <link rel="modulepreload" href="chunk-C2HNWMJH.js"><link rel="modulepreload" href="chunk-WM6QRSU2.js"><link rel="modulepreload" href="chunk-G7PQ22R5.js"><link rel="modulepreload" href="chunk-WRNOLYUH.js"><link rel="modulepreload" href="chunk-XHDSLAJA.js"><link rel="modulepreload" href="chunk-YEGXVBAB.js"><link rel="modulepreload" href="chunk-OGBJ4DTI.js"></head>
+  <body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NBMX2DWS" height="0" width="0" style="display: none; visibility: hidden"></iframe></noscript>
+    <app-root></app-root>
+  <script src="polyfills-N6LQB2YD.js" type="module"></script><script src="scripts-EEEIPNC3.js" defer></script><script src="main-D4AWNU2M.js" type="module"></script></body>
+</html>

@@ -1,0 +1,1 @@
+import{d as o}from"./chunk-XHDSLAJA.js";var a=(()=>{let t=class t{constructor(){}truncateText(r,e){return r.length>e?r.substring(0,e)+"...":r}};t.\u0275fac=function(e){return new(e||t)},t.\u0275prov=o({token:t,factory:t.\u0275fac,providedIn:"root"});let n=t;return n})();export{a};

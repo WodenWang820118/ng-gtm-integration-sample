@@ -1,0 +1,1 @@
+import"./chunk-OGBJ4DTI.js";var t=[{path:"",loadComponent:()=>import("./chunk-QB2EGRKW.js").then(o=>o.HomeComponent),children:[{path:"destinations",loadComponent:()=>import("./chunk-JBAOUWWN.js").then(o=>o.DestinationComponent)},{path:"details/:id",loadComponent:()=>import("./chunk-NJWGGQWU.js").then(o=>o.DetailsComponent)}]}];export{t as PRODUCT_ROUTES};
