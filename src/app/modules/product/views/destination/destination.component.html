@@ -41,15 +41,37 @@
       <div class="d-flex flex-row justify-content-star mb-3">
         @if (((windowSizeService.width$ | async) ?? 0) > 480) {
         <div class="col-md-3">
-          <img src="{{ destination.image1 }}" class="img-thumbnail" alt="" />
+          <img
+            style="max-height: 150px"
+            src="{{
+              destination.image1
+                ? destination.image1
+                : '../../../../../../../assets/images/placeholder.png'
+            }}"
+            class="img-thumbnail"
+            alt=""
+          />
           <div
             class="author"
-            [innerHTML]="authorInforByPassed(destination.image1AuthorInfo)"
+            [innerHTML]="
+              authorInforByPassed(destination.image1AuthorInfo)
+                ? destination.image1AuthorInfo
+                : ''
+            "
           ></div>
         </div>
         } @if (((windowSizeService.width$ | async) ?? 0) > 480) {
         <div class="col-md-3">
-          <img src="{{ destination.image2 }}" class="img-thumbnail" alt="" />
+          <img
+            style="max-height: 150px"
+            src="{{
+              destination.image2
+                ? destination.image2
+                : '../../../../../../../assets/images/placeholder.png'
+            }}"
+            class="img-thumbnail"
+            alt=""
+          />
           <div
             class="author"
             [innerHTML]="authorInforByPassed(destination.image2AuthorInfo)"
@@ -57,25 +79,54 @@
         </div>
         } @if (((windowSizeService.width$ | async) ?? 0) > 480) {
         <div class="col-md-3">
-          <img src="{{ destination.image3 }}" class="img-thumbnail" alt="" />
+          <img
+            style="max-height: 150px"
+            src="{{
+              destination.image3
+                ? destination.image3
+                : '../../../../../../../assets/images/placeholder.png'
+            }}"
+            class="img-thumbnail"
+            alt=""
+          />
           <div
             class="author"
-            [innerHTML]="authorInforByPassed(destination.image3AuthorInfo)"
+            [innerHTML]="
+              authorInforByPassed(destination.image3AuthorInfo)
+                ? destination.image3AuthorInfo
+                : ''
+            "
           ></div>
         </div>
         } @if (((windowSizeService.width$ | async) ?? 0) <= 480) {
         <div class="col-6">
-          <img src="{{ destination.image3 }}" class="img-thumbnail" alt="" />
+          <img
+            src="{{
+              destination.image3
+                ? destination.image3
+                : '../../../../../../../assets/images/placeholder.png'
+            }}"
+            class="img-thumbnail"
+            alt=""
+          />
           <div
             class="author"
-            [innerHTML]="authorInforByPassed(destination.image3AuthorInfo)"
+            [innerHTML]="
+              authorInforByPassed(destination.image3AuthorInfo)
+                ? destination.image3AuthorInfo
+                : ''
+            "
           ></div>
         </div>
         }
         <div class="col-md-3">
           <h3>{{ destination.title }}</h3>
           <div style="text-align: justify">
-            {{ utilsService.truncateText(destination.description, 100) }}
+            {{
+              destination.description
+                ? utilsService.truncateText(destination.description, 100)
+                : ""
+            }}
           </div>
           <div class="mt-2">
             <a
