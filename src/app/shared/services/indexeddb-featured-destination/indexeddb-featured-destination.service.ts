@@ -14,7 +14,7 @@ import { Destination } from '../../models/destination.model';
 @Injectable({
   providedIn: 'root',
 })
-export class IndexdbCountryService {
+export class IndexeddbFeaturedDestinationService {
   db: any;
   private dbInitialized = new BehaviorSubject<boolean>(false);
 
@@ -31,7 +31,7 @@ export class IndexdbCountryService {
   }
   private initializeIndexedDB() {
     return defer(() => {
-      return from(import('../../../db-feature-destinations')).pipe(
+      return from(import('../../../db-destinations')).pipe(
         take(1),
         tap((module) => {
           this.db = module.db;
@@ -40,22 +40,22 @@ export class IndexdbCountryService {
     });
   }
 
-  getAllDestinations(): Observable<Destination[]> {
+  getAllFeaturedDestinations(): Observable<Destination[]> {
     return this.dbInitialized.pipe(
       switchMap((initiated: boolean) =>
         initiated
-          ? (this.db.getFeatureDestinations() as Observable<Destination[]>)
+          ? (this.db.getFeaturedDestinations() as Observable<Destination[]>)
           : of([])
       )
     );
   }
 
-  addFeatureDestinations(destinations: Destination[]): Observable<string[]> {
+  addFeaturedDestinations(destinations: Destination[]): Observable<string[]> {
     return this.dbInitialized.pipe(
       take(1),
       switchMap((initiated: boolean) => {
         if (initiated) {
-          return this.db.addFeatureDestinations(destinations) as Observable<
+          return this.db.addFeaturedDestinations(destinations) as Observable<
             string[]
           >;
         }

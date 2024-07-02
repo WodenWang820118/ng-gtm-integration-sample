@@ -4,7 +4,7 @@ import * as am5map from '@amcharts/amcharts5/map';
 import am5geodata_worldLow from '@amcharts/amcharts5-geodata/worldLow';
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 import am5themes_Dark from '@amcharts/amcharts5/themes/Dark';
-import { FirestoreCountryService } from '../../../../shared/services/firestore-country/firestore-country.service';
+import { FirestoreDestinationPipelineService } from '../../../../shared/services/firestore-destination-pipeline/firestore-destination-pipeline.service';
 import { take, tap } from 'rxjs';
 import { Destination } from 'src/app/shared/models/destination.model';
 
@@ -18,10 +18,12 @@ import { Destination } from 'src/app/shared/models/destination.model';
 })
 export class MapComponent implements OnInit {
   destinations: Destination[] = [];
-  constructor(private firestoreCountryService: FirestoreCountryService) {}
+  constructor(
+    private firestoreDestinationPipelineService: FirestoreDestinationPipelineService
+  ) {}
 
   ngOnInit(): void {
-    this.firestoreCountryService
+    this.firestoreDestinationPipelineService
       .getAllDestinationsData()
       .pipe(
         take(1),
@@ -96,11 +98,14 @@ export class MapComponent implements OnInit {
     );
 
     pointSeries.bullets.push(function () {
+      let circle = am5.Circle.new(root, {
+        radius: 5,
+        fill: am5.color(0xff0000),
+        tooltipText: '{name}',
+      });
+
       return am5.Bullet.new(root, {
-        sprite: am5.Circle.new(root, {
-          radius: 5,
-          fill: am5.color(0xff0000),
-        }),
+        sprite: circle,
       });
     });
   }

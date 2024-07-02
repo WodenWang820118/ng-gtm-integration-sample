@@ -18,3 +18,26 @@ export interface Destination {
   price: number;
   video: string;
 }
+
+export class DestinationDto implements Destination {
+  constructor(
+    public id: string,
+    public country: string,
+    public city: string,
+    public latitude: number,
+    public longitude: number,
+    public description: string,
+    public title: string,
+    public smallTitle: string,
+    public image1: string,
+    public image1AuthorInfo: string,
+    public image2: string,
+    public image2AuthorInfo: string,
+    public image3: string,
+    public image3AuthorInfo: string,
+    public imageBig: string,
+    public imageBigAuthorInfo: string,
+    public price: number,
+    public video: string
+  ) {}
+}

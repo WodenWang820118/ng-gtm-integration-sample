@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, take, tap } from 'rxjs';
 import { AnalyticsService } from '../analytics/analytics.service';
-import { FirestoreCountryService } from '../firestore-country/firestore-country.service';
+import { FirestoreDestinationPipelineService } from '../firestore-destination-pipeline/firestore-destination-pipeline.service';
 import { Destination } from '../../models/destination.model';
 
 @Injectable({
@@ -13,13 +13,13 @@ export class SearchService {
 
   constructor(
     private analyticsService: AnalyticsService,
-    private firestoreCountryService: FirestoreCountryService
+    private firestoreDestinationPipelineService: FirestoreDestinationPipelineService
   ) {}
 
   search(query: string): void {
     switch (query) {
       case '':
-        this.firestoreCountryService
+        this.firestoreDestinationPipelineService
           .getPreviousDestinationsData()
           .pipe(
             take(1),
@@ -31,7 +31,7 @@ export class SearchService {
         break;
 
       case 'all':
-        this.firestoreCountryService
+        this.firestoreDestinationPipelineService
           .getAllDestinationsData()
           .pipe(
             take(1),
@@ -44,7 +44,7 @@ export class SearchService {
         break;
 
       default:
-        this.firestoreCountryService
+        this.firestoreDestinationPipelineService
           .getSearchResultsData(query, 10)
           .subscribe((destinations: Destination[]) => {
             this.analyticsService.trackEvent('search', query);
@@ -55,7 +55,7 @@ export class SearchService {
   }
 
   resetSearch(): void {
-    this.firestoreCountryService
+    this.firestoreDestinationPipelineService
       .getPreviousDestinationsData()
       .pipe(
         take(1),
