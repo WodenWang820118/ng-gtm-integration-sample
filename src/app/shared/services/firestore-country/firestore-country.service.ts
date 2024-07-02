@@ -51,7 +51,9 @@ export class FirestoreCountryService {
         if (destinations && destinations.length > 0) {
           return of(destinations);
         } else {
-          return this.fetchDestinations(() => this.getAllDestinations()).pipe(
+          return this.fetchDestinations(() =>
+            this.getAllPromotedDestinations()
+          ).pipe(
             tap((data) => {
               if (data && data.length > 0)
                 this.indexeddbCountryService
@@ -71,11 +73,11 @@ export class FirestoreCountryService {
   }
 
   // TODO: cache the data locally
-  getFirstDestinationsData(queryLimit = 2) {
+  getFirstDestinationsData(queryLimit = 5) {
     return this.fetchDestinations(() => this.getFirstDestinations(queryLimit));
   }
 
-  getNextDestinationsData(queryLimit = 2) {
+  getNextDestinationsData(queryLimit = 5) {
     return this.fetchDestinations(() => this.getNextDestinations(queryLimit));
   }
 
@@ -83,25 +85,25 @@ export class FirestoreCountryService {
     return this.fetchDestinations(() => this.getPreviousDestinations());
   }
 
-  getSearchResultsData(searchQuery: string, queryLimit = 2) {
+  getSearchResultsData(searchQuery: string, queryLimit = 5) {
     return this.fetchDestinations(() =>
       this.getSearchResults(searchQuery, queryLimit)
     );
   }
 
-  private getAllDestinations() {
+  private getAllPromotedDestinations() {
     return defer(() =>
       from(getDocs(query(collection(firestore, 'countries'))))
     );
   }
 
-  private getFirstDestinations(queryLimit = 2) {
+  private getFirstDestinations(queryLimit = 5) {
     return defer(() =>
       from(
         getDocs(
           query(
-            collection(firestore, 'countries'),
-            orderBy('title'),
+            collection(firestore, 'destinations'),
+            orderBy('country'),
             limit(queryLimit)
           )
         )
@@ -116,7 +118,7 @@ export class FirestoreCountryService {
     );
   }
 
-  private getNextDestinations(queryLimit = 2) {
+  private getNextDestinations(queryLimit = 5) {
     return defer(() => {
       const lastVisible = this.lastVisibleDocs.value;
       if (!lastVisible) {
@@ -125,8 +127,8 @@ export class FirestoreCountryService {
       return from(
         getDocs(
           query(
-            collection(firestore, 'countries'),
-            orderBy('title'),
+            collection(firestore, 'destinations'),
+            orderBy('country'),
             startAfter(lastVisible),
             limit(queryLimit)
           )
@@ -154,8 +156,8 @@ export class FirestoreCountryService {
       return from(
         getDocs(
           query(
-            collection(firestore, 'countries'),
-            orderBy('title'),
+            collection(firestore, 'destinations'),
+            orderBy('country'),
             startAt(previousLastVisible),
             limit(2)
           )
@@ -176,9 +178,9 @@ export class FirestoreCountryService {
       from(
         getDocs(
           query(
-            collection(firestore, 'countries'),
-            where('title', '>=', searchQuery),
-            where('title', '<=', endTerm),
+            collection(firestore, 'destinations'),
+            where('country', '>=', searchQuery),
+            where('country', '<=', endTerm),
             limit(queryLimit)
           )
         )
