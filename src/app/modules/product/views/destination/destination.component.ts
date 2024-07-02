@@ -22,7 +22,7 @@ import { DestinationService } from '../../../../shared/services/destination/dest
 import { SearchService } from '../../../../shared/services/search/search.service';
 import { YoutubeService } from '../../../../shared/services/youtube/youtube.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { FirestoreCountryService } from '../../../../shared/services/firestore-country/firestore-country.service';
+import { FirestoreDestinationPipelineService } from '../../../../shared/services/firestore-destination-pipeline/firestore-destination-pipeline.service';
 import { AnalyticsService } from '../../../../shared/services/analytics/analytics.service';
 import { Destination } from '../../../../shared/models/destination.model';
 
@@ -63,12 +63,12 @@ export class DestinationComponent implements OnInit {
     public searchService: SearchService,
     private youtubeService: YoutubeService,
     private sanitizer: DomSanitizer,
-    private firestoreCountryService: FirestoreCountryService,
+    private firestoreDestinationPipelineService: FirestoreDestinationPipelineService,
     private analyticsService: AnalyticsService
   ) {}
 
   ngOnInit() {
-    this.firestoreCountryService
+    this.firestoreDestinationPipelineService
       .getFirstDestinationsData()
       .pipe(
         take(1),
@@ -89,7 +89,7 @@ export class DestinationComponent implements OnInit {
   }
 
   getNextDestinations() {
-    this.firestoreCountryService
+    this.firestoreDestinationPipelineService
       .getNextDestinationsData()
       .pipe(
         take(1),
@@ -103,7 +103,7 @@ export class DestinationComponent implements OnInit {
 
   getPreviousDestinations() {
     if (this.isPreviousDisabled()) return;
-    this.firestoreCountryService
+    this.firestoreDestinationPipelineService
       .getPreviousDestinationsData()
       .pipe(
         take(1),
@@ -130,7 +130,9 @@ export class DestinationComponent implements OnInit {
   }
 
   isPreviousDisabled() {
-    return this.firestoreCountryService.getPreviousDocsStackLength() < 2;
+    return (
+      this.firestoreDestinationPipelineService.getPreviousDocsStackLength() < 2
+    );
   }
 
   navigateToHome() {
