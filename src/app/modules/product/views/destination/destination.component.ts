@@ -25,6 +25,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { FirestoreDestinationPipelineService } from '../../../../shared/services/firestore-destination-pipeline/firestore-destination-pipeline.service';
 import { AnalyticsService } from '../../../../shared/services/analytics/analytics.service';
 import { Destination } from '../../../../shared/models/destination.model';
+import { ChatbotComponent } from '../../../../shared/components/chatbot/chatbot.component';
 
 @Component({
   selector: 'app-destination',
@@ -35,6 +36,7 @@ import { Destination } from '../../../../shared/models/destination.model';
     AsyncPipe,
     ReactiveFormsModule,
     FormsModule,
+    ChatbotComponent,
   ],
   templateUrl: './destination.component.html',
   styleUrls: ['./destination.component.scss'],

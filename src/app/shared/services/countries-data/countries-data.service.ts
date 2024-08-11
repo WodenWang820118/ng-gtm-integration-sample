@@ -14,7 +14,14 @@ export class CountriesDataService {
   private jsonUrl = 'assets/countries.json'; // Path to the JSON file
   private uploadProgress = new BehaviorSubject<number>(0);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    // const allDestinations = this.assembleAllDestinations();
+    // const letterCountries = allDestinations.filter(
+    //   (destination) => destination.country[0] === ''
+    // );
+    // console.log('Total number of countries:', letterCountries);
+    // this.batchUpload(letterCountries);
+  }
 
   getUploadProgress(): Observable<number> {
     return this.uploadProgress.asObservable();

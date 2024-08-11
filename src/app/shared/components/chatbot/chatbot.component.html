@@ -1,0 +1,62 @@
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-header bg-primary text-white">
+      <div class="d-flex justify-content-between align-items-center">
+        <span>Agent</span>
+        <button
+          class="btn btn-link text-white"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#chatBody"
+          [attr.aria-expanded]="isCollapsed"
+          aria-controls="chatBody"
+          (click)="toggleCollapse()"
+        >
+          <i class="bi bi-chevron-up"></i>
+        </button>
+      </div>
+    </div>
+    <div class="collapse" id="chatBody">
+      <div class="card-body chat-messages">
+        @for (message of messages$ | async; track message) {
+        <div
+          [ngClass]="{
+            'text-end': message.isUser,
+            'text-start': !message.isUser
+          }"
+        >
+          <span
+            class="badge"
+            [ngClass]="{
+              'bg-primary': message.isUser,
+              'bg-secondary': !message.isUser
+            }"
+          >
+            {{ message.text }}
+          </span>
+        </div>
+        }
+      </div>
+      <div class="card-footer">
+        <div
+          class="input-group"
+          data-bs-toggle="tooltip"
+          data-bs-placement="top"
+          title="restart chatbot"
+        >
+          <span role="button" class="input-group-text">
+            <i class="bi bi-arrow-clockwise" (click)="clearMessages()"></i>
+          </span>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="userInput"
+            placeholder="Type a message..."
+            (keyup.enter)="sendMessage()"
+          />
+          <button class="btn btn-primary" (click)="sendMessage()">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
