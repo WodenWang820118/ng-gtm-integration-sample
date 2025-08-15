@@ -1,17 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CarouselComponent } from '../../components/carousel/carousel.component';
-import { faTag, faCookie } from '@fortawesome/free-solid-svg-icons';
 import { NavigationService } from '../../../../shared/services/navigation/navigation.service';
 import { CookieConsentComponent } from '../../../../shared/components/cookie-consent/cookie-consent.component';
 import { ConsentService } from '../../../../shared/services/consent/consent.service';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
     selector: 'app-main',
     imports: [
         CarouselComponent,
         CookieConsentComponent,
-        FontAwesomeModule,
     ],
     template: `
     <div class="container overflow-hidden px-4">
@@ -49,7 +46,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
         </div>
         <div class="p-3 col text-center">
           <h3>
-            <fa-icon [icon]="faTag" size="xs"></fa-icon>
+            <!-- <fa-icon [icon]="faTag" size="xs"></fa-icon> -->
             Pricing
           </h3>
           <p style="text-align: justify">
@@ -76,8 +73,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-  faTag = faTag;
-  faCookie = faCookie;
   showCookieModal!: boolean;
   @ViewChild(CookieConsentComponent)
   cookieConsentComponent!: CookieConsentComponent;

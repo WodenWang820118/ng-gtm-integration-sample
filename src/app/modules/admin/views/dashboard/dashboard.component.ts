@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { MapComponent } from '../../components/map/map.component';
 import { CardComponent } from '../../components/card/card.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-dashboard',
-    imports: [MapComponent, CardComponent, NgbModule],
+    imports: [MapComponent, CardComponent],
     templateUrl: './dashboard.component.html',
     styles: [``]
 })

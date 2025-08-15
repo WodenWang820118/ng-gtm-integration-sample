@@ -8,14 +8,12 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
+import { NgClass } from '@angular/common';
 
-// bootstrap import
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
-import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-card',
-    imports: [CommonModule, NgbDropdownModule],
+    imports: [NgClass],
     templateUrl: './card.component.html',
     styleUrl: './card.component.scss',
     animations: [

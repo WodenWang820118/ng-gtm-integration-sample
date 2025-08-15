@@ -4,15 +4,13 @@ import {
   Component,
   Input,
 } from '@angular/core';
-import { faCookie } from '@fortawesome/free-solid-svg-icons';
 import { ConsentService } from '../../services/consent/consent.service';
 import { take, tap } from 'rxjs';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
     selector: 'app-cookie-consent',
-    imports: [FontAwesomeModule, AsyncPipe],
+    imports: [AsyncPipe],
     templateUrl: './cookie-consent.component.html',
     styleUrl: './cookie-consent.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -20,8 +18,6 @@ import { AsyncPipe } from '@angular/common';
 export class CookieConsentComponent implements AfterViewInit {
   @Input() showModal: boolean = false;
   @Input() showCookieConsent: boolean = false;
-
-  faCookie = faCookie;
 
   constructor(public consentService: ConsentService) {
     if (localStorage.getItem('consentPreferences')) {

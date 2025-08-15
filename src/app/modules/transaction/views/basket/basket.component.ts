@@ -1,23 +1,18 @@
 import { Component } from '@angular/core';
 import { OrderService } from '../../../../shared/services/order/order.service';
-import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Order } from 'src/app/shared/models/order.model';
 import { WindowSizeService } from '../../../../shared/services/window-size/window-size.service';
 import { NavigationService } from '../../../../shared/services/navigation/navigation.service';
 import { AsyncPipe } from '@angular/common';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
     selector: 'app-basket',
-    imports: [AsyncPipe, FontAwesomeModule],
+    imports: [AsyncPipe],
     templateUrl: './basket.component.html',
     styleUrls: ['./basket.component.scss']
 })
 export class BasketComponent {
   basketItems$ = this.orderService.orders$;
-  faTrashCan = faTrashCan;
-  faEdit = faEdit;
 
   constructor(
     public orderService: OrderService,
