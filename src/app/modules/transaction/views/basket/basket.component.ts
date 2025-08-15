@@ -9,11 +9,10 @@ import { AsyncPipe } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
-  selector: 'app-basket',
-  standalone: true,
-  imports: [AsyncPipe, FontAwesomeModule],
-  templateUrl: './basket.component.html',
-  styleUrls: ['./basket.component.scss'],
+    selector: 'app-basket',
+    imports: [AsyncPipe, FontAwesomeModule],
+    templateUrl: './basket.component.html',
+    styleUrls: ['./basket.component.scss']
 })
 export class BasketComponent {
   basketItems$ = this.orderService.orders$;

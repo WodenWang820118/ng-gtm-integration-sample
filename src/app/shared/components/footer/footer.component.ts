@@ -2,10 +2,9 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-footer',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'app-footer',
+    imports: [CommonModule],
+    template: `
     <footer class="footer">
       <div class="container">
         <div id="externalLinks">
@@ -31,6 +30,6 @@ import { CommonModule } from '@angular/common';
       </div>
     </footer>
   `,
-  styleUrls: ['./footer.component.scss'],
+    styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent {}

@@ -27,18 +27,17 @@ import { AnalyticsService } from '../../../../shared/services/analytics/analytic
 import { Destination } from '../../../../shared/models/destination.model';
 
 @Component({
-  selector: 'app-destination',
-  standalone: true,
-  imports: [
-    YouTubePlayerModule,
-    NgClass,
-    AsyncPipe,
-    ReactiveFormsModule,
-    FormsModule,
-  ],
-  templateUrl: './destination.component.html',
-  styleUrls: ['./destination.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+    selector: 'app-destination',
+    imports: [
+        YouTubePlayerModule,
+        NgClass,
+        AsyncPipe,
+        ReactiveFormsModule,
+        FormsModule,
+    ],
+    templateUrl: './destination.component.html',
+    styleUrls: ['./destination.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class DestinationComponent implements OnInit {
   destinations: Destination[] = [];

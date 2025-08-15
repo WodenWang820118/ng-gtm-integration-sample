@@ -9,11 +9,10 @@ import { NavigationService } from 'src/app/shared/services/navigation/navigation
 import { AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-details',
-  standalone: true,
-  imports: [AsyncPipe, ReactiveFormsModule, FormsModule],
-  templateUrl: './details.component.html',
-  styleUrls: ['./details.component.scss'],
+    selector: 'app-details',
+    imports: [AsyncPipe, ReactiveFormsModule, FormsModule],
+    templateUrl: './details.component.html',
+    styleUrls: ['./details.component.scss']
 })
 export class DetailsComponent {
   @Input() title: string = '';

@@ -6,12 +6,11 @@ import { ShippingFormComponent } from '../../components/shipping-form/shipping-f
 import { OrderService } from '../../../../shared/services/order/order.service';
 
 @Component({
-  selector: 'app-checkout',
-  standalone: true,
-  imports: [ShippingFormComponent, PaymentFormComponent, AsyncPipe],
-  templateUrl: './checkout.component.html',
-  styles: [
-    `
+    selector: 'app-checkout',
+    imports: [ShippingFormComponent, PaymentFormComponent, AsyncPipe],
+    templateUrl: './checkout.component.html',
+    styles: [
+        `
       #checkout h2 {
         color: steelblue;
         margin: 0 0 20px 0;
@@ -70,7 +69,7 @@ import { OrderService } from '../../../../shared/services/order/order.service';
         font-size: 16px;
       }
     `,
-  ],
+    ]
 })
 export class CheckoutComponent {
   orders$ = this.orderService.orders$;

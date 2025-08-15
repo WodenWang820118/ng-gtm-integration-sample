@@ -5,10 +5,9 @@ import { NavigationService } from 'src/app/shared/services/navigation/navigation
 import { AsyncPipe, NgClass } from '@angular/common';
 
 @Component({
-  selector: 'app-payment-form',
-  standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, AsyncPipe, NgClass],
-  template: `
+    selector: 'app-payment-form',
+    imports: [ReactiveFormsModule, FormsModule, AsyncPipe, NgClass],
+    template: `
     <div
       id="paymentMethod"
       class="container p-0"
@@ -66,8 +65,8 @@ import { AsyncPipe, NgClass } from '@angular/common';
       </form>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       #paymentMethod label {
         width: 100%;
         color: steelblue;
@@ -76,7 +75,7 @@ import { AsyncPipe, NgClass } from '@angular/common';
         font-size: 16px;
       }
     `,
-  ],
+    ]
 })
 export class PaymentFormComponent implements OnInit {
   paymentForm!: FormGroup;

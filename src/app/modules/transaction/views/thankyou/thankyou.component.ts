@@ -6,10 +6,9 @@ import { NavigationService } from 'src/app/shared/services/navigation/navigation
 import { AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-thankyou',
-  standalone: true,
-  imports: [AsyncPipe],
-  templateUrl: './thankyou.component.html',
+    selector: 'app-thankyou',
+    imports: [AsyncPipe],
+    templateUrl: './thankyou.component.html'
 })
 export class ThankyouComponent {
   constructor(

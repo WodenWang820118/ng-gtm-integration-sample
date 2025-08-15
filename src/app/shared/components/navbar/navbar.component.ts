@@ -9,12 +9,11 @@ import { NavbarClickDirective } from '../../directives/navbar-click/navbar-click
 import { NavigationService } from '../../services/navigation/navigation.service';
 
 @Component({
-  selector: 'app-navbar',
-  standalone: true,
-  imports: [CommonModule, RouterModule, NavbarClickDirective],
-  templateUrl: './navbar.component.html',
-  styles: [
-    `
+    selector: 'app-navbar',
+    imports: [CommonModule, RouterModule, NavbarClickDirective],
+    templateUrl: './navbar.component.html',
+    styles: [
+        `
       .navbar {
         color: #999;
         background-color: #2c2c2c;
@@ -29,7 +28,7 @@ import { NavigationService } from '../../services/navigation/navigation.service'
         color: steelblue;
       }
     `,
-  ],
+    ]
 })
 export class NavbarComponent {
   constructor(

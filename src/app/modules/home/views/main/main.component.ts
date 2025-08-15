@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CarouselComponent } from '../../components/carousel/carousel.component';
-import { DisclaimerComponent } from '../../../../shared/components/disclaimer/disclaimer.component';
 import { faTag, faCookie } from '@fortawesome/free-solid-svg-icons';
 import { NavigationService } from '../../../../shared/services/navigation/navigation.service';
 import { CookieConsentComponent } from '../../../../shared/components/cookie-consent/cookie-consent.component';
@@ -8,15 +7,13 @@ import { ConsentService } from '../../../../shared/services/consent/consent.serv
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
-  selector: 'app-main',
-  standalone: true,
-  imports: [
-    CarouselComponent,
-    DisclaimerComponent,
-    CookieConsentComponent,
-    FontAwesomeModule,
-  ],
-  template: `
+    selector: 'app-main',
+    imports: [
+        CarouselComponent,
+        CookieConsentComponent,
+        FontAwesomeModule,
+    ],
+    template: `
     <div class="container overflow-hidden px-4">
       <div class="row">
         <app-carousel></app-carousel>
@@ -76,7 +73,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
       ></app-cookie-consent>
     </div>
   `,
-  styleUrls: ['./main.component.scss'],
+    styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
   faTag = faTag;

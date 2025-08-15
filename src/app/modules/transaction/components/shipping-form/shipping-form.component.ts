@@ -4,10 +4,9 @@ import { CheckoutFormManagerService } from '../../../../shared/services/checkout
 import { AsyncPipe, NgClass } from '@angular/common';
 
 @Component({
-  selector: 'app-shipping-form',
-  standalone: true,
-  imports: [AsyncPipe, NgClass, ReactiveFormsModule, FormsModule],
-  template: `
+    selector: 'app-shipping-form',
+    imports: [AsyncPipe, NgClass, ReactiveFormsModule, FormsModule],
+    template: `
     <div class="container p-0" id="shippingForm">
       <form [formGroup]="shippingForm" (ngSubmit)="continue()">
         <div class="mb-3 row">
@@ -67,8 +66,8 @@ import { AsyncPipe, NgClass } from '@angular/common';
       </form>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       #confirmReservation {
         margin: 10px 0;
       }
@@ -91,7 +90,7 @@ import { AsyncPipe, NgClass } from '@angular/common';
         width: 100%;
       }
     `,
-  ],
+    ]
 })
 export class ShippingFormComponent implements OnInit {
   shippingForm!: FormGroup;

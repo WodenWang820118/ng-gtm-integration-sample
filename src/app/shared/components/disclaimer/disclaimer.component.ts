@@ -2,10 +2,9 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-disclaimer',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'app-disclaimer',
+    imports: [CommonModule],
+    template: `
     <div id="disclaimer">
       <div class="container">
         <span>This is a demo site designed to showcase GTM. </span>
@@ -13,8 +12,8 @@ import { CommonModule } from '@angular/common';
       </div>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       #disclaimer {
         margin: 0;
         padding: 0;
@@ -37,6 +36,6 @@ import { CommonModule } from '@angular/common';
         clear: both;
       }
     `,
-  ],
+    ]
 })
 export class DisclaimerComponent {}
