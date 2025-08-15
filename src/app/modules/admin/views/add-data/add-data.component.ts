@@ -10,11 +10,10 @@ import { FirebaseDestinationUploadService } from '../../../../shared/services/fi
 import { CountriesDataService } from '../../../../shared/services/countries-data/countries-data.service';
 
 @Component({
-  selector: 'app-add-data',
-  standalone: true,
-  imports: [ReactiveFormsModule, FormsModule],
-  templateUrl: './add-data.component.html',
-  styles: [``],
+    selector: 'app-add-data',
+    imports: [ReactiveFormsModule, FormsModule],
+    templateUrl: './add-data.component.html',
+    styles: [``]
 })
 export class AddDataComponent {
   countries!: any[];

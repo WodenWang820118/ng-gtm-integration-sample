@@ -14,46 +14,33 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-card',
-  standalone: true,
-  imports: [CommonModule, NgbDropdownModule],
-  templateUrl: './card.component.html',
-  styleUrl: './card.component.scss',
-  animations: [
-    trigger('collapsedCard', [
-      state(
-        'collapsed, void',
-        style({
-          overflow: 'hidden',
-          height: '0px',
-        })
-      ),
-      state(
-        'expanded',
-        style({
-          overflow: 'hidden',
-          height: AUTO_STYLE,
-        })
-      ),
-      transition('collapsed <=> expanded', [animate('400ms ease-in-out')]),
-    ]),
-    trigger('cardRemove', [
-      state(
-        'open',
-        style({
-          opacity: 1,
-        })
-      ),
-      state(
-        'closed',
-        style({
-          opacity: 0,
-          display: 'none',
-        })
-      ),
-      transition('open <=> closed', animate('400ms')),
-    ]),
-  ],
+    selector: 'app-card',
+    imports: [CommonModule, NgbDropdownModule],
+    templateUrl: './card.component.html',
+    styleUrl: './card.component.scss',
+    animations: [
+        trigger('collapsedCard', [
+            state('collapsed, void', style({
+                overflow: 'hidden',
+                height: '0px',
+            })),
+            state('expanded', style({
+                overflow: 'hidden',
+                height: AUTO_STYLE,
+            })),
+            transition('collapsed <=> expanded', [animate('400ms ease-in-out')]),
+        ]),
+        trigger('cardRemove', [
+            state('open', style({
+                opacity: 1,
+            })),
+            state('closed', style({
+                opacity: 0,
+                display: 'none',
+            })),
+            transition('open <=> closed', animate('400ms')),
+        ]),
+    ]
 })
 export class CardComponent implements OnInit {
   // public props

@@ -6,22 +6,21 @@ import { DisclaimerComponent } from '../../../../shared/components/disclaimer/di
 import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-transaction-home',
-  standalone: true,
-  imports: [
-    HeaderComponent,
-    FooterComponent,
-    NavbarComponent,
-    DisclaimerComponent,
-    RouterOutlet,
-  ],
-  template: `
+    selector: 'app-transaction-home',
+    imports: [
+        HeaderComponent,
+        FooterComponent,
+        NavbarComponent,
+        DisclaimerComponent,
+        RouterOutlet,
+    ],
+    template: `
     <app-navbar></app-navbar>
     <app-header></app-header>
     <router-outlet></router-outlet>
     <app-footer></app-footer>
     <app-disclaimer></app-disclaimer>
   `,
-  styles: [``],
+    styles: [``]
 })
 export class HomeComponent {}

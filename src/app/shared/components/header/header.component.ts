@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
-  selector: 'app-header',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'app-header',
+    imports: [],
+    template: `
     <header>
       <div class="container">
         <h1>GTM Travel</h1>
@@ -13,8 +12,8 @@ import { CommonModule } from '@angular/common';
       </div>
     </header>
   `,
-  styles: [
-    `
+    styles: [
+        `
       header {
         padding: 75px 0 15px 0;
         margin-bottom: 30px;
@@ -27,6 +26,6 @@ import { CommonModule } from '@angular/common';
         letter-spacing: 3px;
       }
     `,
-  ],
+    ]
 })
 export class HeaderComponent {}

@@ -13,10 +13,9 @@ import { LoadingService } from './shared/services/loading/loading.service';
 import { StyleLoadService } from './shared/services/style-load/style-load.service';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet],
-  template: ` <router-outlet></router-outlet> `,
+    selector: 'app-root',
+    imports: [RouterOutlet],
+    template: ` <router-outlet></router-outlet> `
 })
 export class AppComponent
   implements OnInit, AfterContentInit, AfterViewChecked

@@ -10,10 +10,9 @@ import { AuthService } from '../../../../shared/services/auth/auth.service';
 import { NavigationService } from '../../../../shared/services/navigation/navigation.service';
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [ReactiveFormsModule, FormsModule],
-  template: `
+    selector: 'app-login',
+    imports: [ReactiveFormsModule, FormsModule],
+    template: `
     <div
       class="d-flex flex-column justify-content-center align-items-center"
       id="main"
@@ -26,7 +25,7 @@ import { NavigationService } from '../../../../shared/services/navigation/naviga
       </div>
     </div>
   `,
-  styles: [``],
+    styles: [``]
 })
 export class LoginComponent implements OnInit {
   signInForm = this.fb.group({

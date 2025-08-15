@@ -11,12 +11,11 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-cookie-consent',
-  standalone: true,
-  imports: [FontAwesomeModule, AsyncPipe],
-  templateUrl: './cookie-consent.component.html',
-  styleUrl: './cookie-consent.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-cookie-consent',
+    imports: [FontAwesomeModule, AsyncPipe],
+    templateUrl: './cookie-consent.component.html',
+    styleUrl: './cookie-consent.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CookieConsentComponent implements AfterViewInit {
   @Input() showModal: boolean = false;
