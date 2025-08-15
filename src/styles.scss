@@ -1,40 +1,40 @@
-@import "scss/variables";
+// @import "scss/variables";
 
-/* fonts-icon */
-@import "scss/fonts/fontawesome/scss/fontawesome";
-@import "scss/fonts/feather/iconfont";
+// /* fonts-icon */
+// @import "scss/fonts/fontawesome/scss/fontawesome";
+// @import "scss/fonts/feather/iconfont";
 
-@import "scss/general";
-@import "scss/generic";
-@import "scss/mixins/function";
-@import "scss/mixins/footer";
-@import "scss/mixins/main";
-@import "scss/mixins/details";
+// @import "scss/general";
+// @import "scss/generic";
+// @import "scss/mixins/function";
+// @import "scss/mixins/footer";
+// @import "scss/mixins/main";
+// @import "scss/mixins/details";
 
-/* important element */
-@import "scss/menu/menu-lite";
+// /* important element */
+// @import "scss/menu/menu-lite";
 
-/* basic elements */
-@import "scss/theme-elements/theme-elements";
+// /* basic elements */
+// @import "scss/theme-elements/theme-elements";
 
-/* third party modules style*/
-@import "scss/plugins/plugins";
+// /* third party modules style*/
+// @import "scss/plugins/plugins";
 
-@import "scss/custom";
+// @import "scss/custom";
 
-.hidden {
-  display: none;
-}
+// .hidden {
+//   display: none;
+// }
 
-.visible {
-  display: block;
-}
+// .visible {
+//   display: block;
+// }
 
-.text-center {
-  text-align: center;
-}
+// .text-center {
+//   text-align: center;
+// }
 
-.block-center {
-  margin-left: auto !important;
-  margin-right: auto !important;
-}
+// .block-center {
+//   margin-left: auto !important;
+//   margin-right: auto !important;
+// }
