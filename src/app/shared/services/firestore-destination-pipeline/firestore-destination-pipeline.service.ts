@@ -55,7 +55,7 @@ export class FirestoreDestinationPipelineService {
       this.indexeddbFeaturedDestinationService.getAllFeaturedDestinations(),
     ]).pipe(
       switchMap(([destinations, featuredDestinations]) => {
-        if (destinations.length > 0 && destinations.length > 0) {
+        if (destinations.length > 0) {
           return of(destinations.concat(featuredDestinations));
         } else {
           return forkJoin({
@@ -256,6 +256,7 @@ export class FirestoreDestinationPipelineService {
           return { ...doc.data(), id: doc.id };
         }) as Destination[];
         const destinationObservables = data.map((document) => {
+          console.log('Fetching images for document:', document);
           return forkJoin({
             image1: this.firebaseStorageService.getImage(document['image1']),
             image2: this.firebaseStorageService.getImage(document['image2']),

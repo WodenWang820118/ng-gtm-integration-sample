@@ -1,15 +1,27 @@
 import { Component } from '@angular/core';
+import { TableModule } from 'primeng/table';
+import { DataViewModule } from 'primeng/dataview';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { MessageModule } from 'primeng/message';
 import { OrderService } from '../../../../shared/services/order/order.service';
 import { Order } from 'src/app/shared/models/order.model';
 import { WindowSizeService } from '../../../../shared/services/window-size/window-size.service';
 import { NavigationService } from '../../../../shared/services/navigation/navigation.service';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, CurrencyPipe } from '@angular/common';
 
 @Component({
-    selector: 'app-basket',
-    imports: [AsyncPipe],
-    templateUrl: './basket.component.html',
-    styleUrls: ['./basket.component.scss']
+  selector: 'app-basket',
+  imports: [
+    TableModule,
+    DataViewModule,
+    CardModule,
+    ButtonModule,
+    MessageModule,
+    CurrencyPipe,
+    AsyncPipe,
+  ],
+  templateUrl: './basket.component.html',
 })
 export class BasketComponent {
   basketItems$ = this.orderService.orders$;
@@ -17,7 +29,7 @@ export class BasketComponent {
   constructor(
     public orderService: OrderService,
     public windowSizeService: WindowSizeService,
-    private navigationService: NavigationService
+    private readonly navigationService: NavigationService
   ) {}
 
   navigateToBeginCheckout() {

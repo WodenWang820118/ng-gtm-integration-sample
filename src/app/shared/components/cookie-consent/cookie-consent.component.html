@@ -1,104 +1,54 @@
-<!-- Modal -->
-<div
-  class="modal fade"
-  id="staticBackdrop"
-  data-bs-backdrop="static"
-  tabindex="-1"
-  [class.show]="showModal"
-  [style.display]="showModal ? 'block' : 'none'"
->
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Cookie Policy</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-          (click)="hide()"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <div class="consent d-flex flex-column gap-3">
-          <div class="consent__option d-flex flex-column">
-            <div class="d-flex justify-content-between">
-              <div class="consent__description"><b>Analytics</b></div>
-              <div class="consent__switch">
-                <!-- Rounded switch -->
-                <label class="switch">
-                  <input
-                    type="checkbox"
-                    (change)="acceptAnalytics($event)"
-                    [checked]="consentService.analyticsConsentGiven$() | async"
-                  />
-                  <span class="slider round"></span>
-                </label>
-              </div>
-            </div>
-            <div>
-              Analytics cookies track site usage and trends to improve your
-              browsing experience. They gather anonymous data on how you
-              navigate and interact with the site.
-            </div>
-          </div>
-          <hr />
-          <div class="consent__option d-flex flex-column">
-            <div class="d-flex justify-content-between">
-              <div class="consent__description"><b>Measurement</b></div>
-              <div class="consent__switch">
-                <!-- Rounded switch -->
-                <label class="switch">
-                  <input
-                    type="checkbox"
-                    (change)="acceptMeasurement($event)"
-                    [checked]="
-                      consentService.measurementConsentGiven$() | async
-                    "
-                  />
-                  <span class="slider round"></span>
-                </label>
-              </div>
-            </div>
-            <div>Measurement</div>
-          </div>
-          <hr />
-          <div class="consent__option d-flex flex-column">
-            <div class="d-flex justify-content-between">
-              <div class="consent__description"><b>Audience</b></div>
-              <div class="consent__switch">
-                <!-- Rounded switch -->
-                <label class="switch">
-                  <input
-                    type="checkbox"
-                    (change)="acceptAudience($event)"
-                    [checked]="consentService.audienceConsentGiven$() | async"
-                  />
-                  <span class="slider round"></span>
-                </label>
-              </div>
-            </div>
-            <div>Audience</div>
-          </div>
+  <p-dialog
+    styleClass="max-w-lg w-full"
+    [(visible)]="showModal"
+    [modal]="true"
+    [closeOnEscape]="false"
+    [dismissableMask]="false"
+    (onHide)="hide()"
+    header="Cookie Policy"
+  >
+  <div class="p-6 space-y-6">
+    <div class="flex flex-col space-y-2 pb-4 border-b">
+      <div class="flex justify-between items-center">
+      <b>Analytics</b>
+      <p-toggleswitch
+        [(ngModel)]="analyticsModel"
+        (onChange)="acceptAnalytics($event)"
+      />
+    </div>
+    <div>
+        <div class="text-sm text-gray-600">
+          Analytics cookies track site usage and trends to improve your browsing experience. They gather anonymous data on how you navigate and interact with the site.
         </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-primary"
-            (click)="hide(); consent()"
-          >
-            Confirm
-          </button>
-        </div>
-      </div>
     </div>
   </div>
-</div>
-<!-- <fa-icon
-  class="cookie"
-  [icon]="faCookie"
-  size="2xl"
-  [class.show]="showCookieConsent"
-  [style.display]="showCookieConsent ? 'block' : 'none'"
-  (click)="switchModal()"
-></fa-icon> -->
+    <div class="flex flex-col space-y-2 pb-4 border-b">
+      <div class="flex justify-between items-center">
+      <b>Measurement</b>
+      <p-toggleswitch
+        [(ngModel)]="measurementModel"
+        (onChange)="acceptMeasurement($event)"
+      />
+    </div>
+        <div class="text-sm text-gray-600">
+          Measurement cookies for performance measurement.
+        </div>
+  </div>
+    <div class="flex flex-col space-y-2 pb-4">
+      <div class="flex justify-between items-center">
+      <b>Audience</b>
+      <p-toggleswitch
+        [(ngModel)]="audienceModel"
+        (onChange)="acceptAudience($event)"
+       />
+    </div>
+        <div class="text-sm text-gray-600">
+          Audience cookies to share marketing content relevant to you.
+        </div>
+  </div>
+  </div>
+  <button pButton type="button" label="Confirm"
+    class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
+    (click)="hide(); consent()">
+  </button>
+</p-dialog>

@@ -4,17 +4,19 @@ import { AnalyticsService } from '../../../../shared/services/analytics/analytic
 import { take, tap } from 'rxjs';
 import { NavigationService } from 'src/app/shared/services/navigation/navigation.service';
 import { AsyncPipe } from '@angular/common';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
-    selector: 'app-thankyou',
-    imports: [AsyncPipe],
-    templateUrl: './thankyou.component.html'
+  selector: 'app-thankyou',
+  standalone: true,
+  imports: [AsyncPipe, ButtonModule],
+  templateUrl: './thankyou.component.html',
 })
 export class ThankyouComponent {
   constructor(
     public orderService: OrderService,
-    private analyticsService: AnalyticsService,
-    private navigationService: NavigationService
+    private readonly analyticsService: AnalyticsService,
+    private readonly navigationService: NavigationService
   ) {}
 
   resetOrders(): void {
@@ -32,5 +34,11 @@ export class ThankyouComponent {
         })
       )
       .subscribe();
+  }
+
+  /** refund and then navigate home */
+  cancelOrder(): void {
+    this.trackRefund();
+    this.resetOrders();
   }
 }

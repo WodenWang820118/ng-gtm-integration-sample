@@ -6,16 +6,23 @@ import {
 } from '@angular/core';
 import { ConsentService } from '../../services/consent/consent.service';
 import { take, tap } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
 
 @Component({
-    selector: 'app-cookie-consent',
-    imports: [AsyncPipe],
-    templateUrl: './cookie-consent.component.html',
-    styleUrl: './cookie-consent.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-cookie-consent',
+  standalone: true,
+  imports: [FormsModule, DialogModule, ToggleSwitchModule, ButtonModule],
+  templateUrl: './cookie-consent.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CookieConsentComponent implements AfterViewInit {
+  // models for PrimeNG input switches
+  analyticsModel = false;
+  measurementModel = false;
+  audienceModel = false;
   @Input() showModal: boolean = false;
   @Input() showCookieConsent: boolean = false;
 
@@ -30,6 +37,19 @@ export class CookieConsentComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
+    // initialize switch models from service
+    this.consentService
+      .analyticsConsentGiven$()
+      .pipe(take(1))
+      .subscribe((v) => (this.analyticsModel = v));
+    this.consentService
+      .measurementConsentGiven$()
+      .pipe(take(1))
+      .subscribe((v) => (this.measurementModel = v));
+    this.consentService
+      .audienceConsentGiven$()
+      .pipe(take(1))
+      .subscribe((v) => (this.audienceModel = v));
     // need to update GTM consent preferences after the component is initialized
     this.consentService.consentPreferences$
       .pipe(
@@ -57,7 +77,7 @@ export class CookieConsentComponent implements AfterViewInit {
     this.showCookieConsent = false;
   }
 
-  acceptAnalytics(event: Event) {
+  acceptAnalytics(event: any) {
     const consent = (event.target as HTMLInputElement).checked;
     console.log(`Analytics consent: ${consent}`);
 
@@ -78,7 +98,7 @@ export class CookieConsentComponent implements AfterViewInit {
     }
   }
 
-  acceptMeasurement(event: Event) {
+  acceptMeasurement(event: any) {
     const consent = (event.target as HTMLInputElement).checked;
     console.log(`Measurement consent: ${consent}`);
     if (consent) {
@@ -98,7 +118,7 @@ export class CookieConsentComponent implements AfterViewInit {
     }
   }
 
-  acceptAudience(event: Event) {
+  acceptAudience(event: any) {
     const consent = (event.target as HTMLInputElement).checked;
     console.log(`Audience consent: ${consent}`);
     if (consent) {

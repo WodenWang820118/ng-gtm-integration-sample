@@ -5,27 +5,29 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { take, tap } from 'rxjs';
+import { tap } from 'rxjs';
 import { AuthService } from '../../../../shared/services/auth/auth.service';
 import { NavigationService } from '../../../../shared/services/navigation/navigation.service';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
-    selector: 'app-login',
-    imports: [ReactiveFormsModule, FormsModule],
-    template: `
-    <div
-      class="d-flex flex-column justify-content-center align-items-center"
-      id="main"
-    >
-      <div id="msg"></div>
-      <div>
-        <button class="btn btn-primary" (click)="loginWithGoogle()">
-          Sign-in with Google
-        </button>
+  selector: 'app-login',
+  imports: [ReactiveFormsModule, FormsModule, ButtonModule],
+  template: `
+    <div class="flex justify-center items-center min-h-screen bg-gray-100">
+      <div class="w-full max-w-xs">
+        <button
+          pButton
+          type="button"
+          label="Sign in with Google"
+          icon="pi pi-google"
+          class="w-full"
+          (click)="loginWithGoogle()"
+        ></button>
       </div>
     </div>
   `,
-    styles: [``]
+  styles: [``],
 })
 export class LoginComponent implements OnInit {
   signInForm = this.fb.group({
@@ -33,9 +35,9 @@ export class LoginComponent implements OnInit {
     password: ['', Validators.required],
   });
   constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private navigationService: NavigationService
+    private readonly fb: FormBuilder,
+    private readonly authService: AuthService,
+    private readonly navigationService: NavigationService
   ) {}
 
   ngOnInit(): void {

@@ -1,37 +1,25 @@
-import {
-  AfterContentInit,
-  AfterViewChecked,
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { AfterContentInit, Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Subject, first, tap } from 'rxjs';
 import { UrlTrackerService } from './shared/services/url-tracker/url-tracker.service';
 import { LoadingService } from './shared/services/loading/loading.service';
-import { StyleLoadService } from './shared/services/style-load/style-load.service';
 
 @Component({
-    selector: 'app-root',
-    imports: [RouterOutlet],
-    template: ` <router-outlet></router-outlet> `
+  selector: 'app-root',
+  imports: [RouterOutlet],
+  template: ` <router-outlet></router-outlet> `,
 })
-export class AppComponent
-  implements OnInit, AfterContentInit, AfterViewChecked
-{
+export class AppComponent implements OnInit, AfterContentInit {
   title = 'ng-gtm-integration-sample';
-  @ViewChild('loadingDiv', { static: false }) loadingDiv!: ElementRef;
-  private destroy$ = new Subject<void>();
+  // @ViewChild('loadingDiv', { static: false }) loadingDiv!: ElementRef;
+  private readonly destroy$ = new Subject<void>();
 
   constructor(
-    private urlTrackerService: UrlTrackerService,
-    private loadingService: LoadingService,
-    private styleLoadService: StyleLoadService
+    private readonly urlTrackerService: UrlTrackerService,
+    private readonly loadingService: LoadingService
   ) {}
 
   ngOnInit() {
-    this.styleLoadService.appendAllStyles();
     this.loadingService
       .getLoadingState()
       .pipe(
@@ -50,17 +38,6 @@ export class AppComponent
 
   ngAfterContentInit() {
     window.onload = () => {};
-  }
-
-  ngAfterViewChecked() {
-    try {
-      if (this.loadingDiv.nativeElement) {
-        this.loadingService.setLoadingState(true);
-      }
-    } catch (error) {
-      // loadingDiv is no longer available
-      this.loadingService.setLoadingState(false);
-    }
   }
 
   ngOnDestroy() {

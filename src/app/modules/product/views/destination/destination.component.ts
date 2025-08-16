@@ -27,17 +27,16 @@ import { AnalyticsService } from '../../../../shared/services/analytics/analytic
 import { Destination } from '../../../../shared/models/destination.model';
 
 @Component({
-    selector: 'app-destination',
-    imports: [
-        YouTubePlayerModule,
-        NgClass,
-        AsyncPipe,
-        ReactiveFormsModule,
-        FormsModule,
-    ],
-    templateUrl: './destination.component.html',
-    styleUrls: ['./destination.component.scss'],
-    encapsulation: ViewEncapsulation.None
+  selector: 'app-destination',
+  imports: [
+    YouTubePlayerModule,
+    NgClass,
+    AsyncPipe,
+    ReactiveFormsModule,
+    FormsModule,
+  ],
+  templateUrl: './destination.component.html',
+  encapsulation: ViewEncapsulation.None,
 })
 export class DestinationComponent implements OnInit {
   destinations: Destination[] = [];
@@ -55,15 +54,15 @@ export class DestinationComponent implements OnInit {
   };
 
   constructor(
-    private destinationService: DestinationService,
-    public utilsService: UtilsService,
-    public windowSizeService: WindowSizeService,
-    private navigationService: NavigationService,
-    public searchService: SearchService,
-    private youtubeService: YoutubeService,
-    private sanitizer: DomSanitizer,
-    private firestoreDestinationPipelineService: FirestoreDestinationPipelineService,
-    private analyticsService: AnalyticsService
+    private readonly destinationService: DestinationService,
+    public readonly utilsService: UtilsService,
+    public readonly windowSizeService: WindowSizeService,
+    private readonly navigationService: NavigationService,
+    public readonly searchService: SearchService,
+    private readonly youtubeService: YoutubeService,
+    private readonly sanitizer: DomSanitizer,
+    private readonly firestoreDestinationPipelineService: FirestoreDestinationPipelineService,
+    private readonly analyticsService: AnalyticsService
   ) {}
 
   ngOnInit() {

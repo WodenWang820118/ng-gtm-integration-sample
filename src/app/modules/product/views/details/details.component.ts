@@ -7,12 +7,19 @@ import { Destination } from 'src/app/shared/models/destination.model';
 import { WindowSizeService } from 'src/app/shared/services/window-size/window-size.service';
 import { NavigationService } from 'src/app/shared/services/navigation/navigation.service';
 import { AsyncPipe } from '@angular/common';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
-    selector: 'app-details',
-    imports: [AsyncPipe, ReactiveFormsModule, FormsModule],
-    templateUrl: './details.component.html',
-    styleUrls: ['./details.component.scss']
+  selector: 'app-details',
+  imports: [
+    AsyncPipe,
+    ReactiveFormsModule,
+    FormsModule,
+    AutoCompleteModule,
+    ButtonModule,
+  ],
+  templateUrl: './details.component.html',
 })
 export class DetailsComponent {
   @Input() title: string = '';
@@ -25,11 +32,17 @@ export class DetailsComponent {
     this.destinationService.destinationSource$;
 
   numberOfPersonsControl = new FormControl(1);
+  personOptions = Array.from({ length: 6 }, (_, i) => ({
+    label: `${i + 1} ${i + 1 === 1 ? 'person' : 'persons'}`,
+    value: i + 1,
+  }));
+  filteredPersons: { label: string; value: number }[] = [];
+
   constructor(
     public windowSizeService: WindowSizeService,
     public destinationService: DestinationService,
-    private orderService: OrderService,
-    private navigationService: NavigationService
+    private readonly orderService: OrderService,
+    private readonly navigationService: NavigationService
   ) {}
 
   navigateToDestinations() {
@@ -39,5 +52,12 @@ export class DetailsComponent {
   addToCart(destination: Observable<Destination>): void {
     const numOfPersons = this.numberOfPersonsControl.value;
     if (numOfPersons) this.orderService.addToCart(destination, numOfPersons);
+  }
+
+  filterPersons(event: { query: string }): void {
+    const query = event.query?.toLowerCase() || '';
+    this.filteredPersons = this.personOptions.filter((opt) =>
+      opt.label.toLowerCase().startsWith(query)
+    );
   }
 }

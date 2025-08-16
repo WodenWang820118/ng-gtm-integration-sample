@@ -1,6 +1,7 @@
 onlyBuiltDependencies:
   - '@firebase/util'
   - '@parcel/watcher'
+  - '@tailwindcss/oxide'
   - esbuild
   - lmdb
   - msgpackr-extract
