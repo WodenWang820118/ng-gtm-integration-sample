@@ -31,6 +31,7 @@ export class NavigationService {
   }
 
   private navigate(path: string, additionalParams: any = {}) {
+    console.log(`Navigating to: ${path}`, additionalParams);
     this.router.navigate([path], {
       queryParams: this.getMergedQueryParams(additionalParams),
     });
@@ -64,6 +65,7 @@ export class NavigationService {
   }
 
   navigateToLogin() {
+    console.log('navigate to login');
     this.navigate('/home/login');
   }
 
