@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, computed, OnInit, signal, ViewChild } from '@angular/core';
 import { CarouselComponent } from '../../components/carousel/carousel.component'; // existing custom carousel
 import { NavigationService } from '../../../../shared/services/navigation/navigation.service';
 import { CookieConsentComponent } from '../../../../shared/components/cookie-consent/cookie-consent.component';
@@ -86,14 +86,16 @@ import { CardModule } from 'primeng/card';
       <div class="text-center py-10">Loading...</div>
       }
       <app-cookie-consent
-        [showModal]="showCookieModal"
-        [showCookieConsent]="true"
+        [showModalInput]="showCookieModal$()"
+        [showCookieConsentInput]="true"
       ></app-cookie-consent>
     </div>
   `,
 })
 export class MainComponent implements OnInit {
-  showCookieModal!: boolean;
+  private readonly showCookieModal = signal(false);
+  readonly showCookieModal$ = computed(() => this.showCookieModal());
+
   @ViewChild(CookieConsentComponent)
   cookieConsentComponent!: CookieConsentComponent;
 
@@ -104,7 +106,7 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
     // show cookie consent modal if consent has not been confirmed
-    this.showCookieModal = !this.consentService.getConsentStatus();
+    this.showCookieModal.set(!this.consentService.getConsentStatus());
   }
 
   navigateToDestinations() {

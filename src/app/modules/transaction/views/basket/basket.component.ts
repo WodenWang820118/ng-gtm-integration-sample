@@ -8,7 +8,7 @@ import { OrderService } from '../../../../shared/services/order/order.service';
 import { Order } from 'src/app/shared/models/order.model';
 import { WindowSizeService } from '../../../../shared/services/window-size/window-size.service';
 import { NavigationService } from '../../../../shared/services/navigation/navigation.service';
-import { AsyncPipe, CurrencyPipe } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-basket',
@@ -19,7 +19,6 @@ import { AsyncPipe, CurrencyPipe } from '@angular/common';
     ButtonModule,
     MessageModule,
     CurrencyPipe,
-    AsyncPipe,
   ],
   templateUrl: './basket.component.html',
 })

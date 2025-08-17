@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, take, tap } from 'rxjs';
+import { computed, Injectable, signal } from '@angular/core';
+import { take, tap } from 'rxjs';
 import { AnalyticsService } from '../analytics/analytics.service';
 import { FirestoreDestinationPipelineService } from '../firestore-destination-pipeline/firestore-destination-pipeline.service';
 import { Destination } from '../../models/destination.model';
@@ -8,12 +8,12 @@ import { Destination } from '../../models/destination.model';
   providedIn: 'root',
 })
 export class SearchService {
-  private _searchResults = new BehaviorSubject([] as Destination[]);
-  readonly searchResults$ = this._searchResults.asObservable();
+  private readonly searchResults = signal<Destination[]>([]);
+  readonly searchResults$ = computed(() => this.searchResults());
 
   constructor(
-    private analyticsService: AnalyticsService,
-    private firestoreDestinationPipelineService: FirestoreDestinationPipelineService
+    private readonly analyticsService: AnalyticsService,
+    private readonly firestoreDestinationPipelineService: FirestoreDestinationPipelineService
   ) {}
 
   search(query: string): void {
@@ -24,7 +24,7 @@ export class SearchService {
           .pipe(
             take(1),
             tap((data) => {
-              this._searchResults.next(data);
+              this.searchResults.set(data);
             })
           )
           .subscribe();
@@ -36,7 +36,7 @@ export class SearchService {
           .pipe(
             take(1),
             tap((data) => {
-              this._searchResults.next(data);
+              this.searchResults.set(data);
             })
           )
           .subscribe();
@@ -48,7 +48,7 @@ export class SearchService {
           .getSearchResultsData(query, 10)
           .subscribe((destinations: Destination[]) => {
             this.analyticsService.trackEvent('search', query);
-            this._searchResults.next(destinations);
+            this.searchResults.set(destinations);
           });
         break;
     }
@@ -60,7 +60,7 @@ export class SearchService {
       .pipe(
         take(1),
         tap((data) => {
-          this._searchResults.next(data);
+          this.searchResults.set(data);
         })
       )
       .subscribe();

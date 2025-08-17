@@ -1,14 +1,5 @@
-import { Injectable } from '@angular/core';
-import {
-  BehaviorSubject,
-  defer,
-  from,
-  Observable,
-  of,
-  switchMap,
-  take,
-  tap,
-} from 'rxjs';
+import { computed, Injectable, signal } from '@angular/core';
+import { defer, from, Observable, of, take, tap } from 'rxjs';
 import { Destination } from '../../models/destination.model';
 
 @Injectable({
@@ -16,7 +7,8 @@ import { Destination } from '../../models/destination.model';
 })
 export class IndexeddbDestinationService {
   db: any;
-  private dbInitialized = new BehaviorSubject<boolean>(false);
+  private readonly dbInitialized = signal<boolean>(false);
+  readonly dbInitialized$ = computed(() => this.dbInitialized());
 
   constructor() {
     this.initializeIndexedDB()
@@ -24,7 +16,7 @@ export class IndexeddbDestinationService {
         take(1),
         tap(() => {
           console.log('IndexedDB: regular destinations initialized');
-          this.dbInitialized.next(true);
+          this.dbInitialized.set(true);
         })
       )
       .subscribe();
@@ -40,26 +32,20 @@ export class IndexeddbDestinationService {
     });
   }
 
-  getAllDestinations(): Observable<Destination[]> {
-    return this.dbInitialized.pipe(
-      switchMap((initiated: boolean) =>
-        initiated
-          ? (this.db.getDestinations() as Observable<Destination[]>)
-          : of([])
-      )
-    );
+  getAllDestinations() {
+    const dbInitialized = this.dbInitialized$();
+    if (dbInitialized) {
+      return this.db.getDestinations() as Observable<Destination[]>;
+    }
+    return of([]);
   }
 
   addDestinations(destinations: Destination[]): Observable<string[]> {
-    return this.dbInitialized.pipe(
-      take(1),
-      switchMap((initiated: boolean) => {
-        if (initiated) {
-          console.log('Adding destinations to IndexedDB: ', destinations);
-          return this.db.addDestinations(destinations) as Observable<string[]>;
-        }
-        return of([]);
-      })
-    );
+    const dbInitialized = this.dbInitialized$();
+    if (dbInitialized) {
+      console.log('Adding destinations to IndexedDB: ', destinations);
+      return this.db.addDestinations(destinations) as Observable<string[]>;
+    }
+    return of([]);
   }
 }

@@ -1,6 +1,5 @@
-import { AfterContentInit, Component, OnInit } from '@angular/core';
+import { AfterContentInit, Component, effect } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Subject, first, tap } from 'rxjs';
 import { UrlTrackerService } from './shared/services/url-tracker/url-tracker.service';
 import { LoadingService } from './shared/services/loading/loading.service';
 
@@ -9,40 +8,25 @@ import { LoadingService } from './shared/services/loading/loading.service';
   imports: [RouterOutlet],
   template: ` <router-outlet></router-outlet> `,
 })
-export class AppComponent implements OnInit, AfterContentInit {
+export class AppComponent implements AfterContentInit {
   title = 'ng-gtm-integration-sample';
-  // @ViewChild('loadingDiv', { static: false }) loadingDiv!: ElementRef;
-  private readonly destroy$ = new Subject<void>();
 
   constructor(
     private readonly urlTrackerService: UrlTrackerService,
     private readonly loadingService: LoadingService
-  ) {}
-
-  ngOnInit() {
-    this.loadingService
-      .getLoadingState()
-      .pipe(
-        first((isLoading) => !isLoading),
-        tap((isLoading) => {
-          if (!isLoading) {
-            window.dataLayer.push({
-              event: 'componentsLoaded',
-            });
-          }
-        })
-      )
-      .subscribe();
+  ) {
+    const loading = this.loadingService.getLoadingState();
+    let didFire = false;
+    effect(() => {
+      if (!loading() && !didFire) {
+        didFire = true;
+        window.dataLayer.push({ event: 'componentsLoaded' });
+      }
+    });
     this.urlTrackerService.initializeUrlTracking();
   }
 
   ngAfterContentInit() {
     window.onload = () => {};
-  }
-
-  ngOnDestroy() {
-    // Cleanup subscriptions
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

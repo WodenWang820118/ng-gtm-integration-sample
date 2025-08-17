@@ -6,7 +6,7 @@ import { EnvDetectorService } from '../env-detector/env-detector.service';
   providedIn: 'root',
 })
 export class JavascriptInterfaceService {
-  constructor(private envDetector: EnvDetectorService) {}
+  constructor(private readonly envDetector: EnvDetectorService) {}
   logEvent(name: string, params: any) {
     switch (this.envDetector.getPlatform()) {
       case Environment.FLUTTER:

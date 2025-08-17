@@ -1,10 +1,10 @@
-@let items = basketItems$ | async;
+@let items = basketItems$();
 @if (!items?.length) {
   <div class="max-w-4xl mx-auto p-6">
     <p-message severity="info" text="There are no items in your basket."></p-message>
   </div>
 } @else {
-  @let width = (windowSizeService.width$ | async) ?? 0;
+  @let width = (windowSizeService.width$());
   @if (width > 480) {
   <p-table [value]="items || []" [responsiveLayout]="'scroll'" class="p-datatable-striped">
       <ng-template pTemplate="header">
@@ -31,7 +31,7 @@
       <ng-template pTemplate="footer">
         <tr>
           <td colspan="3" class="p-text-center">
-            Total: {{ calculateTotalPrice() | async | currency }}
+            Total: {{ calculateTotalPrice()() | currency }}
           </td>
           <td colspan="2" class="p-text-center">
             <button pButton label="Checkout" icon="pi pi-check" class="p-button-success" (click)="beginCheckout(); navigateToBeginCheckout()"></button>

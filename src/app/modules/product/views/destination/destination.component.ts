@@ -1,12 +1,13 @@
 import {
   Component,
-  ElementRef,
+  computed,
+  effect,
   OnInit,
-  Type,
-  ViewChild,
+  signal,
+  viewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { AsyncPipe, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import {
   FormControl,
   FormGroup,
@@ -28,27 +29,26 @@ import { Destination } from '../../../../shared/models/destination.model';
 
 @Component({
   selector: 'app-destination',
-  imports: [
-    YouTubePlayerModule,
-    NgClass,
-    AsyncPipe,
-    ReactiveFormsModule,
-    FormsModule,
-  ],
+  imports: [YouTubePlayerModule, NgClass, ReactiveFormsModule, FormsModule],
   templateUrl: './destination.component.html',
   encapsulation: ViewEncapsulation.None,
 })
 export class DestinationComponent implements OnInit {
-  destinations: Destination[] = [];
   searchForm: FormGroup = new FormGroup({
     searchTerm: new FormControl(''),
   });
 
-  @ViewChild('ytPlayerModal') ytPlayerModal!: ElementRef;
-  @ViewChild('player') videoPlayer: any;
-  currentComponent: Type<any> | null = null;
-  videoId = '';
-  showVideoPlayer = false;
+  private readonly destinations = signal<Destination[]>([]);
+  destinations$ = computed(() => this.destinations());
+
+  private readonly videoId = signal<string>('');
+  videoId$ = computed(() => this.videoId());
+
+  private readonly showVideoPlayer = signal<boolean>(false);
+  showVideoPlayer$ = computed(() => this.showVideoPlayer);
+
+  private readonly ytPlayerModal = viewChild('ytPlayerModal');
+  private readonly videoPlayer = viewChild<any>('player');
   playerVars = {
     enablejsapi: 1,
   };
@@ -63,7 +63,14 @@ export class DestinationComponent implements OnInit {
     private readonly sanitizer: DomSanitizer,
     private readonly firestoreDestinationPipelineService: FirestoreDestinationPipelineService,
     private readonly analyticsService: AnalyticsService
-  ) {}
+  ) {
+    effect(() => {
+      const searchResults = this.searchService.searchResults$();
+      if (searchResults.length) {
+        this.destinations.set(searchResults);
+      }
+    });
+  }
 
   ngOnInit() {
     this.firestoreDestinationPipelineService
@@ -71,16 +78,8 @@ export class DestinationComponent implements OnInit {
       .pipe(
         take(1),
         tap((destinations) => {
-          this.destinations = destinations;
+          this.destinations.set(destinations);
           this.trackViewItemList(destinations);
-        })
-      )
-      .subscribe();
-
-    this.searchService.searchResults$
-      .pipe(
-        tap((results) => {
-          this.destinations = results;
         })
       )
       .subscribe();
@@ -92,7 +91,7 @@ export class DestinationComponent implements OnInit {
       .pipe(
         take(1),
         tap((destinations) => {
-          this.destinations = destinations;
+          this.destinations.set(destinations);
           this.trackViewItemList(destinations);
         })
       )
@@ -106,7 +105,7 @@ export class DestinationComponent implements OnInit {
       .pipe(
         take(1),
         tap((destinations) => {
-          this.destinations = destinations;
+          this.destinations.set(destinations);
           this.trackViewItemList(destinations);
         })
       )
@@ -161,14 +160,14 @@ export class DestinationComponent implements OnInit {
   }
 
   closeModal() {
-    this.showVideoPlayer = false;
-    this.videoPlayer.pauseVideo();
+    this.showVideoPlayer.set(false);
+    this.videoPlayer().pauseVideo();
     this.youtubeService.stopProgressTracking();
   }
 
   showModal(url: string) {
-    this.videoId = this.getVideoId(url);
-    this.showVideoPlayer = true;
+    this.videoId.set(this.getVideoId(url));
+    this.showVideoPlayer.set(true);
   }
 
   onStateChange(event: any) {

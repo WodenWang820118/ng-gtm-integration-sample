@@ -10,18 +10,18 @@
   </ng-template>
 
   <ng-template pTemplate="end">
-    @if (!(authService.isLoggedIn() | async)) {
+    @if (!(authService.isLoggedIn()())) {
       <button pButton type="button" label="Login" class="p-button-text mr-2" (click)="navigateToLogin()"></button>
     }
-    @if (authService.isLoggedIn() | async) {
+    @if (authService.isLoggedIn()()) {
       <button pButton type="button" label="Logout" class="p-button-text mr-2" (click)="authService.logout()"></button>
       <button pButton type="button" label="Admin" class="p-button-text mr-2" (click)="navigateToAdmin()"></button>
       <button pButton type="button" label="Add Data" class="p-button-text mr-2" (click)="navigateToAddData()"></button>
     }
     <button pButton type="button" icon="pi pi-shopping-cart" class="p-button-text relative" label="Cart" (click)="trackViewCart(); navigateToBasket()">
-      @if (((numOfItemsInCart() | async) || 0) > 0) {
+      @if (((numOfItemsInCart()) || 0) > 0) {
         <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-          {{ numOfItemsInCart() | async }}
+          {{ numOfItemsInCart() }}
         </span>
       }
     </button>

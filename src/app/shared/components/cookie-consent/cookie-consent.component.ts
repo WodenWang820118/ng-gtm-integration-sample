@@ -1,11 +1,11 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  Input,
+  effect,
+  input,
+  signal,
 } from '@angular/core';
 import { ConsentService } from '../../services/consent/consent.service';
-import { take, tap } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
@@ -18,13 +18,16 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
   templateUrl: './cookie-consent.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CookieConsentComponent implements AfterViewInit {
-  // models for PrimeNG input switches
+export class CookieConsentComponent {
   analyticsModel = false;
   measurementModel = false;
   audienceModel = false;
-  @Input() showModal: boolean = false;
-  @Input() showCookieConsent: boolean = false;
+
+  showModal = signal<boolean>(false);
+  showCookieConsent = signal<boolean>(false);
+
+  showModalInput = input<boolean>(false);
+  showCookieConsentInput = input<boolean>(false);
 
   constructor(public consentService: ConsentService) {
     if (localStorage.getItem('consentPreferences')) {
@@ -34,47 +37,33 @@ export class CookieConsentComponent implements AfterViewInit {
     } else {
       this.consentService.initConsentPreferences();
     }
-  }
 
-  ngAfterViewInit() {
-    // initialize switch models from service
-    this.consentService
-      .analyticsConsentGiven$()
-      .pipe(take(1))
-      .subscribe((v) => (this.analyticsModel = v));
-    this.consentService
-      .measurementConsentGiven$()
-      .pipe(take(1))
-      .subscribe((v) => (this.measurementModel = v));
-    this.consentService
-      .audienceConsentGiven$()
-      .pipe(take(1))
-      .subscribe((v) => (this.audienceModel = v));
-    // need to update GTM consent preferences after the component is initialized
-    this.consentService.consentPreferences$
-      .pipe(
-        take(1),
-        tap((consentPreferences) => {
-          this.consentService.updateConsentPreferences(consentPreferences);
-        })
-      )
-      .subscribe();
+    effect(() => {
+      this.analyticsModel = this.consentService.analyticsConsentGiven$()();
+      this.measurementModel = this.consentService.measurementConsentGiven$()();
+      this.audienceModel = this.consentService.audienceConsentGiven$()();
+    });
+
+    effect(() => {
+      this.showModal.set(this.showModalInput());
+      this.showCookieConsent.set(this.showCookieConsentInput());
+    });
   }
 
   hide() {
-    this.showModal = false;
+    this.showModal.set(false);
   }
 
   show() {
-    this.showModal = true;
+    this.showModal.set(true);
   }
 
   showCookieConsentIcon() {
-    this.showCookieConsent = true;
+    this.showCookieConsent.set(true);
   }
 
   hideCookieConsentIcon() {
-    this.showCookieConsent = false;
+    this.showCookieConsent.set(false);
   }
 
   acceptAnalytics(event: any) {
@@ -146,7 +135,7 @@ export class CookieConsentComponent implements AfterViewInit {
   }
 
   switchModal() {
-    this.showModal = !this.showModal;
+    this.showModal.set(!this.showModal());
   }
 
   consent() {

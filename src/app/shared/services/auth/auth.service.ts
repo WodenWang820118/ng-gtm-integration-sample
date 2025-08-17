@@ -1,13 +1,5 @@
-import {
-  BehaviorSubject,
-  Observable,
-  catchError,
-  defer,
-  from,
-  map,
-  of,
-} from 'rxjs';
-import { Injectable } from '@angular/core';
+import { catchError, defer, from, of } from 'rxjs';
+import { computed, Injectable, signal } from '@angular/core';
 import { AnalyticsService } from '../analytics/analytics.service';
 import { signInWithPopup, GoogleAuthProvider, User } from 'firebase/auth';
 import { auth } from '../../../firebase/auth';
@@ -16,9 +8,11 @@ import { auth } from '../../../firebase/auth';
   providedIn: 'root',
 })
 export class AuthService {
-  private user = new BehaviorSubject<User | undefined>(undefined);
+  // private readonly user = new BehaviorSubject<User | undefined>(undefined);
+  private readonly user = signal<User | undefined>(undefined);
+  private readonly user$ = computed(() => this.user());
 
-  constructor(private analyticsService: AnalyticsService) {}
+  constructor(private readonly analyticsService: AnalyticsService) {}
 
   loginWithGoogle() {
     const provider = new GoogleAuthProvider();
@@ -31,7 +25,7 @@ export class AuthService {
             const token = credential?.accessToken;
             // The signed-in user info.
             const user = result.user;
-            if (user) this.user.next(user);
+            if (user) this.user.set(user);
             // IdP data available using getAdditionalUserInfo(result)
             // ...
             this.analyticsService.trackEvent('login', { method: 'google' });
@@ -55,16 +49,16 @@ export class AuthService {
     );
   }
 
-  isLoggedIn(): Observable<boolean> {
-    return this.user.pipe(map((user) => !!user));
+  isLoggedIn() {
+    return this.user$;
   }
 
-  getUser(): Observable<User | undefined> {
-    return this.user;
+  getUser() {
+    return this.user$;
   }
 
   logout() {
-    this.user.next(undefined);
+    this.user.set(undefined);
     return defer(() =>
       from(auth.signOut()).pipe(
         catchError((error) => {

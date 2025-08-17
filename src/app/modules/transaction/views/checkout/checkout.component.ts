@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { FormBuilder } from '@angular/forms';
 import { PaymentFormComponent } from '../../components/payment-form/payment-form.component';
@@ -9,12 +8,7 @@ import { OrderService } from '../../../../shared/services/order/order.service';
 @Component({
   standalone: true,
   selector: 'app-checkout',
-  imports: [
-    ShippingFormComponent,
-    PaymentFormComponent,
-    AsyncPipe,
-    TableModule,
-  ],
+  imports: [ShippingFormComponent, PaymentFormComponent, TableModule],
   templateUrl: './checkout.component.html',
   styles: [
     `

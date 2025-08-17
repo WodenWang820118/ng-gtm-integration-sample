@@ -3,18 +3,11 @@ import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CheckoutFormManagerService } from '../../../../shared/services/checkout-form-manager/checkout-form-manager.service';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-shipping-form',
   standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    FormsModule,
-    InputTextModule,
-    ButtonModule,
-    AsyncPipe,
-  ],
+  imports: [ReactiveFormsModule, FormsModule, InputTextModule, ButtonModule],
   template: `
     <div class="container mx-auto p-4">
       <form
@@ -53,7 +46,7 @@ import { AsyncPipe } from '@angular/common';
             <input pInputText formControlName="city" id="city" class="w-full" />
           </div>
         </div>
-        @if (!(checkoutFormManager.isShippingFormSubmitted | async)) {
+        @if (!(checkoutFormManager.isShippingFormSubmitted())) {
         <div class="mt-4">
           <button pButton type="submit" label="Continue"></button>
         </div>

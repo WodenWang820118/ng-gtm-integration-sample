@@ -1,12 +1,12 @@
-import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, debounce, debounceTime, fromEvent, tap } from 'rxjs';
+import { computed, Injectable, signal } from '@angular/core';
+import { debounceTime, fromEvent, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class WindowSizeService implements OnDestroy {
-  private widthSubject = new BehaviorSubject<number>(window.innerWidth);
-  width$ = this.widthSubject.asObservable();
+export class WindowSizeService {
+  private readonly width = signal<number>(window.innerWidth);
+  width$ = computed(() => this.width());
 
   constructor() {
     this.onResize().subscribe();
@@ -16,12 +16,8 @@ export class WindowSizeService implements OnDestroy {
     return fromEvent(window, 'resize').pipe(
       debounceTime(100),
       tap((event) => {
-        this.widthSubject.next((event.target as Window).innerWidth);
+        this.width.set((event.target as Window).innerWidth);
       })
     );
-  }
-
-  ngOnDestroy() {
-    this.widthSubject.unsubscribe();
   }
 }

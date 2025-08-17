@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 import { firestore } from '../../../firebase/firestore';
 import {
   collection,
@@ -17,7 +17,6 @@ import {
   of,
   defer,
   from,
-  BehaviorSubject,
   tap,
   forkJoin,
   map,
@@ -36,17 +35,18 @@ import { IndexeddbDestinationService } from '../indexeddb-destination/indexeddb-
   providedIn: 'root',
 })
 export class FirestoreDestinationPipelineService {
-  lastVisibleDocs = new BehaviorSubject<QueryDocumentSnapshot<
+  private readonly lastVisibleDocs = signal<QueryDocumentSnapshot<
     DocumentData,
     DocumentData
   > | null>(null);
+  readonly lastVisibleDocs$ = computed(() => this.lastVisibleDocs());
   previousDocsStack: QueryDocumentSnapshot<DocumentData, DocumentData>[] = [];
   db: any;
 
   constructor(
-    private firebaseStorageService: FirebaseStorageService,
-    private indexeddbFeaturedDestinationService: IndexeddbFeaturedDestinationService,
-    private indexeddbDestinationService: IndexeddbDestinationService
+    private readonly firebaseStorageService: FirebaseStorageService,
+    private readonly indexeddbFeaturedDestinationService: IndexeddbFeaturedDestinationService,
+    private readonly indexeddbDestinationService: IndexeddbDestinationService
   ) {}
 
   getAllDestinationsData(): Observable<Destination[]> {
@@ -164,7 +164,7 @@ export class FirestoreDestinationPipelineService {
           const lastVisible =
             documentSnapshots.docs[documentSnapshots.docs.length - 1];
           this.previousDocsStack = [lastVisible];
-          this.lastVisibleDocs.next(lastVisible);
+          this.lastVisibleDocs.set(lastVisible);
         })
       )
     );
@@ -172,7 +172,7 @@ export class FirestoreDestinationPipelineService {
 
   private getNextDestinations(queryLimit = 5) {
     return defer(() => {
-      const lastVisible = this.lastVisibleDocs.value;
+      const lastVisible = this.lastVisibleDocs$();
       if (!lastVisible) {
         return of({} as QuerySnapshot<DocumentData, DocumentData>);
       }
@@ -190,7 +190,7 @@ export class FirestoreDestinationPipelineService {
           const lastVisible =
             documentSnapshots.docs[documentSnapshots.docs.length - 1];
           this.previousDocsStack.push(lastVisible);
-          this.lastVisibleDocs.next(lastVisible);
+          this.lastVisibleDocs.set(lastVisible);
         })
       );
     });
@@ -218,7 +218,7 @@ export class FirestoreDestinationPipelineService {
         tap((documentSnapshots) => {
           const lastVisible =
             documentSnapshots.docs[documentSnapshots.docs.length - 1];
-          this.lastVisibleDocs.next(lastVisible);
+          this.lastVisibleDocs.set(lastVisible);
         })
       );
     });
@@ -241,7 +241,7 @@ export class FirestoreDestinationPipelineService {
           const lastVisible =
             documentSnapshots.docs[documentSnapshots.docs.length - 1];
           this.previousDocsStack = [lastVisible];
-          this.lastVisibleDocs.next(lastVisible);
+          this.lastVisibleDocs.set(lastVisible);
         })
       )
     );

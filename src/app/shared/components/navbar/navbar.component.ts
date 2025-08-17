@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, effect } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { AnalyticsService } from 'src/app/shared/services/analytics/analytics.service';
@@ -7,11 +7,10 @@ import { map, take, tap } from 'rxjs';
 import { NavigationService } from '../../services/navigation/navigation.service';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ButtonModule } from 'primeng/button';
-import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterModule, ToolbarModule, ButtonModule, AsyncPipe],
+  imports: [RouterModule, ToolbarModule, ButtonModule],
   templateUrl: './navbar.component.html',
 })
 export class NavbarComponent {
@@ -20,7 +19,14 @@ export class NavbarComponent {
     private readonly orderService: OrderService,
     private readonly analyticsService: AnalyticsService,
     private readonly navigationService: NavigationService
-  ) {}
+  ) {
+    // effect(() => {
+    //   const orders = this.orderService.orders$();
+    //   if (orders.length > 0) {
+    //     this.analyticsService.trackEvent('view_cart', orders);
+    //   }
+    // });
+  }
 
   navigateToHome() {
     this.navigationService.navigateToHome();
@@ -47,20 +53,13 @@ export class NavbarComponent {
   }
 
   trackViewCart(): void {
-    this.orderService.orders$
-      .pipe(
-        take(1),
-        tap((orders) => {
-          this.analyticsService.trackEvent('view_cart', orders);
-        })
-      )
-      .subscribe();
+    const orders = this.orderService.orders$();
+    if (orders.length > 0) {
+      this.analyticsService.trackEvent('view_cart', orders);
+    }
   }
 
   numOfItemsInCart() {
-    return this.orderService.orders$.pipe(
-      take(1),
-      map((orders) => orders.length)
-    );
+    return this.orderService.orders$().length;
   }
 }

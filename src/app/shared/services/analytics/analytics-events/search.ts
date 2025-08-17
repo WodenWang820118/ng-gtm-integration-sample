@@ -1,7 +1,7 @@
 import { AnalyticsEventTracker } from '../../../models/analytics-event-tracker.model';
 
 export class SearchEventTracker implements AnalyticsEventTracker {
-  constructor(private eventName: string) {
+  constructor(private readonly eventName: string) {
     this.eventName = eventName;
   }
 

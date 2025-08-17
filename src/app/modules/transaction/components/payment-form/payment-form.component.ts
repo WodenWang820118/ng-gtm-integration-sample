@@ -4,20 +4,13 @@ import { CheckoutFormManagerService } from '../../../../shared/services/checkout
 import { NavigationService } from 'src/app/shared/services/navigation/navigation.service';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-payment-form',
   standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    FormsModule,
-    InputTextModule,
-    ButtonModule,
-    AsyncPipe,
-  ],
+  imports: [ReactiveFormsModule, FormsModule, InputTextModule, ButtonModule],
   template: `
-    @if (checkoutFormManager.isShippingFormSubmitted$ | async) {
+    @if (checkoutFormManager.isShippingFormSubmitted$()) {
     <div class="container mx-auto p-4">
       <form [formGroup]="paymentForm" class="space-y-4">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">

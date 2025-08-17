@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, defer, from, Observable, take } from 'rxjs';
+import { defer, from, Observable, take } from 'rxjs';
 import { Country, City } from 'country-state-city';
 import { Destination } from '../../models/destination.model';
 import { doc, setDoc, writeBatch } from 'firebase/firestore';
@@ -11,14 +11,11 @@ import { v4 as uuidv4 } from 'uuid';
   providedIn: 'root',
 })
 export class CountriesDataService {
-  private jsonUrl = 'assets/countries.json'; // Path to the JSON file
-  private uploadProgress = new BehaviorSubject<number>(0);
+  private readonly jsonUrl = 'assets/countries.json'; // Path to the JSON file
+  private readonly uploadProgress = signal<number>(0);
+  readonly uploadProgress$ = computed(() => this.uploadProgress());
 
-  constructor(private http: HttpClient) {}
-
-  getUploadProgress(): Observable<number> {
-    return this.uploadProgress.asObservable();
-  }
+  constructor(private readonly http: HttpClient) {}
 
   private batchUpload(destinations: Destination[]) {
     const chunkSize = 400; // Firestore allows up to 500 operations per batch, we use 400 to be safe
@@ -29,10 +26,10 @@ export class CountriesDataService {
       const chunk = destinations.slice(i, i + chunkSize);
       this.uploadChunk(chunk).pipe(take(1)).subscribe();
       processedChunks++;
-      this.uploadProgress.next((processedChunks / totalChunks) * 100);
+      this.uploadProgress.set((processedChunks / totalChunks) * 100);
     }
 
-    this.uploadProgress.next(100);
+    this.uploadProgress.set(100);
   }
 
   private uploadChunk(chunk: Destination[]) {

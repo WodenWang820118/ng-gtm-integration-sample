@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, effect } from '@angular/core';
 import {
   FormBuilder,
   FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { tap } from 'rxjs';
 import { AuthService } from '../../../../shared/services/auth/auth.service';
 import { NavigationService } from '../../../../shared/services/navigation/navigation.service';
 import { ButtonModule } from 'primeng/button';
@@ -29,7 +28,7 @@ import { ButtonModule } from 'primeng/button';
   `,
   styles: [``],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   signInForm = this.fb.group({
     username: ['', Validators.required],
     password: ['', Validators.required],
@@ -38,18 +37,11 @@ export class LoginComponent implements OnInit {
     private readonly fb: FormBuilder,
     private readonly authService: AuthService,
     private readonly navigationService: NavigationService
-  ) {}
-
-  ngOnInit(): void {
-    this.authService
-      .isLoggedIn()
-      .pipe(
-        tap((isLoggedIn) => {
-          console.log('isLoggedIn', isLoggedIn);
-          if (isLoggedIn) this.navigationService.navigateToHome();
-        })
-      )
-      .subscribe();
+  ) {
+    effect(() => {
+      const isLoggedIn = this.authService.isLoggedIn();
+      if (isLoggedIn !== undefined) this.navigationService.navigateToHome();
+    });
   }
 
   loginWithGoogle(): void {

@@ -1,12 +1,12 @@
 <div
-  id="content-{{ (destination$ | async)?.title?.toLowerCase() }}"
+  id="content-{{ (destination$())?.title?.toLowerCase() }}"
   class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8"
 >
   <div class="mb-6 border-b pb-4">
     <h2>
-      {{ (destination$ | async)?.title }}
+      {{ (destination$())?.title }}
       <small style="font-size: 18px">{{
-        (destination$ | async)?.smallTitle
+        (destination$())?.smallTitle
       }}</small>
       <br />
       <a
@@ -18,15 +18,15 @@
   </div>
   <div class="flex flex-col lg:flex-row space-y-6 lg:space-y-0 lg:space-x-6">
     <div class="flex-1 p-4 bg-white rounded-lg shadow">
-      <h3>Go to {{ (destination$ | async)?.title }}</h3>
+      <h3>Go to {{ (destination$())?.title }}</h3>
       <div style="height: 66%">
         <p>
-          {{ (destination$ | async)?.description }}
+          {{ (destination$())?.description }}
         </p>
       </div>
       <div class="mt-4">
         <h4 class="text-xl font-semibold mb-2">
-          ${{ (destination$ | async)?.price }} / 6 Nights
+          ${{ (destination$())?.price }} / 6 Nights
         </h4>
         <div class="flex justify-end items-center space-x-2">
           <!-- Replace select with PrimeNG AutoComplete -->
@@ -42,8 +42,8 @@
           ></p-autoComplete>
           <button
             class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
-            data-name="{{ (destination$ | async)?.title }}"
-            (click)="addToCart(destination$)"
+            data-name="{{ (destination$())?.title }}"
+            (click)="addToCart(destination$())"
           >
             Add to Cart
           </button>
@@ -56,8 +56,8 @@
         <div class="overflow-hidden rounded-lg">
           <img
             src="{{
-              (destination$ | async)?.imageBig
-                ? (destination$ | async)?.imageBig
+              (destination$())?.imageBig
+                ? (destination$())?.imageBig
                 : '../../../../../../../assets/images/placeholder.png'
             }}"
             alt=""
@@ -66,12 +66,12 @@
         </div>
       </div>
   <!-- Responsive additional images -->
-  @if (( (windowSizeService.width$ | async) ?? 0 ) > 480) {
+  @if (windowSizeService.width$() > 480) {
         <div class="flex justify-center space-x-4">
           <div class="overflow-hidden rounded-lg">
             <img
-              src="{{ (destination$ | async)?.image2
-                ? (destination$ | async)?.image2
+              src="{{ (destination$())?.image2
+                ? (destination$())?.image2
                 : '../../../../../../../assets/images/placeholder.png' }}"
               alt=""
               class="w-32 h-32 object-cover"
@@ -79,8 +79,8 @@
           </div>
           <div class="overflow-hidden rounded-lg">
             <img
-              src="{{ (destination$ | async)?.image3
-                ? (destination$ | async)?.image3
+              src="{{ (destination$())?.image3
+                ? (destination$())?.image3
                 : '../../../../../../../assets/images/placeholder.png' }}"
               alt=""
               class="w-32 h-32 object-cover"

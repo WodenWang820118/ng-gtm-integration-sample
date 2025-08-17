@@ -6,7 +6,7 @@
 
   <div class="bg-blue-50 p-6 rounded-lg text-center" id="orderConfirmed">
     <h2 class="text-2xl font-semibold mb-4">
-      Thank you for reserving your trip through GTM Travel Site for ${{ orderService.totalPrice$ | async }}. Enjoy!
+      Thank you for reserving your trip through GTM Travel Site for ${{ orderService.totalPrice$() }}. Enjoy!
     </h2>
     <div class="flex justify-center space-x-4">
       <button pButton type="button" label="Back to Home" class="bg-gray-800" (click)="resetOrders()"></button>

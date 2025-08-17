@@ -1,6 +1,6 @@
 <div class="max-w-3xl mx-auto p-6" id="checkout">
   <h2 class="text-2xl font-semibold mb-4">Checkout</h2>
-  <p-table [value]="(orders$ | async) || []" class="min-w-full bg-white shadow rounded-lg overflow-hidden">
+  <p-table [value]="(orders$()) || []" class="min-w-full bg-white shadow rounded-lg overflow-hidden">
     <caption class="p-2 text-base font-semibold">Summary</caption>
     <ng-template pTemplate="header">
       <tr class="bg-gray-100 uppercase text-sm leading-normal">
@@ -22,7 +22,7 @@
     </ng-template>
     <ng-template pTemplate="footer">
       <tr>
-        <td colspan="5" class="text-right text-lg font-bold py-4">Total Price: ${{ calculateTotalPrice() | async }}</td>
+        <td colspan="5" class="text-right text-lg font-bold py-4">Total Price: ${{ calculateTotalPrice()}}</td>
       </tr>
     </ng-template>
   </p-table>
