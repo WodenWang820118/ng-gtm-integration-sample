@@ -7,7 +7,6 @@ import {
   viewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { NgClass } from '@angular/common';
 import {
   FormControl,
   FormGroup,
@@ -26,10 +25,17 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { FirestoreDestinationPipelineService } from '../../../../shared/services/firestore-destination-pipeline/firestore-destination-pipeline.service';
 import { AnalyticsService } from '../../../../shared/services/analytics/analytics.service';
 import { Destination } from '../../../../shared/models/destination.model';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
+  standalone: true,
   selector: 'app-destination',
-  imports: [YouTubePlayerModule, NgClass, ReactiveFormsModule, FormsModule],
+  imports: [
+    YouTubePlayerModule,
+    ReactiveFormsModule,
+    FormsModule,
+    DialogModule,
+  ],
   templateUrl: './destination.component.html',
   encapsulation: ViewEncapsulation.None,
 })
@@ -46,8 +52,14 @@ export class DestinationComponent implements OnInit {
 
   private readonly showVideoPlayer = signal<boolean>(false);
   showVideoPlayer$ = computed(() => this.showVideoPlayer);
+  // Getter and setter for PrimeNG dialog two-way binding
+  get videoDialogVisible(): boolean {
+    return this.showVideoPlayer();
+  }
+  set videoDialogVisible(value: boolean) {
+    this.showVideoPlayer.set(value);
+  }
 
-  private readonly ytPlayerModal = viewChild('ytPlayerModal');
   private readonly videoPlayer = viewChild<any>('player');
   playerVars = {
     enablejsapi: 1,

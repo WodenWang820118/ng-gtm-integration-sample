@@ -13,10 +13,16 @@ import { RouterOutlet } from '@angular/router';
     RouterOutlet,
   ],
   template: `
-    <app-navbar></app-navbar>
-    <router-outlet></router-outlet>
-    <app-footer></app-footer>
-    <app-disclaimer></app-disclaimer>
+    <div class="flex flex-col min-h-screen">
+      <app-navbar></app-navbar>
+      <main class="flex-1 p-4">
+        <router-outlet></router-outlet>
+      </main>
+      <footer class="bg-white">
+        <app-footer></app-footer>
+        <app-disclaimer class="mt-2"></app-disclaimer>
+      </footer>
+    </div>
   `,
   styles: [``],
 })

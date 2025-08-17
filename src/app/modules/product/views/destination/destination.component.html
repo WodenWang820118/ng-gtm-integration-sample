@@ -53,15 +53,6 @@
         <button type="button" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" (click)="goToDetails(destination); selectItem(destination)">Details</button>
         <button type="button" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" (click)="showModal(destination.video)">Video</button>
       </div>
-      @if (videoId$() === getVideoId(destination.video)) {
-        <!-- modal content -->
-        <div #ytPlayerModal id="yt-player-modal" [ngClass]="{ 'show-modal': showVideoPlayer$(), 'hide-modal': !showVideoPlayer$() }" class="modal rwd-mobile">
-          <div class="modal-content">
-            <youtube-player #player [id]="'yt-player-' + videoId$()" class="video-player" [videoId]="videoId$()" [playerVars]="playerVars" (stateChange)="onStateChange($event)" disablePlaceholder="true" placeholderButtonLabel="destination intro video"></youtube-player>
-            <button type="button" class="close text-2xl focus:outline-none" (click)="closeModal()" aria-label="Close">&times;</button>
-          </div>
-        </div>
-      }
     </div>
     }
     <!-- pagination -->
@@ -79,4 +70,8 @@
   } @placeholder {
   <div>Loading..</div>
   }
+  <!-- PrimeNG Dialog for video player -->
+  <p-dialog [(visible)]="videoDialogVisible" modal class="w-11/12 sm:w-8/12 md:w-6/12 lg:w-4/12 p-0" [style]="{'padding':'0'}" [baseZIndex]="10000" (onHide)="closeModal()">
+    <youtube-player #player [id]="'yt-player-' + videoId$()" class="w-full h-auto" [videoId]="videoId$()" [playerVars]="playerVars" (stateChange)="onStateChange($event)" disablePlaceholder="true" placeholderButtonLabel="destination intro video"></youtube-player>
+  </p-dialog>
 </div>

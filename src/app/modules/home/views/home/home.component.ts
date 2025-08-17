@@ -18,10 +18,10 @@ import { RouterOutlet } from '@angular/router';
       <main class="flex-grow container mx-auto px-4 py-8">
         <router-outlet></router-outlet>
       </main>
-      <app-footer class="bg-gray-100"></app-footer>
-      <app-disclaimer
-        class="text-xs text-center text-gray-500 py-4"
-      ></app-disclaimer>
+      <footer class="bg-white">
+        <app-footer></app-footer>
+        <app-disclaimer class="mt-2"></app-disclaimer>
+      </footer>
     </div>
   `,
   styles: [``],
