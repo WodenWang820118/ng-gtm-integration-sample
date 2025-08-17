@@ -1,14 +1,5 @@
-import { Injectable } from '@angular/core';
-import {
-  BehaviorSubject,
-  defer,
-  from,
-  Observable,
-  of,
-  switchMap,
-  take,
-  tap,
-} from 'rxjs';
+import { computed, Injectable, signal } from '@angular/core';
+import { defer, from, Observable, of, take, tap } from 'rxjs';
 import { Destination } from '../../models/destination.model';
 
 @Injectable({
@@ -16,7 +7,9 @@ import { Destination } from '../../models/destination.model';
 })
 export class IndexeddbFeaturedDestinationService {
   db: any;
-  private dbInitialized = new BehaviorSubject<boolean>(false);
+  // private dbInitialized = new BehaviorSubject<boolean>(false);
+  private readonly dbInitialized = signal<boolean>(false);
+  readonly dbInitialized$ = computed(() => this.dbInitialized());
 
   constructor() {
     this.initializeIndexedDB()
@@ -24,7 +17,7 @@ export class IndexeddbFeaturedDestinationService {
         take(1),
         tap(() => {
           console.log('IndexedDB initialized');
-          this.dbInitialized.next(true);
+          this.dbInitialized.set(true);
         })
       )
       .subscribe();
@@ -41,26 +34,20 @@ export class IndexeddbFeaturedDestinationService {
   }
 
   getAllFeaturedDestinations(): Observable<Destination[]> {
-    return this.dbInitialized.pipe(
-      switchMap((initiated: boolean) =>
-        initiated
-          ? (this.db.getFeaturedDestinations() as Observable<Destination[]>)
-          : of([])
-      )
-    );
+    const dbInitialized = this.dbInitialized$();
+    if (dbInitialized) {
+      return this.db.getFeaturedDestinations() as Observable<Destination[]>;
+    }
+    return of([]);
   }
 
   addFeaturedDestinations(destinations: Destination[]): Observable<string[]> {
-    return this.dbInitialized.pipe(
-      take(1),
-      switchMap((initiated: boolean) => {
-        if (initiated) {
-          return this.db.addFeaturedDestinations(destinations) as Observable<
-            string[]
-          >;
-        }
-        return of([]);
-      })
-    );
+    const dbInitialized = this.dbInitialized$();
+    if (dbInitialized) {
+      return this.db.addFeaturedDestinations(destinations) as Observable<
+        string[]
+      >;
+    }
+    return of([]);
   }
 }

@@ -1,16 +1,17 @@
 import { Component } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
+import { TableModule } from 'primeng/table';
 import { FormBuilder } from '@angular/forms';
 import { PaymentFormComponent } from '../../components/payment-form/payment-form.component';
 import { ShippingFormComponent } from '../../components/shipping-form/shipping-form.component';
 import { OrderService } from '../../../../shared/services/order/order.service';
 
 @Component({
-    selector: 'app-checkout',
-    imports: [ShippingFormComponent, PaymentFormComponent, AsyncPipe],
-    templateUrl: './checkout.component.html',
-    styles: [
-        `
+  standalone: true,
+  selector: 'app-checkout',
+  imports: [ShippingFormComponent, PaymentFormComponent, TableModule],
+  templateUrl: './checkout.component.html',
+  styles: [
+    `
       #checkout h2 {
         color: steelblue;
         margin: 0 0 20px 0;
@@ -69,12 +70,15 @@ import { OrderService } from '../../../../shared/services/order/order.service';
         font-size: 16px;
       }
     `,
-    ]
+  ],
 })
 export class CheckoutComponent {
   orders$ = this.orderService.orders$;
 
-  constructor(private orderService: OrderService, private fb: FormBuilder) {}
+  constructor(
+    private readonly orderService: OrderService,
+    private readonly fb: FormBuilder
+  ) {}
 
   calculateTotalPrice() {
     return this.orderService.calculateTotalPrice();

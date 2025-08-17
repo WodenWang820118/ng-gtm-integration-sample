@@ -1,71 +1,32 @@
-import {
-  AfterContentInit,
-  AfterViewChecked,
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { AfterContentInit, Component, effect } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Subject, first, tap } from 'rxjs';
 import { UrlTrackerService } from './shared/services/url-tracker/url-tracker.service';
 import { LoadingService } from './shared/services/loading/loading.service';
-import { StyleLoadService } from './shared/services/style-load/style-load.service';
 
 @Component({
-    selector: 'app-root',
-    imports: [RouterOutlet],
-    template: ` <router-outlet></router-outlet> `
+  selector: 'app-root',
+  imports: [RouterOutlet],
+  template: ` <router-outlet></router-outlet> `,
 })
-export class AppComponent
-  implements OnInit, AfterContentInit, AfterViewChecked
-{
+export class AppComponent implements AfterContentInit {
   title = 'ng-gtm-integration-sample';
-  @ViewChild('loadingDiv', { static: false }) loadingDiv!: ElementRef;
-  private destroy$ = new Subject<void>();
 
   constructor(
-    private urlTrackerService: UrlTrackerService,
-    private loadingService: LoadingService,
-    private styleLoadService: StyleLoadService
-  ) {}
-
-  ngOnInit() {
-    this.styleLoadService.appendAllStyles();
-    this.loadingService
-      .getLoadingState()
-      .pipe(
-        first((isLoading) => !isLoading),
-        tap((isLoading) => {
-          if (!isLoading) {
-            window.dataLayer.push({
-              event: 'componentsLoaded',
-            });
-          }
-        })
-      )
-      .subscribe();
+    private readonly urlTrackerService: UrlTrackerService,
+    private readonly loadingService: LoadingService
+  ) {
+    const loading = this.loadingService.getLoadingState();
+    let didFire = false;
+    effect(() => {
+      if (!loading() && !didFire) {
+        didFire = true;
+        window.dataLayer.push({ event: 'componentsLoaded' });
+      }
+    });
     this.urlTrackerService.initializeUrlTracking();
   }
 
   ngAfterContentInit() {
     window.onload = () => {};
-  }
-
-  ngAfterViewChecked() {
-    try {
-      if (this.loadingDiv.nativeElement) {
-        this.loadingService.setLoadingState(true);
-      }
-    } catch (error) {
-      // loadingDiv is no longer available
-      this.loadingService.setLoadingState(false);
-    }
-  }
-
-  ngOnDestroy() {
-    // Cleanup subscriptions
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

@@ -38,24 +38,12 @@
             ],
             "styles": [
               {
-                "input": "node_modules/bootstrap/scss/bootstrap.scss",
-                "bundleName": "bootstrap",
-                "inject": false
-              },
-              {
-                "input": "node_modules/bootstrap-icons/font/bootstrap-icons.css",
-                "bundleName": "bootstrap-icons",
-                "inject": false
-              },
-              {
-                "input": "src/styles.scss",
+                "input": "src/styles.css",
                 "bundleName": "styles",
-                "inject": false
+                "inject": true
               }
             ],
-            "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
-            ],
+            "scripts": [],
             "serviceWorker": "ngsw-config.json",
             "browser": "src/main.ts"
           },

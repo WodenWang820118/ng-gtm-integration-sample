@@ -2,97 +2,82 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CheckoutFormManagerService } from '../../../../shared/services/checkout-form-manager/checkout-form-manager.service';
 import { NavigationService } from 'src/app/shared/services/navigation/navigation.service';
-import { AsyncPipe, NgClass } from '@angular/common';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
-    selector: 'app-payment-form',
-    imports: [ReactiveFormsModule, FormsModule, AsyncPipe, NgClass],
-    template: `
-    <div
-      id="paymentMethod"
-      class="container p-0"
-      [ngClass]="
-        (checkoutFormManager.isShippingFormSubmitted$ | async)
-          ? 'visible'
-          : 'hidden'
-      "
-    >
-      <form [formGroup]="paymentForm">
-        <div class="row mb-3">
-          <label for="cardNum" class="col-sm-2 col-form-label"
-            >Card Number</label
-          >
-          <div class="col-sm-10">
+  selector: 'app-payment-form',
+  standalone: true,
+  imports: [ReactiveFormsModule, FormsModule, InputTextModule, ButtonModule],
+  template: `
+    @if (checkoutFormManager.isShippingFormSubmitted$()) {
+    <div class="container mx-auto p-4">
+      <form [formGroup]="paymentForm" class="space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label for="cardNum" class="block text-sm font-medium text-gray-700"
+              >Card Number</label
+            >
             <input
+              pInputText
               formControlName="cardNum"
-              type="text"
-              class="form-control"
               id="cardNum"
+              class="w-full"
             />
           </div>
-        </div>
-        <div class="row mb-3">
-          <label for="expiration" class="col-sm-2 col-form-label"
-            >Expiration</label
-          >
-          <div class="col-sm-10">
+          <div>
+            <label
+              for="expiration"
+              class="block text-sm font-medium text-gray-700"
+              >Expiration</label
+            >
             <input
+              pInputText
               formControlName="expiration"
-              type="text"
-              class="form-control"
               id="expiration"
+              class="w-full"
             />
           </div>
-        </div>
-        <div class="row mb-3">
-          <label for="security" class="col-sm-2 col-form-label"
-            >Security Code</label
-          >
-          <div class="col-sm-10">
+          <div>
+            <label
+              for="security"
+              class="block text-sm font-medium text-gray-700"
+              >Security Code</label
+            >
             <input
+              pInputText
               formControlName="security"
-              type="text"
-              class="form-control"
               id="security"
+              class="w-full"
             />
           </div>
         </div>
-        <a (click)="navigateToThankYou()">
-          <button class="btn btn-primary" (click)="trackAddPaymentInfo()">
-            Place Order
-          </button>
-        </a>
+        <div class="mt-4">
+          <button
+            pButton
+            type="button"
+            label="Place Order"
+            (click)="placeOrder()"
+          ></button>
+        </div>
       </form>
     </div>
+    }
   `,
-    styles: [
-        `
-      #paymentMethod label {
-        width: 100%;
-        color: steelblue;
-        text-transform: lowercase;
-        font-variant: small-caps;
-        font-size: 16px;
-      }
-    `,
-    ]
 })
 export class PaymentFormComponent implements OnInit {
   paymentForm!: FormGroup;
   constructor(
     public checkoutFormManager: CheckoutFormManagerService,
-    private navigationService: NavigationService
+    private readonly navigationService: NavigationService
   ) {}
 
   ngOnInit(): void {
     this.paymentForm = this.checkoutFormManager.paymentForm;
   }
 
-  navigateToThankYou() {
-    this.navigationService.navigateToThankYou();
-  }
-
-  trackAddPaymentInfo() {
+  placeOrder() {
     this.checkoutFormManager.paymentFormComplete();
+    this.navigationService.navigateToThankYou();
   }
 }

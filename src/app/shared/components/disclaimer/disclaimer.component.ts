@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 
-
 @Component({
-    selector: 'app-disclaimer',
-    imports: [],
-    template: `
+  selector: 'app-disclaimer',
+  template: `
     <div id="disclaimer">
       <div class="container">
         <span>This is a demo site designed to showcase GTM. </span>
@@ -12,8 +10,8 @@ import { Component } from '@angular/core';
       </div>
     </div>
   `,
-    styles: [
-        `
+  styles: [
+    `
       #disclaimer {
         margin: 0;
         padding: 0;
@@ -36,6 +34,6 @@ import { Component } from '@angular/core';
         clear: both;
       }
     `,
-    ]
+  ],
 })
 export class DisclaimerComponent {}

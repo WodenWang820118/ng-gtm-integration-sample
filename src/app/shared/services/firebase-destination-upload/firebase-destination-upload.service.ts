@@ -7,8 +7,6 @@ import { doc, setDoc } from 'firebase/firestore';
   providedIn: 'root',
 })
 export class FirebaseDestinationUploadService {
-  constructor() {}
-
   upload(data: any) {
     return defer(() =>
       from(

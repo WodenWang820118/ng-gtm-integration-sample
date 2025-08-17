@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, map } from 'rxjs';
+import { computed, Injectable, signal } from '@angular/core';
 
 interface ConsentPreferences {
   analytics_storage: boolean;
@@ -12,14 +11,14 @@ interface ConsentPreferences {
   providedIn: 'root',
 })
 export class ConsentService {
-  consentPreferencesSubject = new BehaviorSubject<ConsentPreferences>({
+  private readonly consentPreferences = signal<ConsentPreferences>({
     analytics_storage: false,
     ad_storage: false,
     ad_user_data: false,
     ad_personalization: false,
   });
 
-  consentPreferences$ = this.consentPreferencesSubject.asObservable();
+  readonly consentPreferences$ = computed(() => this.consentPreferences());
 
   constructor() {}
 
@@ -39,38 +38,39 @@ export class ConsentService {
       'consentPreferences',
       JSON.stringify(consentPreferences)
     );
-    this.consentPreferencesSubject.next(consentPreferences);
+    this.consentPreferences.set(consentPreferences);
   }
 
   analyticsConsentGiven$() {
-    return this.consentPreferences$.pipe(
-      map(
-        (consentOptions) =>
-          consentOptions.analytics_storage &&
-          consentOptions.ad_storage &&
-          consentOptions.ad_user_data
-      )
-    );
+    const analyticsConsentGiven$ = computed(() => {
+      const consentOptions = this.consentPreferences();
+      return (
+        consentOptions.analytics_storage &&
+        consentOptions.ad_storage &&
+        consentOptions.ad_user_data
+      );
+    });
+    return analyticsConsentGiven$;
   }
 
   measurementConsentGiven$() {
-    return this.consentPreferences$.pipe(
-      map(
-        (consentOptions) =>
-          consentOptions.ad_storage && consentOptions.ad_user_data
-      )
-    );
+    const measurementConsentGiven$ = computed(() => {
+      const consentOptions = this.consentPreferences();
+      return consentOptions.ad_storage && consentOptions.ad_user_data;
+    });
+    return measurementConsentGiven$;
   }
 
   audienceConsentGiven$() {
-    return this.consentPreferences$.pipe(
-      map(
-        (consentOptions) =>
-          consentOptions.ad_storage &&
-          consentOptions.ad_user_data &&
-          consentOptions.ad_personalization
-      )
-    );
+    const audienceConsentGiven$ = computed(() => {
+      const consentOptions = this.consentPreferences();
+      return (
+        consentOptions.ad_storage &&
+        consentOptions.ad_user_data &&
+        consentOptions.ad_personalization
+      );
+    });
+    return audienceConsentGiven$;
   }
 
   getConsentPreferences() {

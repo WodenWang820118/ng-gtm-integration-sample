@@ -21,5 +21,6 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./modules/admin/routes').then((m) => m.ADMIN_ROUTES),
   },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' },
 ];

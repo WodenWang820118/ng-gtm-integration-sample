@@ -12,11 +12,7 @@ export class EnvDetectorService {
       return Environment.FLUTTER;
     } else if (window.AnalyticsWebInterface) {
       return Environment.ANDROID;
-    } else if (
-      window.webkit &&
-      window.webkit.messageHandlers &&
-      window.webkit.messageHandlers.firebase
-    ) {
+    } else if (window?.webkit?.messageHandlers?.firebase) {
       return Environment.IOS;
     } else {
       return Environment.UNKNOWN;

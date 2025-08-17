@@ -1,15 +1,10 @@
-import { Injectable } from '@angular/core';
 import { AnalyticsEventTracker } from '../../../models/analytics-event-tracker.model';
-import { JavascriptInterfaceService } from '../../javascript-interface/javascript-interface.service';
 
 const promotions: string[] = [];
 
-// @Injectable({
-//   providedIn: 'root',
-// })
 export class ViewPromotionEventTracker implements AnalyticsEventTracker {
   item_id: string;
-  constructor(private eventName: string) {
+  constructor(private readonly eventName: string) {
     this.item_id = '';
   }
 

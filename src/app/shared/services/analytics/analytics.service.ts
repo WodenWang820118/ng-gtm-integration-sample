@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 import { AnalyticsEventTrackerFactory } from './analytics-factory';
-import { BehaviorSubject, of, take, tap, from, defer } from 'rxjs';
+import { of, take, tap, from, defer } from 'rxjs';
 import { Order } from '../../models/order.model';
 import { JavascriptInterfaceService } from '../javascript-interface/javascript-interface.service';
 import { v4 as uuidv4 } from 'uuid';
@@ -9,12 +9,13 @@ import { DataLayerEvent } from '../../models/data-layer-event.model';
   providedIn: 'root',
 })
 export class AnalyticsService {
-  private _checkoutOrders = new BehaviorSubject<Order[]>([]);
+  private readonly checkoutOrders = signal<Order[]>([]);
+  readonly checkoutOrders$ = computed(() => this.checkoutOrders());
   private db: any;
 
   constructor(
-    private analyticsEventTrackerFactory: AnalyticsEventTrackerFactory,
-    private javascriptInterfaceService: JavascriptInterfaceService
+    private readonly analyticsEventTrackerFactory: AnalyticsEventTrackerFactory,
+    private readonly javascriptInterfaceService: JavascriptInterfaceService
   ) {
     this.loadInitialData();
     this.initializeIndexedDB()
@@ -85,41 +86,33 @@ export class AnalyticsService {
       const data = eventTracker.getProcessedData(eventData);
       this.saveDataLayerEvent(eventName, data.eventData).subscribe();
     } catch (error) {
+      console.error('Error tracking event:', error);
       console.log('Event not tracked:', eventName, eventData);
     }
   }
 
   trackPageViewECEvent(url: string): void {
     if (url.includes('/checkout')) {
-      this._checkoutOrders
-        .pipe(
-          take(1),
-          tap((orders) => {
-            this.trackEvent('begin_checkout', orders);
-          })
-        )
-        .subscribe();
+      const checkoutOrders = this.checkoutOrders$();
+      if (checkoutOrders.length > 0) {
+        this.trackEvent('begin_checkout', checkoutOrders);
+      }
     }
 
     if (url.includes('/thankyou')) {
-      // mimic a purchase event after a successful checkout
-      this._checkoutOrders
-        .pipe(
-          take(1),
-          tap((orders) => {
-            this.trackEvent('purchase', orders);
-          })
-        )
-        .subscribe();
+      const checkoutOrders = this.checkoutOrders$();
+      if (checkoutOrders.length > 0) {
+        this.trackEvent('purchase', checkoutOrders);
+      }
     }
   }
 
   setCheckoutOrders(orders: Order[]): void {
-    this._checkoutOrders.next(orders);
+    this.checkoutOrders.set(orders);
   }
 
   private loadInitialData(): void {
     const orders = JSON.parse(localStorage.getItem('orders') || '[]');
-    this._checkoutOrders.next(orders);
+    this.checkoutOrders.set(orders);
   }
 }

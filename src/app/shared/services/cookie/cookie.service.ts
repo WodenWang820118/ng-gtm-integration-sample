@@ -4,8 +4,6 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class CookieService {
-  constructor() {}
-
   createCookie(
     name: string,
     value: string,
@@ -34,10 +32,10 @@ export class CookieService {
   getCookie(name: string): string | null {
     const nameEQ = name + '=';
     const ca = document.cookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-      if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    for (const cookie of ca) {
+      let c = cookie;
+      while (c.startsWith(' ')) c = c.substring(1, c.length);
+      if (c.startsWith(nameEQ)) return c.substring(nameEQ.length, c.length);
     }
     return null;
   }
@@ -45,9 +43,11 @@ export class CookieService {
   getAllCookies(): { [key: string]: string } {
     const pairs = document.cookie.split(';');
     const cookies: { [key: string]: string } = {};
-    for (let i = 0; i < pairs.length; i++) {
-      const pair = pairs[i].split('=');
-      cookies[(pair[0] + '').trim()] = unescape(pair.slice(1).join('='));
+    for (const pairString of pairs) {
+      const pair = pairString.split('=');
+      cookies[(pair[0] + '').trim()] = decodeURIComponent(
+        pair.slice(1).join('=')
+      );
     }
     return cookies;
   }

@@ -7,9 +7,8 @@ import { catchError, defer, from, of } from 'rxjs';
   providedIn: 'root',
 })
 export class FirebaseStorageService {
-  constructor() {}
-
   getImage(name: string) {
+    if (!name) return of('');
     return defer(() =>
       from(getDownloadURL(ref(bucket, `images/${name}`))).pipe(
         catchError((error) => {

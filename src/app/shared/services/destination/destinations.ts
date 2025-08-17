@@ -4,21 +4,15 @@ export const destinations = [
     title: 'Switzerland',
     smallTitle: 'Swiss Confederation - Europe',
     image1: './assets/images/switzerland_1.jpg',
-    image1AuthorInfo:
-      'Photo by <a href="https://unsplash.com/@maxican" target="_blank" rel="nooperer noreferrer">Maximilian Jaenicke\
-      </a> on <a href="https://unsplash.com/photos/brown-wooden-house-on-green-grass-field-near-mountain-under-white-clouds-during-daytime-UaBDu5hi8Wg" target="_blank" rel="nooperer noreferrer">Unsplash</a>',
+    image1AuthorInfo: `Photo by <a href="https://unsplash.com/@maxican" target="_blank" rel="nooperer noreferrer">Maximilian Jaenicke
+      </a> on <a href="https://unsplash.com/photos/brown-wooden-house-on-green-grass-field-near-mountain-under-white-clouds-during-daytime-UaBDu5hi8Wg" target="_blank" rel="nooperer noreferrer">Unsplash</a>`,
     image2: './assets/images/switzerland_2.jpg',
-    image2AuthorInfo:
-      'Photo by <a href="https://unsplash.com/@teapowered" target="_blank" rel="nooperer noreferrer"> \
-      Patrick Robert Doyle</a> on <a href="https://unsplash.com/photos/brown-wooden-houses-QOuV-iMpL_w" target="_blank" rel="nooperer noreferrer">Unsplash</a>',
+    image2AuthorInfo: `Photo by <a href="https://unsplash.com/@teapowered" target="_blank" rel="nooperer noreferrer">Patrick Robert Doyle</a> on <a href="https://unsplash.com/photos/brown-wooden-houses-QOuV-iMpL_w" target="_blank" rel="nooperer noreferrer">Unsplash</a>`,
     image3: './assets/images/switzerland_3.jpg',
-    image3AuthorInfo:
-      'Photo by <a href="https://unsplash.com/@teapowered" target="_blank" rel="nooperer noreferrer">Patrick Robert Doyle\
-      </a> on <a href="https://unsplash.com/photos/brown-wooden-houses-near-green-trees-and-mountain-under-white-clouds-during-daytime-eb8dmXNOGP4" target="_blank" rel="nooperer noreferrer">Unsplash</a>',
+    image3AuthorInfo: `Photo by <a href="https://unsplash.com/@teapowered" target="_blank" rel="nooperer noreferrer">Patrick Robert Doyle</a> on <a href="https://unsplash.com/photos/brown-wooden-houses-near-green-trees-and-mountain-under-white-clouds-during-daytime-eb8dmXNOGP4" target="_blank" rel="nooperer noreferrer">Unsplash</a>`,
     imageBig: './assets/images/switzerland_big.jpg',
-    imageBigAuthorInfo:
-      'Photo by <a href="https://unsplash.com/@bladeoftree" target="_blank" rel="nooperer noreferrer"> \
-      Marco Meyer</a> on <a href="https://unsplash.com/photos/mountain-filled-with-trees-during-daytime-eAAjKAGEKmI" target="_blank" rel="nooperer noreferrer">Unsplash</a>',
+    imageBigAuthorInfo: `Photo by <a href="https://unsplash.com/@bladeoftree" target="_blank" rel="nooperer noreferrer">
+      Marco Meyer</a> on <a href="https://unsplash.com/photos/mountain-filled-with-trees-during-daytime-eAAjKAGEKmI" target="_blank" rel="nooperer noreferrer">Unsplash</a>`,
     price: 799,
     video: 'https://www.youtube.com/embed/jDNbTU1O-oM',
     description: `Switzerland, officially the Swiss Confederation, is a country situated at the confluence of Western, Central, and Southern Europe. It is a federal republic composed of 26 cantons, with federal authorities based in Bern. Switzerland is a landlocked country bordered by Italy to the south, France to the west, Germany to the north, and Austria and Liechtenstein to the east.`,
@@ -28,21 +22,17 @@ export const destinations = [
     title: 'Sevilla',
     smallTitle: 'Andalusia - Spain - Europe',
     image1: './assets/images/sevilla_1.jpg',
-    image1AuthorInfo:
-      'Photo by <a href="https://unsplash.com/@joanoger" target="_blank" rel="nooperer noreferrer">\
-      Joan Oger</a> on <a href="https://unsplash.com/photos/brown-concrete-structure-PWrNP4bQHB4" target="_blank" rel="nooperer noreferrer">Unsplash</a>',
+    image1AuthorInfo: `Photo by <a href="https://unsplash.com/@joanoger" target="_blank" rel="nooperer noreferrer">
+      Joan Oger</a> on <a href="https://unsplash.com/photos/brown-concrete-structure-PWrNP4bQHB4" target="_blank" rel="nooperer noreferrer">Unsplash</a>`,
     image2: './assets/images/sevilla_2.jpg',
-    image2AuthorInfo:
-      'Photo by <a href="https://unsplash.com/@rickpsd" target="_blank" rel="nooperer noreferrer">\
-      Henrique Ferreira</a> on <a href="https://unsplash.com/photos/brown-concrete-building-during-daytime-photo-62QRdDoe44M" target="_blank" rel="nooperer noreferrer">Unsplash</a>',
+    image2AuthorInfo: `Photo by <a href="https://unsplash.com/@rickpsd" target="_blank" rel="nooperer noreferrer">
+      Henrique Ferreira</a> on <a href="https://unsplash.com/photos/brown-concrete-building-during-daytime-photo-62QRdDoe44M" target="_blank" rel="nooperer noreferrer">Unsplash</a>`,
     image3: './assets/images/sevilla_3.jpg',
-    image3AuthorInfo:
-      'Photo by <a href="https://unsplash.com/@nassifvisuals" target="_blank" rel="nooperer noreferrer">\
-      Yassine Nacif</a> on <a href="https://unsplash.com/photos/red-and-blue-floral-carpet-7cKEPfRQamI" target="_blank" rel="nooperer noreferrer">Unsplash</a>',
+    image3AuthorInfo: `Photo by <a href="https://unsplash.com/@nassifvisuals" target="_blank" rel="nooperer noreferrer">
+      Yassine Nacif</a> on <a href="https://unsplash.com/photos/red-and-blue-floral-carpet-7cKEPfRQamI" target="_blank" rel="nooperer noreferrer">Unsplash</a>`,
     imageBig: './assets/images/sevilla_big.jpg',
-    imageBigAuthorInfo:
-      'Photo by <a href="https://unsplash.com/@marcelokunze" target="_blank" rel="nooperer noreferrer">\
-      Marcelo Kunze</a> on <a href="https://unsplash.com/photos/aerial-view-of-city-buildings-during-daytime-LpgYwmpmN_U" target="_blank" rel="nooperer noreferrer">Unsplash</a>',
+    imageBigAuthorInfo: `Photo by <a href="https://unsplash.com/@marcelokunze" target="_blank" rel="nooperer noreferrer">
+      Marcelo Kunze</a> on <a href="https://unsplash.com/photos/aerial-view-of-city-buildings-during-daytime-LpgYwmpmN_U" target="_blank" rel="nooperer noreferrer">Unsplash</a>`,
     price: 799,
     video: 'https://www.youtube.com/embed/LnV7IkZU-OY',
     description: `Seville is the capital and largest city of the Spanish autonomous community of Andalusia and the province of Seville. It is situated on the lower reaches of the River Guadalquivir, in the southwest of the Iberian Peninsula. Seville has a municipal population of about 690,000 as of 2016, and a metropolitan population of about 1.5 million, making it the largest city in Andalusia, the fourth-largest city in Spain and the 30th most populous municipality in the European Union.`,
@@ -52,21 +42,17 @@ export const destinations = [
     title: 'Providence',
     smallTitle: 'New Egland - Rhode Island - Usa',
     image1: './assets/images/providence_1.jpg',
-    image1AuthorInfo:
-      'Photo by <a href="https://unsplash.com/@ze_wu" target="_blank" rel="nooperer noreferrer">\
-      Zean Wu</a> on <a href="https://unsplash.com/photos/gray-concrete-road-near-body-of-water-during-daytime-8-HbnmOJK3U" target="_blank" rel="nooperer noreferrer">Unsplash</a>',
+    image1AuthorInfo: `Photo by <a href="https://unsplash.com/@ze_wu" target="_blank" rel="nooperer noreferrer">
+      Zean Wu</a> on <a href="https://unsplash.com/photos/gray-concrete-road-near-body-of-water-during-daytime-8-HbnmOJK3U" target="_blank" rel="nooperer noreferrer">Unsplash</a>`,
     image2: './assets/images/providence_2.jpg',
-    image2AuthorInfo:
-      'Photo by <a href="https://unsplash.com/@ancprb" target="_blank" rel="nooperer noreferrer">\
-      Andrew Perabeau</a> on <a href="https://unsplash.com/photos/white-concrete-building-near-bare-trees-during-daytime-YvZcdm3idzo" target="_blank" rel="nooperer noreferrer">Unsplash</a>',
+    image2AuthorInfo: `Photo by <a href="https://unsplash.com/@ancprb" target="_blank" rel="nooperer noreferrer">
+      Andrew Perabeau</a> on <a href="https://unsplash.com/photos/white-concrete-building-near-bare-trees-during-daytime-YvZcdm3idzo" target="_blank" rel="nooperer noreferrer">Unsplash</a>`,
     image3: './assets/images/providence_3.jpg',
-    image3AuthorInfo:
-      'Photo by <a href="https://unsplash.com/@rafaelrodrigues" target="_blank" rel="nooperer noreferrer">\
-      Rafael Rodrigues</a> on <a href="https://unsplash.com/photos/a-view-of-a-city-with-tall-buildings-VR5a7AxvEy8" target="_blank" rel="nooperer noreferrer">Unsplash</a>',
+    image3AuthorInfo: `Photo by <a href="https://unsplash.com/@rafaelrodrigues" target="_blank" rel="nooperer noreferrer">
+      Rafael Rodrigues</a> on <a href="https://unsplash.com/photos/a-view-of-a-city-with-tall-buildings-VR5a7AxvEy8" target="_blank" rel="nooperer noreferrer">Unsplash</a>`,
     imageBig: './assets/images/providence_big.jpg',
-    imageBigAuthorInfo:
-      'Photo by <a href="https://unsplash.com/@coffeeguy77" target="_blank" rel="nooperer noreferrer">\
-      Michael Denning</a> on <a href="https://unsplash.com/photos/city-skyline-under-blue-sky-and-white-clouds-during-daytime-t_ksiy4ZFa0" target="_blank" rel="nooperer noreferrer">Unsplash</a>',
+    imageBigAuthorInfo: `Photo by <a href="https://unsplash.com/@coffeeguy77" target="_blank" rel="nooperer noreferrer">
+      Michael Denning</a> on <a href="https://unsplash.com/photos/city-skyline-under-blue-sky-and-white-clouds-during-daytime-t_ksiy4ZFa0" target="_blank" rel="nooperer noreferrer">Unsplash</a>`,
     price: 799,
     video: 'https://www.youtube.com/embed/_mXvFKLsacs',
     description: `Providence is the capital and most populous city of the state of Rhode Island and is one of the oldest cities in the United States. It was founded in 1636 by Roger Williams, a Reformed Baptist theologian and religious exile from the Massachusetts Bay Colony. He named the area in honor of "God's merciful Providence" which he believed was responsible for revealing such a haven for him and his followers.`,

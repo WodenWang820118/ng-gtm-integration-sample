@@ -1,95 +1,112 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { CarouselComponent } from '../../components/carousel/carousel.component';
-import { faTag, faCookie } from '@fortawesome/free-solid-svg-icons';
+import { Component, computed, OnInit, signal, ViewChild } from '@angular/core';
+import { CarouselComponent } from '../../components/carousel/carousel.component'; // existing custom carousel
 import { NavigationService } from '../../../../shared/services/navigation/navigation.service';
 import { CookieConsentComponent } from '../../../../shared/components/cookie-consent/cookie-consent.component';
 import { ConsentService } from '../../../../shared/services/consent/consent.service';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
 
 @Component({
-    selector: 'app-main',
-    imports: [
-        CarouselComponent,
-        CookieConsentComponent,
-        FontAwesomeModule,
-    ],
-    template: `
-    <div class="container overflow-hidden px-4">
-      <div class="row">
+  selector: 'app-main',
+  imports: [
+    CarouselComponent,
+    CookieConsentComponent,
+    ButtonModule,
+    CardModule,
+  ],
+  template: `
+    <div class="container mx-auto px-6">
+      <div>
         <app-carousel></app-carousel>
       </div>
-      <div id="viewDestination">
-        <a (click)="navigateToDestinations()" class="btn btn-primary">
-          <h2>View Destinations</h2>
-        </a>
+      <div id="viewDestination" class="my-6 text-center">
+        <button
+          pButton
+          type="button"
+          label="View Destinations"
+          (click)="navigateToDestinations()"
+        ></button>
       </div>
       @defer (on viewport) {
-      <div class="row rwd-mobile" style="gap: 1rem">
-        <div class="p-3 col text-center">
-          <h3>
-            <i class="fas fa-home" style="vertical-align: middle"></i> Luxurious
-            Accommodations
-          </h3>
-          <p style="text-align: justify">
-            Nunc ornare turpis eu nisi hendrerit a tempor felis ullamcorper.
-            Integer turpis felis, consectetur quis congue tempus, porta vitae
-            purus. Mauris condimentum orci et nunc tempor mollis.
-          </p>
+      <div
+        class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch justify-between"
+      >
+        <div class="h-full">
+          <p-card class="h-full">
+            <ng-template pTemplate="header">
+              <div class="flex items-center space-x-2">
+                <i class="pi pi-home text-blue-600 text-2xl"></i>
+                <h3 class="text-xl font-semibold">Luxurious Accommodations</h3>
+              </div>
+            </ng-template>
+            <p>
+              Nunc ornare turpis eu nisi hendrerit a tempor felis ullamcorper.
+              Integer turpis felis, consectetur quis congue tempus, porta vitae
+              purus. Mauris condimentum orci et nunc tempor mollis.
+            </p>
+          </p-card>
         </div>
-        <div class="p-3 col text-center">
-          <h3>
-            <i class="fas fa-globe" style="vertical-align: middle"></i>
-            Incredible Locations
-          </h3>
-          <p style="text-align: justify">
-            Nunc ornare turpis eu nisi hendrerit a tempor felis ullamcorper.
-            Integer turpis felis, consectetur quis congue tempus, porta vitae
-            purus. Mauris condimentum orci et nunc tempor mollis.
-          </p>
+        <div class="h-full">
+          <p-card class="h-full">
+            <ng-template pTemplate="header">
+              <div class="flex items-center space-x-2">
+                <i class="pi pi-globe text-green-600 text-2xl"></i>
+                <h3 class="text-xl font-semibold">Incredible Locations</h3>
+              </div>
+            </ng-template>
+            <p>
+              Nunc ornare turpis eu nisi hendrerit a tempor felis ullamcorper.
+              Integer turpis felis, consectetur quis congue tempus, porta vitae
+              purus. Mauris condimentum orci et nunc tempor mollis.
+            </p>
+          </p-card>
         </div>
-        <div class="p-3 col text-center">
-          <h3>
-            <fa-icon [icon]="faTag" size="xs"></fa-icon>
-            Pricing
-          </h3>
-          <p style="text-align: justify">
-            Please use our
-            <a
-              href="https://wodenwang820118.github.io/ng-gtm-integration-sample/?utm_source=ng-gtm-integration-sample&utm_medium=website&utm_campaign=app_download"
-              target="_blank"
-              >app</a
-            >
-            for more seemless services. Please use the link in the mobile to
-            test the deep link with UTM parameters.
-          </p>
+        <div class="h-full">
+          <p-card class="h-full">
+            <ng-template pTemplate="header">
+              <div class="flex items-center space-x-2">
+                <i class="pi pi-tags text-yellow-600 text-2xl"></i>
+                <h3 class="text-xl font-semibold">Pricing</h3>
+              </div>
+            </ng-template>
+            <p>
+              Please use our
+              <a
+                href="https://wodenwang820118.github.io/ng-gtm-integration-sample/?utm_source=ng-gtm-integration-sample&utm_medium=website&utm_campaign=app_download"
+                target="_blank"
+                >app</a
+              >
+              for more seamless services. Please use the link in the mobile to
+              test the deep link with UTM parameters.
+            </p>
+          </p-card>
         </div>
       </div>
       } @placeholder {
-      <div>Loading..</div>
+      <div class="text-center py-10">Loading...</div>
       }
       <app-cookie-consent
-        [showModal]="showCookieModal"
-        [showCookieConsent]="true"
+        [showModalInput]="showCookieModal$()"
+        [showCookieConsentInput]="true"
       ></app-cookie-consent>
     </div>
   `,
-    styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-  faTag = faTag;
-  faCookie = faCookie;
-  showCookieModal!: boolean;
+  private readonly showCookieModal = signal(false);
+  readonly showCookieModal$ = computed(() => this.showCookieModal());
+
   @ViewChild(CookieConsentComponent)
   cookieConsentComponent!: CookieConsentComponent;
 
   constructor(
-    private navigationService: NavigationService,
-    private consentService: ConsentService
+    private readonly navigationService: NavigationService,
+    private readonly consentService: ConsentService
   ) {}
 
   ngOnInit(): void {
     // show cookie consent modal if consent has not been confirmed
-    this.showCookieModal = !this.consentService.getConsentStatus();
+    this.showCookieModal.set(!this.consentService.getConsentStatus());
   }
 
   navigateToDestinations() {
