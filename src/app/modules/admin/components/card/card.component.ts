@@ -1,4 +1,3 @@
-// angular import
 import { Component, Input, OnInit } from '@angular/core';
 import {
   animate,
@@ -8,15 +7,11 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-
-// bootstrap import
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
-import { CommonModule } from '@angular/common';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-card',
-  standalone: true,
-  imports: [CommonModule, NgbDropdownModule],
+  imports: [NgClass],
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss',
   animations: [

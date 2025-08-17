@@ -1,100 +1,65 @@
-@if (!(orderService.orders$ | async)?.length) {
-<div>
-  <div class="container">There are no items in your basket.</div>
-</div>
-} @else { @if (((windowSizeService.width$ | async) ?? 0) > 480) {
-<div class="container table-no-col-borders table-striped table-responsive">
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">Image</th>
-        <th scope="col">Destination</th>
-        <th scope="col">Travelers</th>
-        <th scope="col">Total Price</th>
-        <th scope="col">Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (item of basketItems$ | async; track item) {
-      <tr>
-        <td><img src="{{ item.image }}" /></td>
-        <td>{{ item.title }}</td>
-        <td>{{ item.quantity }}</td>
-        <td>{{ item.value }}</td>
-        <td>
-          <fa-icon
-            style="cursor: pointer"
-            (click)="updateCart(item.id)"
-            [icon]="faEdit"
-            size="lg"
-          ></fa-icon>
-          <fa-icon
-            style="cursor: pointer"
-            class="mx-2"
-            (click)="removeFromCart(item)"
-            [icon]="faTrashCan"
-            size="lg"
-          ></fa-icon>
-        </td>
-      </tr>
-      }
-    </tbody>
-    <tfoot>
-      <tr>
-        <td colspan="3" class="text-center align-middle h3">
-          Total: ${{ calculateTotalPrice() | async }}
-        </td>
-        <td colspan="2" class="text-center align-middle h3 styled-link">
-          <a
-            style="cursor: pointer"
-            (click)="navigateToBeginCheckout()"
-            (click)="beginCheckout()"
-            >Checkout</a
-          >
-        </td>
-      </tr>
-    </tfoot>
-  </table>
-</div>
-} @if (((windowSizeService.width$ | async) ?? 0) <= 480) {
-<div class="container">
-  @for (item of basketItems$ | async; track item) {
-  <div class="card mb-3">
-    <div class="row g-0">
-      <div class="col-md-4" style="padding: 1rem">
-        <img
-          src="{{ item.image }}"
-          class="img-fluid rounded-start"
-          style="width: 100%"
-          alt="destination-img"
-        />
-      </div>
-      <div class="col-md-8">
-        <div class="card-body">
-          <h5 class="card-title">{{ item.title }}</h5>
-          <p class="card-text">Travelers: {{ item.quantity }}</p>
-          <p class="card-text">
-            <small>Total Price: ${{ item.value }}</small>
-          </p>
-          <button (click)="updateCart(item.id)" class="btn btn-primary">
-            Edit
-          </button>
-          <button (click)="removeFromCart(item)" class="btn btn-danger mx-2">
-            Delete
-          </button>
-        </div>
-      </div>
-    </div>
+@let items = basketItems$();
+@if (!items?.length) {
+  <div class="max-w-4xl mx-auto p-6">
+    <p-message severity="info" text="There are no items in your basket."></p-message>
   </div>
+} @else {
+  @let width = (windowSizeService.width$());
+  @if (width > 480) {
+  <p-table [value]="items || []" [responsiveLayout]="'scroll'" class="p-datatable-striped">
+      <ng-template pTemplate="header">
+        <tr>
+          <th scope="col">Image</th>
+          <th scope="col">Destination</th>
+          <th scope="col">Travelers</th>
+          <th scope="col">Total Price</th>
+          <th scope="col">Action</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item>
+        <tr>
+          <td><img [src]="item.image" alt="{{item.title}}" style="width:50px"/></td>
+          <td>{{ item.title }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.value | currency }}</td>
+          <td>
+            <button pButton pRipple icon="pi pi-pencil" class="p-button-text p-button-sm" (click)="updateCart(item.id)"></button>
+            <button pButton pRipple icon="pi pi-trash" class="p-button-text p-button-danger p-button-sm" (click)="removeFromCart(item)"></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <tr>
+          <td colspan="3" class="p-text-center">
+            Total: {{ calculateTotalPrice()() | currency }}
+          </td>
+          <td colspan="2" class="p-text-center">
+            <button pButton label="Checkout" icon="pi pi-check" class="p-button-success" (click)="beginCheckout(); navigateToBeginCheckout()"></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  } @else {
+  <p-dataView [value]="items || []" [layout]="'grid'" class="p-mt-3">
+      <ng-template pTemplate="item" let-item>
+        <p-card>
+          <ng-template pTemplate="header">
+            <img [src]="item.image" alt="{{ item.title }}" style="width:100%"/>
+          </ng-template>
+          <div class="p-card-body">
+            <h5>{{ item.title }}</h5>
+            <p>Travelers: {{ item.quantity }}</p>
+            <p>Total Price: {{ item.value | currency }}</p>
+            <button pButton label="Edit" icon="pi pi-pencil" class="p-button-sm p-mr-2" (click)="updateCart(item.id)"></button>
+            <button pButton label="Delete" icon="pi pi-trash" class="p-button-sm p-button-danger" (click)="removeFromCart(item)"></button>
+          </div>
+        </p-card>
+      </ng-template>
+      <ng-template pTemplate="header">
+      <div class="text-right mb-2">
+        <button pButton label="Proceed to Checkout" icon="pi pi-check" class="p-button-success" (click)="beginCheckout(); navigateToBeginCheckout()"></button>
+      </div>
+      </ng-template>
+    </p-dataView>
   }
-  <div class="total-price">
-    <h3>Total: ${{ calculateTotalPrice() | async }}</h3>
-    <a
-      (click)="navigateToBeginCheckout()"
-      class="btn btn-success"
-      (click)="beginCheckout()"
-      >Proceed to Checkout</a
-    >
-  </div>
-</div>
-} }
+}

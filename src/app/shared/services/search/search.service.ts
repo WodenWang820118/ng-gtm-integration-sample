@@ -1,42 +1,42 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, take, tap } from 'rxjs';
+import { computed, Injectable, signal } from '@angular/core';
+import { take, tap } from 'rxjs';
 import { AnalyticsService } from '../analytics/analytics.service';
-import { FirestoreCountryService } from '../firestore-country/firestore-country.service';
+import { FirestoreDestinationPipelineService } from '../firestore-destination-pipeline/firestore-destination-pipeline.service';
 import { Destination } from '../../models/destination.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SearchService {
-  private _searchResults = new BehaviorSubject([] as Destination[]);
-  readonly searchResults$ = this._searchResults.asObservable();
+  private readonly searchResults = signal<Destination[]>([]);
+  readonly searchResults$ = computed(() => this.searchResults());
 
   constructor(
-    private analyticsService: AnalyticsService,
-    private firestoreCountryService: FirestoreCountryService
+    private readonly analyticsService: AnalyticsService,
+    private readonly firestoreDestinationPipelineService: FirestoreDestinationPipelineService
   ) {}
 
   search(query: string): void {
     switch (query) {
       case '':
-        this.firestoreCountryService
+        this.firestoreDestinationPipelineService
           .getPreviousDestinationsData()
           .pipe(
             take(1),
             tap((data) => {
-              this._searchResults.next(data);
+              this.searchResults.set(data);
             })
           )
           .subscribe();
         break;
 
       case 'all':
-        this.firestoreCountryService
+        this.firestoreDestinationPipelineService
           .getAllDestinationsData()
           .pipe(
             take(1),
             tap((data) => {
-              this._searchResults.next(data);
+              this.searchResults.set(data);
             })
           )
           .subscribe();
@@ -44,23 +44,23 @@ export class SearchService {
         break;
 
       default:
-        this.firestoreCountryService
+        this.firestoreDestinationPipelineService
           .getSearchResultsData(query, 10)
           .subscribe((destinations: Destination[]) => {
             this.analyticsService.trackEvent('search', query);
-            this._searchResults.next(destinations);
+            this.searchResults.set(destinations);
           });
         break;
     }
   }
 
   resetSearch(): void {
-    this.firestoreCountryService
+    this.firestoreDestinationPipelineService
       .getPreviousDestinationsData()
       .pipe(
         take(1),
         tap((data) => {
-          this._searchResults.next(data);
+          this.searchResults.set(data);
         })
       )
       .subscribe();

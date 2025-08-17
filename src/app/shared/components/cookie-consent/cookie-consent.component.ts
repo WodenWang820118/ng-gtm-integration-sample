@@ -1,28 +1,33 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  Input,
+  effect,
+  input,
+  signal,
 } from '@angular/core';
-import { faCookie } from '@fortawesome/free-solid-svg-icons';
 import { ConsentService } from '../../services/consent/consent.service';
-import { take, tap } from 'rxjs';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { AsyncPipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
 
 @Component({
   selector: 'app-cookie-consent',
   standalone: true,
-  imports: [FontAwesomeModule, AsyncPipe],
+  imports: [FormsModule, DialogModule, ToggleSwitchModule, ButtonModule],
   templateUrl: './cookie-consent.component.html',
-  styleUrl: './cookie-consent.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CookieConsentComponent implements AfterViewInit {
-  @Input() showModal: boolean = false;
-  @Input() showCookieConsent: boolean = false;
+export class CookieConsentComponent {
+  analyticsModel = false;
+  measurementModel = false;
+  audienceModel = false;
 
-  faCookie = faCookie;
+  showModal = signal<boolean>(false);
+  showCookieConsent = signal<boolean>(false);
+
+  showModalInput = input<boolean>(false);
+  showCookieConsentInput = input<boolean>(false);
 
   constructor(public consentService: ConsentService) {
     if (localStorage.getItem('consentPreferences')) {
@@ -32,37 +37,36 @@ export class CookieConsentComponent implements AfterViewInit {
     } else {
       this.consentService.initConsentPreferences();
     }
-  }
 
-  ngAfterViewInit() {
-    // need to update GTM consent preferences after the component is initialized
-    this.consentService.consentPreferences$
-      .pipe(
-        take(1),
-        tap((consentPreferences) => {
-          this.consentService.updateConsentPreferences(consentPreferences);
-        })
-      )
-      .subscribe();
+    effect(() => {
+      this.analyticsModel = this.consentService.analyticsConsentGiven$()();
+      this.measurementModel = this.consentService.measurementConsentGiven$()();
+      this.audienceModel = this.consentService.audienceConsentGiven$()();
+    });
+
+    effect(() => {
+      this.showModal.set(this.showModalInput());
+      this.showCookieConsent.set(this.showCookieConsentInput());
+    });
   }
 
   hide() {
-    this.showModal = false;
+    this.showModal.set(false);
   }
 
   show() {
-    this.showModal = true;
+    this.showModal.set(true);
   }
 
   showCookieConsentIcon() {
-    this.showCookieConsent = true;
+    this.showCookieConsent.set(true);
   }
 
   hideCookieConsentIcon() {
-    this.showCookieConsent = false;
+    this.showCookieConsent.set(false);
   }
 
-  acceptAnalytics(event: Event) {
+  acceptAnalytics(event: any) {
     const consent = (event.target as HTMLInputElement).checked;
     console.log(`Analytics consent: ${consent}`);
 
@@ -83,7 +87,7 @@ export class CookieConsentComponent implements AfterViewInit {
     }
   }
 
-  acceptMeasurement(event: Event) {
+  acceptMeasurement(event: any) {
     const consent = (event.target as HTMLInputElement).checked;
     console.log(`Measurement consent: ${consent}`);
     if (consent) {
@@ -103,7 +107,7 @@ export class CookieConsentComponent implements AfterViewInit {
     }
   }
 
-  acceptAudience(event: Event) {
+  acceptAudience(event: any) {
     const consent = (event.target as HTMLInputElement).checked;
     console.log(`Audience consent: ${consent}`);
     if (consent) {
@@ -131,7 +135,7 @@ export class CookieConsentComponent implements AfterViewInit {
   }
 
   switchModal() {
-    this.showModal = !this.showModal;
+    this.showModal.set(!this.showModal());
   }
 
   consent() {

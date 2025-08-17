@@ -2,7 +2,7 @@ import { AnalyticsEventTracker } from '../../../models/analytics-event-tracker.m
 import { Order } from '../../../models/order.model';
 
 export class AddPaymentInfoEventTracker implements AnalyticsEventTracker {
-  constructor(private eventName: string) {
+  constructor(private readonly eventName: string) {
     this.eventName = eventName;
   }
 

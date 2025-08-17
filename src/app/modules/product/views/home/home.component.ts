@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { HeaderComponent } from '../../../../shared/components/header/header.component';
 import { FooterComponent } from '../../../../shared/components/footer/footer.component';
 import { NavbarComponent } from '../../../../shared/components/navbar/navbar.component';
 import { DisclaimerComponent } from '../../../../shared/components/disclaimer/disclaimer.component';
@@ -7,20 +6,23 @@ import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-product-home',
-  standalone: true,
   imports: [
-    HeaderComponent,
     FooterComponent,
     NavbarComponent,
     DisclaimerComponent,
     RouterOutlet,
   ],
   template: `
-    <app-navbar></app-navbar>
-    <app-header></app-header>
-    <router-outlet></router-outlet>
-    <app-footer></app-footer>
-    <app-disclaimer></app-disclaimer>
+    <div class="flex flex-col min-h-screen">
+      <app-navbar></app-navbar>
+      <main class="flex-1 p-4">
+        <router-outlet></router-outlet>
+      </main>
+      <footer class="bg-white">
+        <app-footer></app-footer>
+        <app-disclaimer class="mt-2"></app-disclaimer>
+      </footer>
+    </div>
   `,
   styles: [``],
 })

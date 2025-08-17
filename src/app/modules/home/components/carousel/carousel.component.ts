@@ -5,126 +5,88 @@ import { UtilsService } from '../../../../shared/services/utils/utils.service';
 import { AnalyticsService } from '../../../../shared/services/analytics/analytics.service';
 import { NavigationService } from '../../../../shared/services/navigation/navigation.service';
 import { destinations } from '../../../../shared/services/destination/destinations';
+import { CarouselModule } from 'primeng/carousel';
+import { ButtonModule } from 'primeng/button';
+
 @Component({
-  selector: 'app-carousel',
   standalone: true,
+  selector: 'app-carousel',
+  imports: [CarouselModule, ButtonModule],
   template: `
-    <div
-      id="myCarousel"
-      class="carousel slide"
-      data-bs-ride="carousel"
-      (slid.bs.carousel)="onSlideChanged($event)"
-    >
-      <div class="carousel-inner">
-        @for (destination of destinations; track destination; let i = $index) {
-        <div
-          class="carousel-item"
-          data-bs-interval="4000"
-          [class.active]="i === 0"
-        >
-          <a (click)="selectPromotion(destination); goToDetails(destination)">
-            <img [src]="destination.imageBig" class="d-block w-100" alt="" />
-            <div class="carousel-caption d-none d-md-block">
-              <h4>{{ destination.title }}</h4>
+    <div class="container mx-auto px-6">
+      <p-carousel
+        [value]="destinations"
+        [numVisible]="3"
+        [numScroll]="3"
+        [circular]="false"
+        [responsiveOptions]="responsiveOptions"
+        (page)="onSlideChanged($event)"
+        class="w-full"
+      >
+        <ng-template pTemplate="item" let-destination>
+          <div
+            class="flex flex-col items-center cursor-pointer transition-shadow hover:shadow-lg"
+            (click)="selectPromotion(destination); goToDetails(destination)"
+          >
+            <div class="relative w-full h-48 md:h-56 mb-4">
+              <img
+                [src]="destination.imageBig"
+                class="w-full h-full object-cover rounded"
+                alt=""
+              />
               <div
+                class="absolute top-1 left-1 bg-black bg-opacity-60 text-white text-xs p-1 rounded max-w-xs break-words"
                 (click)="preventDefault($event)"
                 [innerHTML]="
                   authorInforByPassed(destination.imageBigAuthorInfo)
                 "
               ></div>
             </div>
-          </a>
-        </div>
-        }
-      </div>
-      <button
-        class="carousel-control-prev"
-        type="button"
-        data-bs-target="#myCarousel"
-        data-bs-slide="prev"
-      >
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button
-        class="carousel-control-next"
-        type="button"
-        data-bs-target="#myCarousel"
-        data-bs-slide="next"
-      >
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
+            <div class="text-lg font-medium text-center w-full">
+              {{ destination.title }}
+            </div>
+          </div>
+        </ng-template>
+      </p-carousel>
     </div>
   `,
-  styles: [
-    `
-      .carousel-caption {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        padding: 10px 15px 5px;
-        background: rgba(0, 0, 0, 0.75);
-      }
-
-      .carousel-item {
-        cursor: pointer;
-      }
-
-      img {
-        width: 100%;
-        height: 500px;
-        object-fit: cover;
-        border-radius: 5px;
-
-        @media screen and (max-width: 480px) {
-          height: 300px;
-        }
-      }
-
-      h4 {
-        color: white;
-      }
-    `,
-  ],
 })
 export class CarouselComponent implements AfterViewInit {
   destinations = destinations;
+  responsiveOptions = [
+    { breakpoint: '1024px', numVisible: 3, numScroll: 3 },
+    { breakpoint: '768px', numVisible: 2, numScroll: 2 },
+    { breakpoint: '560px', numVisible: 1, numScroll: 1 },
+  ];
   activeSlideIndex = 0;
 
   constructor(
-    private destinationService: DestinationService,
-    public utilsService: UtilsService,
-    private analyticsService: AnalyticsService,
-    private navigationService: NavigationService,
-    private sanitizer: DomSanitizer
+    private readonly destinationService: DestinationService,
+    public readonly utilsService: UtilsService,
+    private readonly analyticsService: AnalyticsService,
+    private readonly navigationService: NavigationService,
+    private readonly sanitizer: DomSanitizer
   ) {}
 
   ngAfterViewInit(): void {
     // track the first promotion
-    // other promotions will be tracked on slide change
     this.analyticsService.trackEvent(
       'view_promotion',
       this.destinations[this.activeSlideIndex]
     );
   }
 
-  onSlideChange(newIndex: number): void {
-    this.activeSlideIndex = newIndex;
+  onSlideChanged(event: any): void {
+    this.activeSlideIndex = event.page;
+    this.analyticsService.trackEvent(
+      'view_promotion',
+      this.destinations[this.activeSlideIndex]
+    );
   }
 
   goToDetails(destination: any): void {
     this.destinationService.changeDestination(destination);
     this.navigationService.navigateToDetail(destination.id);
-  }
-
-  onSlideChanged(event: any) {
-    this.activeSlideIndex = event.to;
-    this.analyticsService.trackEvent(
-      'view_promotion',
-      this.destinations[this.activeSlideIndex]
-    );
   }
 
   selectPromotion(destination: any): void {

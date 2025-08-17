@@ -1,29 +1,34 @@
 import { Component } from '@angular/core';
+import { TableModule } from 'primeng/table';
+import { DataViewModule } from 'primeng/dataview';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { MessageModule } from 'primeng/message';
 import { OrderService } from '../../../../shared/services/order/order.service';
-import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Order } from 'src/app/shared/models/order.model';
 import { WindowSizeService } from '../../../../shared/services/window-size/window-size.service';
 import { NavigationService } from '../../../../shared/services/navigation/navigation.service';
-import { AsyncPipe } from '@angular/common';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-basket',
-  standalone: true,
-  imports: [AsyncPipe, FontAwesomeModule],
+  imports: [
+    TableModule,
+    DataViewModule,
+    CardModule,
+    ButtonModule,
+    MessageModule,
+    CurrencyPipe,
+  ],
   templateUrl: './basket.component.html',
-  styleUrls: ['./basket.component.scss'],
 })
 export class BasketComponent {
   basketItems$ = this.orderService.orders$;
-  faTrashCan = faTrashCan;
-  faEdit = faEdit;
 
   constructor(
     public orderService: OrderService,
     public windowSizeService: WindowSizeService,
-    private navigationService: NavigationService
+    private readonly navigationService: NavigationService
   ) {}
 
   navigateToBeginCheckout() {

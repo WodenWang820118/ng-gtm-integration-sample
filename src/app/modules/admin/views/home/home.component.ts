@@ -3,10 +3,9 @@ import { NavbarComponent } from '../../../../shared/components/navbar/navbar.com
 import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-admin-home',
-  standalone: true,
-  imports: [NavbarComponent, RouterOutlet],
-  template: `
+    selector: 'app-admin-home',
+    imports: [NavbarComponent, RouterOutlet],
+    template: `
     <div style="margin-bottom: 5rem;">
       <app-navbar></app-navbar>
     </div>
@@ -24,6 +23,6 @@ import { RouterOutlet } from '@angular/router';
       </div>
     </div>
   `,
-  styles: [``],
+    styles: [``]
 })
 export class HomeComponent {}

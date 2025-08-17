@@ -1,6 +1,4 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map, take, tap } from 'rxjs/operators';
+import { computed, Injectable, signal } from '@angular/core';
 import { Destination } from 'src/app/shared/models/destination.model';
 import { Order } from 'src/app/shared/models/order.model';
 import { AnalyticsService } from '../analytics/analytics.service';
@@ -9,77 +7,66 @@ import { AnalyticsService } from '../analytics/analytics.service';
   providedIn: 'root',
 })
 export class OrderService {
-  private _orders = new BehaviorSubject<Order[]>([]);
-  private _totalPrice = this.calculateTotalPrice();
+  private readonly _orders = signal<Order[]>([]);
+  private readonly _totalPrice = this.calculateTotalPrice();
+  readonly orders$ = computed(() => this._orders());
+  readonly totalPrice$ = computed(() => this._totalPrice());
 
-  constructor(private analyticsService: AnalyticsService) {
+  constructor(private readonly analyticsService: AnalyticsService) {
     this.loadInitialData();
   }
 
-  get orders$(): Observable<Order[]> {
-    return this._orders.asObservable();
-  }
+  addToCart(destination: Destination, numOfPersons: number): void {
+    // destination$
+    const order = this.createOrder(destination, numOfPersons);
+    const currentOrders = this._orders();
+    const duplicateOrderIndex = currentOrders.findIndex(
+      (o) => o.id === order.id
+    );
 
-  get totalPrice$(): Observable<number> {
-    return this._totalPrice;
-  }
+    if (duplicateOrderIndex !== -1) {
+      currentOrders[duplicateOrderIndex] = this.updateOrderQuantity(
+        currentOrders[duplicateOrderIndex],
+        order.quantity
+      );
+    } else {
+      currentOrders.push(order);
+    }
 
-  addToCart(destination$: Observable<Destination>, numOfPersons: number): void {
-    destination$
-      .pipe(
-        take(1),
-        map((destination) => this.createOrder(destination, numOfPersons)),
-        tap((order) => {
-          const currentOrders = this._orders.value;
-          const duplicateOrderIndex = currentOrders.findIndex(
-            (o) => o.id === order.id
-          );
-
-          if (duplicateOrderIndex !== -1) {
-            currentOrders[duplicateOrderIndex] = this.updateOrderQuantity(
-              currentOrders[duplicateOrderIndex],
-              order.quantity
-            );
-          } else {
-            currentOrders.push(order);
-          }
-
-          this._orders.next(currentOrders);
-          this.storeOrders(currentOrders);
-          this.analyticsService.trackEvent('add_to_cart', [order]);
-        })
-      )
-      .subscribe();
+    this._orders.set(currentOrders);
+    this.storeOrders(currentOrders);
+    this.analyticsService.trackEvent('add_to_cart', [order]);
   }
 
   removeFromCart(order: Order): void {
-    const currentOrders = this._orders.value;
+    const currentOrders = this.orders$();
     const updatedOrders = currentOrders.filter((item) => item.id !== order.id);
-    this._orders.next(updatedOrders);
+    this._orders.set(updatedOrders);
     this.analyticsService.trackEvent('remove_from_cart', [order]);
     this.storeOrders(updatedOrders);
   }
 
   beginCheckout(): void {
-    this.analyticsService.trackEvent('begin_checkout', this._orders.value);
+    this.analyticsService.trackEvent('begin_checkout', this._orders());
   }
 
   calculateTotalPrice() {
-    return this.orders$.pipe(
-      map((orders) =>
-        orders.reduce((total, order) => total + order.value * order.quantity, 0)
+    return computed(() =>
+      this.orders$().reduce(
+        (total, order) => total + order.value * order.quantity,
+        0
       )
     );
   }
 
   resetOrders(): void {
-    this._orders.next([]);
+    this._orders.set([]);
     this.storeOrders([]);
   }
 
   private loadInitialData(): void {
     const orders = JSON.parse(localStorage.getItem('orders') || '[]');
-    this._orders.next(orders);
+    this._orders.set(orders);
   }
 
   private storeOrders(orders: Order[]): void {

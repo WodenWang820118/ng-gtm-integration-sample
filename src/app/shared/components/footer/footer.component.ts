@@ -1,36 +1,39 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ToolbarModule } from 'primeng/toolbar';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-footer',
-  standalone: true,
-  imports: [CommonModule],
+  imports: [ToolbarModule, ButtonModule, InputTextModule],
   template: `
-    <footer class="footer">
-      <div class="container">
+    <p-toolbar
+      class="footer-toolbar"
+      [style]="{ 'border-radius': '0', padding: '0.5rem' }"
+    >
+      <ng-template #start>
         <div id="externalLinks">
           <ul>
             <li>
-              Developer:
+              Developer:&nbsp;
               <a href="https://github.com/WodenWang820118">Guan Xin Wang</a>
             </li>
           </ul>
         </div>
-        <div id="newsletter-form">
-          <form class="d-flex">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Newsletter..."
-            />
-            <button type="submit" class="btn btn-light">OK</button>
-          </form>
-          <div id="reponse"></div>
+      </ng-template>
+      <ng-template #end>
+        <div id="newsletter-form" class="p-d-flex p-ai-center">
+          <input pInputText type="text" placeholder="Newsletter..." />
+          <button
+            pButton
+            type="button"
+            label="OK"
+            class="p-button-text p-ml-2"
+          ></button>
+          <div id="response" class="p-ml-3"></div>
         </div>
-        <div class="clear"></div>
-      </div>
-    </footer>
+      </ng-template>
+    </p-toolbar>
   `,
-  styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent {}

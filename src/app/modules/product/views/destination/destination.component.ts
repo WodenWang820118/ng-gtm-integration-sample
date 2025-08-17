@@ -1,12 +1,12 @@
 import {
   Component,
-  ElementRef,
+  computed,
+  effect,
   OnInit,
-  Type,
-  ViewChild,
+  signal,
+  viewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { AsyncPipe, NgClass } from '@angular/common';
 import {
   FormControl,
   FormGroup,
@@ -22,79 +22,88 @@ import { DestinationService } from '../../../../shared/services/destination/dest
 import { SearchService } from '../../../../shared/services/search/search.service';
 import { YoutubeService } from '../../../../shared/services/youtube/youtube.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { FirestoreCountryService } from '../../../../shared/services/firestore-country/firestore-country.service';
+import { FirestoreDestinationPipelineService } from '../../../../shared/services/firestore-destination-pipeline/firestore-destination-pipeline.service';
 import { AnalyticsService } from '../../../../shared/services/analytics/analytics.service';
 import { Destination } from '../../../../shared/models/destination.model';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
-  selector: 'app-destination',
   standalone: true,
+  selector: 'app-destination',
   imports: [
     YouTubePlayerModule,
-    NgClass,
-    AsyncPipe,
     ReactiveFormsModule,
     FormsModule,
+    DialogModule,
   ],
   templateUrl: './destination.component.html',
-  styleUrls: ['./destination.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
 export class DestinationComponent implements OnInit {
-  destinations: Destination[] = [];
   searchForm: FormGroup = new FormGroup({
     searchTerm: new FormControl(''),
   });
 
-  @ViewChild('ytPlayerModal') ytPlayerModal!: ElementRef;
-  @ViewChild('player') videoPlayer: any;
-  currentComponent: Type<any> | null = null;
-  videoId = '';
-  showVideoPlayer = false;
+  private readonly destinations = signal<Destination[]>([]);
+  destinations$ = computed(() => this.destinations());
+
+  private readonly videoId = signal<string>('');
+  videoId$ = computed(() => this.videoId());
+
+  private readonly showVideoPlayer = signal<boolean>(false);
+  showVideoPlayer$ = computed(() => this.showVideoPlayer);
+  // Getter and setter for PrimeNG dialog two-way binding
+  get videoDialogVisible(): boolean {
+    return this.showVideoPlayer();
+  }
+  set videoDialogVisible(value: boolean) {
+    this.showVideoPlayer.set(value);
+  }
+
+  private readonly videoPlayer = viewChild<any>('player');
   playerVars = {
     enablejsapi: 1,
   };
 
   constructor(
-    private destinationService: DestinationService,
-    public utilsService: UtilsService,
-    public windowSizeService: WindowSizeService,
-    private navigationService: NavigationService,
-    public searchService: SearchService,
-    private youtubeService: YoutubeService,
-    private sanitizer: DomSanitizer,
-    private firestoreCountryService: FirestoreCountryService,
-    private analyticsService: AnalyticsService
-  ) {}
+    private readonly destinationService: DestinationService,
+    public readonly utilsService: UtilsService,
+    public readonly windowSizeService: WindowSizeService,
+    private readonly navigationService: NavigationService,
+    public readonly searchService: SearchService,
+    private readonly youtubeService: YoutubeService,
+    private readonly sanitizer: DomSanitizer,
+    private readonly firestoreDestinationPipelineService: FirestoreDestinationPipelineService,
+    private readonly analyticsService: AnalyticsService
+  ) {
+    effect(() => {
+      const searchResults = this.searchService.searchResults$();
+      if (searchResults.length) {
+        this.destinations.set(searchResults);
+      }
+    });
+  }
 
   ngOnInit() {
-    this.firestoreCountryService
+    this.firestoreDestinationPipelineService
       .getFirstDestinationsData()
       .pipe(
         take(1),
         tap((destinations) => {
-          this.destinations = destinations;
+          this.destinations.set(destinations);
           this.trackViewItemList(destinations);
-        })
-      )
-      .subscribe();
-
-    this.searchService.searchResults$
-      .pipe(
-        tap((results) => {
-          this.destinations = results;
         })
       )
       .subscribe();
   }
 
   getNextDestinations() {
-    this.firestoreCountryService
+    this.firestoreDestinationPipelineService
       .getNextDestinationsData()
       .pipe(
         take(1),
         tap((destinations) => {
-          this.destinations = destinations;
+          this.destinations.set(destinations);
           this.trackViewItemList(destinations);
         })
       )
@@ -103,12 +112,12 @@ export class DestinationComponent implements OnInit {
 
   getPreviousDestinations() {
     if (this.isPreviousDisabled()) return;
-    this.firestoreCountryService
+    this.firestoreDestinationPipelineService
       .getPreviousDestinationsData()
       .pipe(
         take(1),
         tap((destinations) => {
-          this.destinations = destinations;
+          this.destinations.set(destinations);
           this.trackViewItemList(destinations);
         })
       )
@@ -130,7 +139,9 @@ export class DestinationComponent implements OnInit {
   }
 
   isPreviousDisabled() {
-    return this.firestoreCountryService.getPreviousDocsStackLength() < 2;
+    return (
+      this.firestoreDestinationPipelineService.getPreviousDocsStackLength() < 2
+    );
   }
 
   navigateToHome() {
@@ -161,14 +172,14 @@ export class DestinationComponent implements OnInit {
   }
 
   closeModal() {
-    this.showVideoPlayer = false;
-    this.videoPlayer.pauseVideo();
+    this.showVideoPlayer.set(false);
+    this.videoPlayer().pauseVideo();
     this.youtubeService.stopProgressTracking();
   }
 
   showModal(url: string) {
-    this.videoId = this.getVideoId(url);
-    this.showVideoPlayer = true;
+    this.videoId.set(this.getVideoId(url));
+    this.showVideoPlayer.set(true);
   }
 
   onStateChange(event: any) {

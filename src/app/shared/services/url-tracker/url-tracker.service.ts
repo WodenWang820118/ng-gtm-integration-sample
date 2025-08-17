@@ -8,8 +8,8 @@ import { filter } from 'rxjs/operators';
 })
 export class UrlTrackerService {
   constructor(
-    private analyticsService: AnalyticsService,
-    private router: Router
+    private readonly analyticsService: AnalyticsService,
+    private readonly router: Router
   ) {}
 
   initializeUrlTracking(): void {

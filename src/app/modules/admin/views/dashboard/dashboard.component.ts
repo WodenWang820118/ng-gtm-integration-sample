@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
 import { MapComponent } from '../../components/map/map.component';
 import { CardComponent } from '../../components/card/card.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-dashboard',
-  standalone: true,
-  imports: [MapComponent, CardComponent, NgbModule],
-  templateUrl: './dashboard.component.html',
-  styles: [``],
+    selector: 'app-dashboard',
+    imports: [MapComponent, CardComponent],
+    templateUrl: './dashboard.component.html',
+    styles: [``]
 })
 export class DashboardComponent {
   sales = [

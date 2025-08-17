@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-disclaimer',
-  standalone: true,
-  imports: [CommonModule],
   template: `
     <div id="disclaimer">
       <div class="container">

@@ -3,7 +3,7 @@ import { AnalyticsEventTracker } from '../../../models/analytics-event-tracker.m
 import { v4 as uuidv4 } from 'uuid';
 
 export class PurchaseEventTracker implements AnalyticsEventTracker {
-  constructor(private eventName: string) {
+  constructor(private readonly eventName: string) {
     this.eventName = eventName;
   }
 

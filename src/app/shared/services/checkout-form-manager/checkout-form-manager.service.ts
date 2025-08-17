@@ -1,9 +1,7 @@
-import { Injectable } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { BehaviorSubject, take, tap } from 'rxjs';
 import { AnalyticsService } from '../analytics/analytics.service';
 import { OrderService } from '../order/order.service';
-import { Order } from '../../models/order.model';
 
 @Injectable({
   providedIn: 'root',
@@ -22,44 +20,30 @@ export class CheckoutFormManagerService {
     security: [''],
   });
 
-  isShippingFormSubmitted = new BehaviorSubject<boolean>(false);
-  isPaymentFormSubmitted = new BehaviorSubject<boolean>(false);
+  isShippingFormSubmitted = signal<boolean>(false);
+  isPaymentFormSubmitted = signal<boolean>(false);
+  isShippingFormSubmitted$ = computed(() => this.isShippingFormSubmitted());
+  isPaymentFormSubmitted$ = computed(() => this.isPaymentFormSubmitted());
 
   constructor(
-    private fb: FormBuilder,
-    private analyticsService: AnalyticsService,
-    private orderService: OrderService
+    private readonly fb: FormBuilder,
+    private readonly analyticsService: AnalyticsService,
+    private readonly orderService: OrderService
   ) {}
 
   shippingFormComplete() {
-    this.orderService.orders$
-      .pipe(
-        take(1),
-        tap((orders: Order[]) => {
-          this.isShippingFormSubmitted.next(true);
-          this.analyticsService.trackEvent('add_shipping_info', orders);
-        })
-      )
-      .subscribe();
+    const orders = this.orderService.orders$();
+    if (orders.length > 0) {
+      this.isShippingFormSubmitted.set(true);
+      this.analyticsService.trackEvent('add_shipping_info', orders);
+    }
   }
 
   paymentFormComplete() {
-    this.orderService.orders$
-      .pipe(
-        take(1),
-        tap((orders: Order[]) => {
-          this.isPaymentFormSubmitted.next(true);
-          this.analyticsService.trackEvent('add_payment_info', orders);
-        })
-      )
-      .subscribe();
-  }
-
-  get isShippingFormSubmitted$() {
-    return this.isShippingFormSubmitted.asObservable();
-  }
-
-  get isPaymentFormSubmitted$() {
-    return this.isPaymentFormSubmitted.asObservable();
+    const orders = this.orderService.orders$();
+    if (orders.length > 0) {
+      this.isPaymentFormSubmitted.set(true);
+      this.analyticsService.trackEvent('add_payment_info', orders);
+    }
   }
 }
