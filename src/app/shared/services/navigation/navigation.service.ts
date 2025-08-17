@@ -18,7 +18,7 @@ export class NavigationService {
 
   private getMergedQueryParams(additionalParams: any = {}) {
     // Always include app_source if it's available
-    const queryParams: any = { app_source: this.source };
+    const queryParams: any = { app_source: this.source$() };
 
     // Merge additionalParams only if they are explicitly provided
     for (const key in additionalParams) {
@@ -39,6 +39,7 @@ export class NavigationService {
   private trackSource() {
     return this.activatedRoute.queryParams.pipe(
       tap((params) => {
+        console.log(params);
         if (params['app_source']) {
           this.source.set(params['app_source']);
         }
