@@ -23,7 +23,12 @@ import { InputTextModule } from 'primeng/inputtext';
       </ng-template>
       <ng-template #end>
         <div id="newsletter-form" class="p-d-flex p-ai-center">
-          <input pInputText type="text" placeholder="Newsletter..." />
+          <input
+            pInputText
+            type="text"
+            id="newsletter"
+            placeholder="Newsletter..."
+          />
           <button
             pButton
             type="button"
