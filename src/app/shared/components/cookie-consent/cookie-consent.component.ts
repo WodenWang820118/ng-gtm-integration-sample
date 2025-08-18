@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { ConsentService } from '../../services/consent/consent.service';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import {
@@ -17,7 +18,13 @@ import {
 @Component({
   selector: 'app-cookie-consent',
   standalone: true,
-  imports: [FormsModule, DialogModule, ToggleSwitchModule, ButtonModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    DialogModule,
+    ToggleSwitchModule,
+    ButtonModule,
+  ],
   templateUrl: './cookie-consent.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
