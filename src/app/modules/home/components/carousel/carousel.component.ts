@@ -13,19 +13,20 @@ import { ButtonModule } from 'primeng/button';
   selector: 'app-carousel',
   imports: [CarouselModule, ButtonModule],
   template: `
-    <div class="container mx-auto px-6">
+    <div class="container mx-auto px-6 border border-gray-300 rounded-lg p-4">
       <p-carousel
         [value]="destinations"
         [numVisible]="3"
         [numScroll]="3"
         [circular]="false"
         [responsiveOptions]="responsiveOptions"
+        autoplayInterval="3000"
         (page)="onSlideChanged($event)"
         class="w-full"
       >
         <ng-template pTemplate="item" let-destination>
           <div
-            class="flex flex-col items-center cursor-pointer transition-shadow hover:shadow-lg"
+            class="flex flex-col items-center cursor-pointer transition-shadow hover:shadow-lg border border-surface rounded-border m-2 p-4"
             (click)="selectPromotion(destination); goToDetails(destination)"
           >
             <div class="relative w-full h-48 md:h-56 mb-4">
@@ -35,14 +36,14 @@ import { ButtonModule } from 'primeng/button';
                 alt=""
               />
               <div
-                class="absolute top-1 left-1 bg-black bg-opacity-60 text-white text-xs p-1 rounded max-w-xs break-words"
+                class="absolute bottom-1 left-1 bg-black bg-opacity-60 text-white text-xs p-1 rounded max-w-xs break-words"
                 (click)="preventDefault($event)"
                 [innerHTML]="
                   authorInforByPassed(destination.imageBigAuthorInfo)
                 "
               ></div>
             </div>
-            <div class="text-lg font-medium text-center w-full">
+            <div class="text-lg font-medium text-center w-full text-gray-800">
               {{ destination.title }}
             </div>
           </div>

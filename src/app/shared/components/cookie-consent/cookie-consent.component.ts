@@ -7,14 +7,24 @@ import {
 } from '@angular/core';
 import { ConsentService } from '../../services/consent/consent.service';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
-import { ToggleSwitchModule } from 'primeng/toggleswitch';
+import {
+  ToggleSwitchChangeEvent,
+  ToggleSwitchModule,
+} from 'primeng/toggleswitch';
 
 @Component({
   selector: 'app-cookie-consent',
   standalone: true,
-  imports: [FormsModule, DialogModule, ToggleSwitchModule, ButtonModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    DialogModule,
+    ToggleSwitchModule,
+    ButtonModule,
+  ],
   templateUrl: './cookie-consent.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -66,8 +76,8 @@ export class CookieConsentComponent {
     this.showCookieConsent.set(false);
   }
 
-  acceptAnalytics(event: any) {
-    const consent = (event.target as HTMLInputElement).checked;
+  acceptAnalytics(event: ToggleSwitchChangeEvent) {
+    const consent = event.checked;
     console.log(`Analytics consent: ${consent}`);
 
     if (consent) {
@@ -87,8 +97,8 @@ export class CookieConsentComponent {
     }
   }
 
-  acceptMeasurement(event: any) {
-    const consent = (event.target as HTMLInputElement).checked;
+  acceptMeasurement(event: ToggleSwitchChangeEvent) {
+    const consent = event.checked;
     console.log(`Measurement consent: ${consent}`);
     if (consent) {
       this.consentService.updateConsentPreferences({
@@ -107,8 +117,8 @@ export class CookieConsentComponent {
     }
   }
 
-  acceptAudience(event: any) {
-    const consent = (event.target as HTMLInputElement).checked;
+  acceptAudience(event: ToggleSwitchChangeEvent) {
+    const consent = event.checked;
     console.log(`Audience consent: ${consent}`);
     if (consent) {
       this.consentService.updateConsentPreferences({
@@ -127,7 +137,7 @@ export class CookieConsentComponent {
     }
   }
 
-  acceptCookies(event: Event) {
+  acceptCookies(event: ToggleSwitchChangeEvent) {
     this.acceptMeasurement(event);
     this.acceptAudience(event);
     this.acceptAnalytics(event);

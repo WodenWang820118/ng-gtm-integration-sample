@@ -1,4 +1,4 @@
-import { Component, computed, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, computed, OnInit, signal, viewChild } from '@angular/core';
 import { CarouselComponent } from '../../components/carousel/carousel.component'; // existing custom carousel
 import { NavigationService } from '../../../../shared/services/navigation/navigation.service';
 import { CookieConsentComponent } from '../../../../shared/components/cookie-consent/cookie-consent.component';
@@ -34,12 +34,15 @@ import { CardModule } from 'primeng/card';
         <div class="h-full">
           <p-card class="h-full">
             <ng-template pTemplate="header">
-              <div class="flex items-center space-x-2">
-                <i class="pi pi-home text-blue-600 text-2xl"></i>
+              <div class="flex items-center space-x-2 p-4 pb-0">
+                <i
+                  class="pi pi-home text-blue-600 text-2xl"
+                  style="font-size: 1.5rem;"
+                ></i>
                 <h3 class="text-xl font-semibold">Luxurious Accommodations</h3>
               </div>
             </ng-template>
-            <p>
+            <p class="p-4 pt-0">
               Nunc ornare turpis eu nisi hendrerit a tempor felis ullamcorper.
               Integer turpis felis, consectetur quis congue tempus, porta vitae
               purus. Mauris condimentum orci et nunc tempor mollis.
@@ -49,12 +52,15 @@ import { CardModule } from 'primeng/card';
         <div class="h-full">
           <p-card class="h-full">
             <ng-template pTemplate="header">
-              <div class="flex items-center space-x-2">
-                <i class="pi pi-globe text-green-600 text-2xl"></i>
+              <div class="flex items-center space-x-2 p-4 pb-0">
+                <i
+                  class="pi pi-globe text-green-600 text-2xl"
+                  style="font-size: 1.5rem;"
+                ></i>
                 <h3 class="text-xl font-semibold">Incredible Locations</h3>
               </div>
             </ng-template>
-            <p>
+            <p class="p-4 pt-0">
               Nunc ornare turpis eu nisi hendrerit a tempor felis ullamcorper.
               Integer turpis felis, consectetur quis congue tempus, porta vitae
               purus. Mauris condimentum orci et nunc tempor mollis.
@@ -64,12 +70,15 @@ import { CardModule } from 'primeng/card';
         <div class="h-full">
           <p-card class="h-full">
             <ng-template pTemplate="header">
-              <div class="flex items-center space-x-2">
-                <i class="pi pi-tags text-yellow-600 text-2xl"></i>
+              <div class="flex items-center space-x-2 p-4 pb-0">
+                <i
+                  class="pi pi-tags text-yellow-600 text-2xl"
+                  style="font-size: 1.5rem;"
+                ></i>
                 <h3 class="text-xl font-semibold">Pricing</h3>
               </div>
             </ng-template>
-            <p>
+            <p class="p-4 pt-0">
               Please use our
               <a
                 href="https://wodenwang820118.github.io/ng-gtm-integration-sample/?utm_source=ng-gtm-integration-sample&utm_medium=website&utm_campaign=app_download"
@@ -96,8 +105,7 @@ export class MainComponent implements OnInit {
   private readonly showCookieModal = signal(false);
   readonly showCookieModal$ = computed(() => this.showCookieModal());
 
-  @ViewChild(CookieConsentComponent)
-  cookieConsentComponent!: CookieConsentComponent;
+  cookieConsentComponent = viewChild(CookieConsentComponent);
 
   constructor(
     private readonly navigationService: NavigationService,
