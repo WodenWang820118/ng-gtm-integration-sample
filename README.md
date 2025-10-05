@@ -1,5 +1,10 @@
 # NgGtmSite: Angular Google Tag Manager Integration Sample
 
+> **⚠️ ARCHIVED PROJECT**  
+> This project has been archived and is no longer actively maintained. All development has moved to [tag-check](https://github.com/WodenWang820118/tag-check), a more comprehensive and modern solution for Google Tag Manager integration and testing.
+>
+> **Please visit the new project: https://github.com/WodenWang820118/tag-check**
+
 ## Table of Contents
 
 - [Overview](#overview)
