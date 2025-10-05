@@ -1,5 +1,11 @@
 ## Project Overview
 
+:::warning PROJECT ARCHIVED
+**This project has been archived and migrated to [tag-check](https://github.com/WodenWang820118/tag-check).**
+
+The new project offers enhanced features, better testing capabilities, and modern tooling. Please visit https://github.com/WodenWang820118/tag-check for the latest version.
+:::
+
 ### Introduction
 
 This project focuses on implementing Google Tag Manager (GTM) with an Angular application, aiming to provide a practical demonstration of tracking and analytics in single-page applications (SPAs). It's designed to address common challenges and demonstrate efficient strategies for integrating GTM with Google Analytics 4 (GA4) events.
